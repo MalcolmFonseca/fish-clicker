@@ -1,4 +1,4 @@
-import pygame,time,shop,shopButton,player
+import pygame,time,shop,shopButton,player,math
 
 pygame.init()
 
@@ -15,7 +15,7 @@ brown_color = pygame.color.Color('#9E6F21')
 screen.fill(light_water_color)
 
 #create player object
-player = player.Player()
+player_ob = player.Player()
 
 #create main game shop
 main_shop = shop.Shop(window_size)
@@ -55,18 +55,23 @@ shop_title_text_rect = shop_title_text.get_rect()
 shop_title_text_rect.left = seaweed_btn.button_rect.left
 shop_title_text_rect.top = 5
 
-#create text for 
+#create text for score
 score_font = pygame.font.Font('Assets/Kamalla.ttf',80)
 score_text = score_font.render('0',True,(0,0,0))
 score_text_rect = score_text.get_rect()
 score_text_rect.centerx = window_size[0]/3
 
-#function to update score
+#function and event object to update score every 1 second
+UPDATE_SCORE = pygame.USEREVENT +1
 def update_score():
-    pass
+    player_ob.score += player_ob.sps
+    global score_text
+    score_text = score_font.render(f'{math.trunc(player_ob.score)}',True,(0,0,0))
 
 #render method
 def render():
+    #render backdrop
+    screen.fill(light_water_color)
     #render shop box
     pygame.draw.rect(screen,brown_color,main_shop.shop_rect)
 
@@ -90,6 +95,12 @@ def render():
 
     pygame.display.flip()
 
+#make game clock
+clock = pygame.time.Clock()
+
+#update player score every 1 second
+pygame.time.set_timer(UPDATE_SCORE,1000)
+
 #update screen and set running to true
 render()
 running = True
@@ -97,9 +108,13 @@ running = True
 while running:
     #event loop
     for event in pygame.event.get():
+        #event check for score update    
+        if event.type == UPDATE_SCORE:
+            update_score()
         if event.type == pygame.QUIT:
             running = False
 
-    time.sleep(.05)
+    render()
+    clock.tick(30)
 
 pygame.quit()    
