@@ -1,4 +1,4 @@
-import pygame,time,shop,shopButton
+import pygame,time,shop,shopButton,player
 
 pygame.init()
 
@@ -13,6 +13,9 @@ sand_color = pygame.color.Color('#FFEEB3')
 brown_color = pygame.color.Color('#9E6F21')
 
 screen.fill(light_water_color)
+
+#create player object
+player = player.Player()
 
 #create main game shop
 main_shop = shop.Shop(window_size)
