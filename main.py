@@ -21,12 +21,12 @@ player_ob = player.Player()
 main_shop = shop.Shop(window_size)
 
 #create shop buttons
-seaweed_btn = shopButton.ShopButton("Seaweed",15,'Assets/seaweed.png')
-seaslug_btn = shopButton.ShopButton("Seaslug",100,'Assets/seaslug.png')
-crab_btn = shopButton.ShopButton("Crab",1_100,'Assets/crab.png')
-angelfish_btn = shopButton.ShopButton("Angelfish",12_000,'Assets/angelfish.png')
-clownfish_btn = shopButton.ShopButton("Clownfish",130_000,'Assets/clownfish.png')
-squid_btn = shopButton.ShopButton("Squid",1_400_000,'Assets/squid.png')
+seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'Assets/seaweed.png')
+seaslug_btn = shopButton.ShopButton("Seaslug",100,1,'Assets/seaslug.png')
+crab_btn = shopButton.ShopButton("Crab",1_100,8,'Assets/crab.png')
+angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'Assets/angelfish.png')
+clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'Assets/clownfish.png')
+squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'Assets/squid.png')
 
 #add buttons to main_shop
 main_shop.all_buttons.append(seaweed_btn)
@@ -57,7 +57,7 @@ shop_title_text_rect.top = 5
 
 #create text for score
 score_font = pygame.font.Font('Assets/Kamalla.ttf',80)
-score_text = score_font.render('0',True,(0,0,0))
+score_text = score_font.render(f'{math.trunc(player_ob.score)}',True,(0,0,0))
 score_text_rect = score_text.get_rect()
 score_text_rect.centerx = window_size[0]/3
 
@@ -67,6 +67,11 @@ def update_score():
     player_ob.score += player_ob.sps
     global score_text
     score_text = score_font.render(f'{math.trunc(player_ob.score)}',True,(0,0,0))
+
+def bought(button):
+    button.owned += 1
+    player_ob.score -+ button.cost
+    player_ob.sps += button.sps
 
 #render method
 def render():
@@ -81,9 +86,12 @@ def render():
         button.position(position)
         position += 1
         pygame.draw.rect(screen,sand_color,button.button_rect)
+        #check if cost should be red
+        button.check_expensive(player_ob.score)
         screen.blit(button.image,button.image_rect)
         screen.blit(button.name_text,button.name_text_rect)
         screen.blit(button.cost_text,button.cost_text_rect)
+        screen.blit(button.owned_text,button.owned_text_rect)
 
     #render arrows
     screen.blit(top_arrow,top_arrow_rect)
@@ -115,6 +123,6 @@ while running:
             running = False
 
     render()
-    clock.tick(30)
+    clock.tick(60)
 
 pygame.quit()    
