@@ -1,4 +1,4 @@
-import pygame,time,shop,shopButton,player,math
+import pygame,time,shop,shopButton,player,math,creature
 
 pygame.init()
 
@@ -21,12 +21,12 @@ player_ob = player.Player()
 main_shop = shop.Shop(window_size)
 
 #create shop buttons
-seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'Assets/seaweed.png')
-seaslug_btn = shopButton.ShopButton("Seaslug",100,1,'Assets/seaslug.png')
-crab_btn = shopButton.ShopButton("Crab",1_100,8,'Assets/crab.png')
-angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'Assets/angelfish.png')
-clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'Assets/clownfish.png')
-squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'Assets/squid.png')
+seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'Assets/seaweed.png','stationary')
+seaslug_btn = shopButton.ShopButton("Seaslug",100,1,'Assets/seaslug.png','walking')
+crab_btn = shopButton.ShopButton("Crab",1_100,8,'Assets/crab.png','walking')
+angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'Assets/angelfish.png','swimming')
+clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'Assets/clownfish.png','swimming')
+squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'Assets/squid.png','swimming')
 
 #add buttons to main_shop
 main_shop.all_buttons.append(seaweed_btn)
@@ -35,8 +35,8 @@ main_shop.all_buttons.append(crab_btn)
 main_shop.all_buttons.append(angelfish_btn)
 main_shop.all_buttons.append(clownfish_btn)
 main_shop.all_buttons.append(squid_btn)
-main_shop.all_buttons.append(seaweed_btn)
 
+#set current buttons
 main_shop.current_buttons = main_shop.all_buttons
 
 #create arrows for shop scrolling
@@ -57,7 +57,7 @@ shop_title_text_rect.top = 5
 
 #create text for score
 score_font = pygame.font.Font('Assets/Kamalla.ttf',80)
-score_text = score_font.render(f'{math.trunc(player_ob.score)}',True,(0,0,0))
+score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
 score_text_rect = score_text.get_rect()
 score_text_rect.centerx = window_size[0]/3
 
@@ -66,12 +66,12 @@ UPDATE_SCORE = pygame.USEREVENT +1
 def update_score():
     player_ob.score += player_ob.sps
     global score_text
-    score_text = score_font.render(f'{math.trunc(player_ob.score)}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
 
-def bought(button):
-    button.owned += 1
+def buy(button):
     player_ob.score -+ button.cost
     player_ob.sps += button.sps
+    player_ob.bought.add(button.buy())
 
 #render method
 def render():
@@ -97,8 +97,14 @@ def render():
     screen.blit(top_arrow,top_arrow_rect)
     screen.blit(bottom_arrow,bottom_arrow_rect)
 
-    #render shop title and score text
+    #render shop title
     screen.blit(shop_title_text,shop_title_text_rect)
+
+    #render all owned creatures
+    player_ob.bought.update()
+    player_ob.bought.draw(screen)
+
+    #render score text
     screen.blit(score_text,score_text_rect)
 
     pygame.display.flip()
@@ -118,10 +124,14 @@ while running:
     for event in pygame.event.get():
         #event check for score update    
         if event.type == UPDATE_SCORE:
-            update_score()
+            update_score()    
         if event.type == pygame.QUIT:
             running = False
-
+        elif event.type == pygame.MOUSEBUTTONUP: #handle player purchases from the shop
+            for button in main_shop.current_buttons:
+                if button.button_rect.collidepoint(event.pos):
+                    buy(button)
+                    
     render()
     clock.tick(60)
 

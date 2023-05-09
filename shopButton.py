@@ -1,12 +1,14 @@
-import pygame
+import pygame, creature, math
 
-class ShopButton():   
-    def __init__(self,name,cost,sps,image_path):
+class ShopButton():
+    def __init__(self,name,cost,sps,image_path,creature_type): #creature type is either walking, swimming or stationary
         self.button_rect = pygame.Rect((1920/3)*2+15,15,(1920/3)-30,120)
         self.name = name
         self.cost = cost
         self.sps = sps
         self.owned = 0
+        self.creature_type = creature_type
+        self.image_path = image_path
         self.image = pygame.image.load(image_path)
         self.image_rect = self.image.get_rect()
         self.big_font = pygame.font.Font('Assets/Kamalla.ttf',70)
@@ -44,3 +46,23 @@ class ShopButton():
     def check_expensive(self,player_score):
         if player_score < self.cost:
             self.cost_text = self.big_font.render(f'{self.cost}',True,(255,0,0))
+
+    def buy(self):
+        #update cost and owned #
+        self.owned += 1
+        self.cost += math.ceil(self.cost*.15)
+
+        #update text
+        self.cost_text = self.big_font.render(f'{self.cost}',True,(0,0,0))
+        self.cost_text_rect = self.cost_text.get_rect()
+
+        self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
+        self.owned_text_rect = self.owned_text.get_rect()
+        
+        #create correct creature
+        if self.creature_type == 'swimming':
+            return creature.SwimmingCreature(self.image_path)
+        elif self.creature_type == 'walking':
+            return creature.WalkingCreature(self.image_path)
+        else:
+            return creature.StationaryCreature(self.image_path)
