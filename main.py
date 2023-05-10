@@ -46,12 +46,15 @@ def move_shop(direction):
         #check if fully scrolled up
         if main_shop.current_position != 0 :
             main_shop.current_position -= 7
+            print("upworks")
     elif direction == "DOWN":
         #check if fully scrolled down
-        if main_shop.current_position + 7 > len(main_shop.all_buttons) :
+        if main_shop.current_position + 7 < len(main_shop.all_buttons) :
             main_shop.current_position += 7
-    for i in range(0,7):
-                main_shop.current_buttons.append(main_shop.all_buttons[i])
+            print("downworks")
+    main_shop.current_buttons.clear()
+    for i in range(main_shop.current_position,main_shop.current_position + 7):
+        main_shop.current_buttons.append(main_shop.all_buttons[i])
 
 #set current buttons
 #main_shop.current_buttons = main_shop.all_buttons
