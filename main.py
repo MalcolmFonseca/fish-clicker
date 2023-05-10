@@ -27,6 +27,8 @@ crab_btn = shopButton.ShopButton("Crab",1_100,8,'Assets/crab.png','walking')
 angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'Assets/angelfish.png','swimming')
 clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'Assets/clownfish.png','swimming')
 squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'Assets/squid.png','swimming')
+barracuda_btn = shopButton.ShopButton("Barracuda",1_400_000,1_400,'Assets/barracuda.png','swimming')
+bluewhale_btn = shopButton.ShopButton("Blue Whale",1_400_000,1_400,'Assets/bluewhale.png','swimming')
 
 #add buttons to main_shop
 main_shop.all_buttons.append(seaweed_btn)
@@ -35,9 +37,25 @@ main_shop.all_buttons.append(crab_btn)
 main_shop.all_buttons.append(angelfish_btn)
 main_shop.all_buttons.append(clownfish_btn)
 main_shop.all_buttons.append(squid_btn)
+main_shop.all_buttons.append(barracuda_btn)
+main_shop.all_buttons.append(bluewhale_btn)
+
+#make function for scrolling through shop
+def move_shop(direction):
+    if direction == "UP":
+        #check if fully scrolled up
+        if main_shop.current_position != 0 :
+            main_shop.current_position -= 7
+    elif direction == "DOWN":
+        #check if fully scrolled down
+        if main_shop.current_position + 7 > len(main_shop.all_buttons) :
+            main_shop.current_position += 7
+    for i in range(0,7):
+                main_shop.current_buttons.append(main_shop.all_buttons[i])
 
 #set current buttons
-main_shop.current_buttons = main_shop.all_buttons
+#main_shop.current_buttons = main_shop.all_buttons
+move_shop("UP")
 
 #create arrows for shop scrolling
 top_arrow = pygame.image.load('Assets/arrow.png')
@@ -127,10 +145,14 @@ while running:
             update_score()    
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.MOUSEBUTTONUP: #handle player purchases from the shop
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player purchases from the shop
             for button in main_shop.current_buttons:
                 if button.button_rect.collidepoint(event.pos):
                     buy(button)
+            if top_arrow_rect.collidepoint(event.pos):
+                move_shop("UP")
+            if bottom_arrow_rect.collidepoint(event.pos):
+                move_shop("DOWN")
                     
     render()
     clock.tick(30)
