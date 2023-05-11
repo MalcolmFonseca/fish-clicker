@@ -93,9 +93,19 @@ def update_score():
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
 
 def buy(button):
-    player_ob.score -+ button.cost
+    player_ob.score -= button.cost
     player_ob.sps += button.sps
     player_ob.bought.add(button.buy())
+    #update text immediately for more responsive gameplay
+    global score_text
+    score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+
+def click_creature():
+    player_ob.score += 1
+    #update text immediately for more responsive gameplay
+    global score_text
+    score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    pygame.mouse.get_pos
 
 #render method
 def render():
@@ -116,6 +126,7 @@ def render():
         screen.blit(button.name_text,button.name_text_rect)
         screen.blit(button.cost_text,button.cost_text_rect)
         screen.blit(button.owned_text,button.owned_text_rect)
+        screen.blit(button.sps_text,button.sps_text_rect)
 
     #render arrows
     screen.blit(top_arrow,top_arrow_rect)
@@ -152,13 +163,22 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player purchases from the shop
-            for button in main_shop.current_buttons:
-                if button.button_rect.collidepoint(event.pos):
-                    buy(button)
             if top_arrow_rect.collidepoint(event.pos):
                 move_shop("UP")
+                break
             if bottom_arrow_rect.collidepoint(event.pos):
                 move_shop("DOWN")
+                break
+            for button in main_shop.current_buttons:
+                if button.button_rect.collidepoint(event.pos):
+                    if player_ob.score > button.cost: #comment out for free shop creatures
+                        buy(button)
+                        break
+            for owned_creature in player_ob.bought:
+                if owned_creature.rect.collidepoint(event.pos):
+                        click_creature()
+                        break
+                        
                     
     render()
     clock.tick(30)

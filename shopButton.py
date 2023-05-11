@@ -24,6 +24,9 @@ class ShopButton():
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
         self.owned_text_rect = self.owned_text.get_rect()
 
+        self.sps_text = self.small_font.render(f'CPS: {self.sps}',True,(0,0,0))
+        self.sps_text_rect = self.sps_text.get_rect()
+
     def position(self, position_num):
         #15 is size of gap 120 is height of button
 
@@ -42,10 +45,15 @@ class ShopButton():
         #position owned text
         self.owned_text_rect.right = self.cost_text_rect.right
         self.owned_text_rect.centery = self.button_rect.centery + 40
+        #position sps text
+        self.sps_text_rect.left = self.name_text_rect.left
+        self.sps_text_rect.bottom = self.owned_text_rect.bottom
     
     def check_expensive(self,player_score):
         if player_score < self.cost:
             self.cost_text = self.small_font.render(f'{self.cost}',True,(255,0,0))
+        else:
+            self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
 
     def buy(self):
         #update cost and owned #
