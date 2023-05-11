@@ -11,14 +11,14 @@ class ShopButton():
         self.image_path = image_path
         self.image = pygame.image.load(image_path)
         self.image_rect = self.image.get_rect()
-        self.big_font = pygame.font.Font('Assets/Kamalla.ttf',70)
+        self.big_font = pygame.font.Font('Assets/Kamalla.ttf',65)
         self.small_font = pygame.font.Font('Assets/Kamalla.ttf',40)
 
         #create text
         self.name_text = self.big_font.render(f'{self.name}',True,(0,0,0))
         self.name_text_rect = self.name_text.get_rect()
 
-        self.cost_text = self.big_font.render(f'{self.cost}',True,(0,0,0))
+        self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
         self.cost_text_rect = self.cost_text.get_rect()
 
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
@@ -38,14 +38,14 @@ class ShopButton():
         self.name_text_rect.centery = self.button_rect.centery
         #position cost text
         self.cost_text_rect.right = self.button_rect.right - 15
-        self.cost_text_rect.centery = self.button_rect.centery
+        self.cost_text_rect.top = self.button_rect.top
         #position owned text
         self.owned_text_rect.right = self.cost_text_rect.right
         self.owned_text_rect.centery = self.button_rect.centery + 40
     
     def check_expensive(self,player_score):
         if player_score < self.cost:
-            self.cost_text = self.big_font.render(f'{self.cost}',True,(255,0,0))
+            self.cost_text = self.small_font.render(f'{self.cost}',True,(255,0,0))
 
     def buy(self):
         #update cost and owned #
@@ -53,7 +53,7 @@ class ShopButton():
         self.cost += math.ceil(self.cost*.15)
 
         #update text
-        self.cost_text = self.big_font.render(f'{self.cost}',True,(0,0,0))
+        self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
         self.cost_text_rect = self.cost_text.get_rect()
 
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))

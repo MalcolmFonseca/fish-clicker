@@ -54,7 +54,10 @@ def move_shop(direction):
             print("downworks")
     main_shop.current_buttons.clear()
     for i in range(main_shop.current_position,main_shop.current_position + 7):
-        main_shop.current_buttons.append(main_shop.all_buttons[i])
+        try:
+            main_shop.current_buttons.append(main_shop.all_buttons[i])
+        except:
+            break
 
 #set current buttons
 #main_shop.current_buttons = main_shop.all_buttons
