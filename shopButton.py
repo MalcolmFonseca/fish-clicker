@@ -8,9 +8,13 @@ class ShopButton():
         self.sps = sps
         self.owned = 0
         self.creature_type = creature_type
+
+        #image attributes
         self.image_path = image_path
         self.image = pygame.image.load(image_path)
         self.image_rect = self.image.get_rect()
+
+        #fonts
         self.big_font = pygame.font.Font('Assets/Kamalla.ttf',65)
         self.small_font = pygame.font.Font('Assets/Kamalla.ttf',40)
 

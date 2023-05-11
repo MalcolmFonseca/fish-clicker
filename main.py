@@ -12,8 +12,6 @@ blue_color = pygame.color.Color('#B8E7E1')
 sand_color = pygame.color.Color('#FFEEB3')
 brown_color = pygame.color.Color('#9E6F21')
 
-screen.fill(light_water_color)
-
 #create player object
 player_ob = player.Player()
 
@@ -56,11 +54,10 @@ def move_shop(direction):
     for i in range(main_shop.current_position,main_shop.current_position + 7):
         try:
             main_shop.current_buttons.append(main_shop.all_buttons[i])
-        except:
+        except: #will stop adding buttons when no more are available
             break
 
 #set current buttons
-#main_shop.current_buttons = main_shop.all_buttons
 move_shop("UP")
 
 #create arrows for shop scrolling
@@ -105,6 +102,7 @@ def click_creature():
     #update text immediately for more responsive gameplay
     global score_text
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    #display effect to show user their clicks are working
     pygame.mouse.get_pos
 
 #render method
@@ -122,6 +120,7 @@ def render():
         pygame.draw.rect(screen,sand_color,button.button_rect)
         #check if cost should be red
         button.check_expensive(player_ob.score)
+
         screen.blit(button.image,button.image_rect)
         screen.blit(button.name_text,button.name_text_rect)
         screen.blit(button.cost_text,button.cost_text_rect)
@@ -162,7 +161,7 @@ while running:
             update_score()    
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player purchases from the shop
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
             if top_arrow_rect.collidepoint(event.pos):
                 move_shop("UP")
                 break
