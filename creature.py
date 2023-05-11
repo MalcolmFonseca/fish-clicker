@@ -1,12 +1,12 @@
-import pygame,random
+import pygame,random,settings
 
 class Creature(pygame.sprite.Sprite):
     def __init__(self,image_path):
         super().__init__()
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
-        self.rect.bottom = 1055
-        self.rect.centerx = random.randrange(100,1820)
+        self.rect.bottom = settings.window_size[1]
+        self.rect.centerx = random.randrange(0,settings.window_size[1])
         self.speed = 0
 
     def update(self):
@@ -19,8 +19,8 @@ class Creature(pygame.sprite.Sprite):
             self.rect.left = 0
             self.speed *= -1
             self.image = pygame.transform.flip(self.image,True,False)
-        elif self.rect.right > 1920:
-            self.rect.right = 1920
+        elif self.rect.right > settings.window_size[0]:
+            self.rect.right = settings.window_size[0]
             self.speed *= -1
             self.image = pygame.transform.flip(self.image,True,False)
 
@@ -39,7 +39,7 @@ class StationaryCreature(Creature):
 class SwimmingCreature(Creature):
     def __init__(self, image_path):
         super().__init__(image_path)
-        self.rect.centery = random.randrange(0,950)
+        self.rect.top = random.randrange(0,settings.window_size[1]-self.rect.height)
         self.speed = 5
 
 class WalkingCreature(Creature):

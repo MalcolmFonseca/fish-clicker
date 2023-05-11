@@ -1,10 +1,12 @@
-import pygame,time,shop,shopButton,player,math,creature
+import pygame,time,shop,shopButton,player,math,creature,settings
 
 pygame.init()
 
-#Initialize Game with light blue background
-window_size = [1920,1055]
-screen = pygame.display.set_mode(window_size)
+#set fullscreen
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+#sync settings between classes
+settings.init(screen.get_size())
 
 #load palette
 light_water_color = pygame.color.Color('#D4FAFC')
@@ -16,7 +18,7 @@ brown_color = pygame.color.Color('#9E6F21')
 player_ob = player.Player()
 
 #create main game shop
-main_shop = shop.Shop(window_size)
+main_shop = shop.Shop(settings.window_size)
 
 #create shop buttons
 seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'Assets/seaweed.png','stationary')
@@ -63,11 +65,11 @@ move_shop("UP")
 #create arrows for shop scrolling
 top_arrow = pygame.image.load('Assets/arrow.png')
 top_arrow_rect = top_arrow.get_rect()
-top_arrow_rect.center = [seaweed_btn.button_rect.centerx,seaweed_btn.button_rect.top+15]
+top_arrow_rect.center = [seaweed_btn.button_rect.centerx,seaweed_btn.button_rect.top+settings.window_size[0]/128]
 
 bottom_arrow = pygame.transform.rotate(top_arrow,180)
 bottom_arrow_rect = bottom_arrow.get_rect()
-bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,window_size[1]-35]
+bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,settings.window_size[1]-settings.window_size[1]/31]
 
 #create text for shop
 title_font = pygame.font.Font('Assets/Kamalla.ttf',50)
@@ -80,7 +82,7 @@ shop_title_text_rect.top = 5
 score_font = pygame.font.Font('Assets/Kamalla.ttf',80)
 score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
 score_text_rect = score_text.get_rect()
-score_text_rect.centerx = window_size[0]/3
+score_text_rect.centerx = settings.window_size[0]/3
 
 #function and event object to update score every 1 second
 UPDATE_SCORE = pygame.USEREVENT +1
@@ -170,7 +172,7 @@ while running:
                 break
             for button in main_shop.current_buttons:
                 if button.button_rect.collidepoint(event.pos):
-                    if player_ob.score > button.cost: #comment out for free shop creatures
+                    #if player_ob.score > button.cost: #comment out for free shop creatures
                         buy(button)
                         break
             for owned_creature in player_ob.bought:

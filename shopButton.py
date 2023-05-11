@@ -1,8 +1,8 @@
-import pygame, creature, math
+import pygame, creature, math, settings
 
 class ShopButton():
     def __init__(self,name,cost,sps,image_path,creature_type): #creature type is either walking, swimming or stationary
-        self.button_rect = pygame.Rect((1920/3)*2+15,15,(1920/3)-30,120)
+        self.button_rect = pygame.Rect((settings.window_size[0]/3)*2+settings.window_size[0]/128,settings.window_size[0]/128,(settings.window_size[0]/3)-settings.window_size[0]/64,settings.window_size[1]/9)
         self.name = name
         self.cost = cost
         self.sps = sps
@@ -32,23 +32,21 @@ class ShopButton():
         self.sps_text_rect = self.sps_text.get_rect()
 
     def position(self, position_num):
-        #15 is size of gap 120 is height of button
-
         #position box
-        top = position_num*15 + (position_num-1)*120 + 45
+        top = position_num*settings.window_size[0]/128 + (position_num-1)*settings.window_size[1]/9 + settings.window_size[1]/24
         self.button_rect.top = top
         #position image
-        self.image_rect.left = (1920/3)*2+15
-        self.image_rect.top = top + 10
+        self.image_rect.left = (settings.window_size[0]/3)*2+settings.window_size[0]/128
+        self.image_rect.top = top + settings.window_size[1]/108
         #position name text
-        self.name_text_rect.left = self.image_rect.right + 15
+        self.name_text_rect.left = self.image_rect.right + settings.window_size[0]/128
         self.name_text_rect.centery = self.button_rect.centery
         #position cost text
-        self.cost_text_rect.right = self.button_rect.right - 15
+        self.cost_text_rect.right = self.button_rect.right - settings.window_size[0]/128
         self.cost_text_rect.top = self.button_rect.top
         #position owned text
         self.owned_text_rect.right = self.cost_text_rect.right
-        self.owned_text_rect.centery = self.button_rect.centery + 40
+        self.owned_text_rect.centery = self.button_rect.centery + settings.window_size[1]/27
         #position sps text
         self.sps_text_rect.left = self.name_text_rect.left
         self.sps_text_rect.bottom = self.owned_text_rect.bottom
