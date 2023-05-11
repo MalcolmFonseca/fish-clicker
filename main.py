@@ -18,7 +18,7 @@ brown_color = pygame.color.Color('#9E6F21')
 player_ob = player.Player()
 
 #create main game shop
-main_shop = shop.Shop(settings.window_size)
+main_shop = shop.Shop()
 
 #create shop buttons
 seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'Assets/seaweed.png','stationary')
@@ -72,14 +72,14 @@ bottom_arrow_rect = bottom_arrow.get_rect()
 bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,settings.window_size[1]-settings.window_size[1]/31]
 
 #create text for shop
-title_font = pygame.font.Font('Assets/Kamalla.ttf',50)
+title_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/22))
 shop_title_text = title_font.render('Shop',True,(0,0,0))
 shop_title_text_rect = shop_title_text.get_rect()
 shop_title_text_rect.left = seaweed_btn.button_rect.left
 shop_title_text_rect.top = 5
 
 #create text for score
-score_font = pygame.font.Font('Assets/Kamalla.ttf',80)
+score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
 score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
 score_text_rect = score_text.get_rect()
 score_text_rect.centerx = settings.window_size[0]/3

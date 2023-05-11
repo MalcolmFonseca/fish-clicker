@@ -15,8 +15,8 @@ class ShopButton():
         self.image_rect = self.image.get_rect()
 
         #fonts
-        self.big_font = pygame.font.Font('Assets/Kamalla.ttf',65)
-        self.small_font = pygame.font.Font('Assets/Kamalla.ttf',40)
+        self.big_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/16.6))
+        self.small_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/27))
 
         #create text
         self.name_text = self.big_font.render(f'{self.name}',True,(0,0,0))
@@ -33,11 +33,10 @@ class ShopButton():
 
     def position(self, position_num):
         #position box
-        top = position_num*settings.window_size[0]/128 + (position_num-1)*settings.window_size[1]/9 + settings.window_size[1]/24
-        self.button_rect.top = top
+        self.button_rect.top = position_num*settings.window_size[0]/128 + (position_num-1)*settings.window_size[1]/9 + settings.window_size[1]/24 #last term for arrow size
         #position image
-        self.image_rect.left = (settings.window_size[0]/3)*2+settings.window_size[0]/128
-        self.image_rect.top = top + settings.window_size[1]/108
+        self.image_rect.left = self.button_rect.left
+        self.image_rect.centery = self.button_rect.centery
         #position name text
         self.name_text_rect.left = self.image_rect.right + settings.window_size[0]/128
         self.name_text_rect.centery = self.button_rect.centery
