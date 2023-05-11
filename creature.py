@@ -6,7 +6,7 @@ class Creature(pygame.sprite.Sprite):
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
         self.rect.bottom = settings.window_size[1]
-        self.rect.centerx = random.randrange(0,settings.window_size[1])
+        self.rect.centerx = random.randrange(0,settings.window_size[0])
         self.speed = 0
 
     def update(self):

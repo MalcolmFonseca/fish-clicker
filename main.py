@@ -129,16 +129,16 @@ def render():
         screen.blit(button.owned_text,button.owned_text_rect)
         screen.blit(button.sps_text,button.sps_text_rect)
 
-    #render arrows
-    screen.blit(top_arrow,top_arrow_rect)
-    screen.blit(bottom_arrow,bottom_arrow_rect)
-
     #render shop title
     screen.blit(shop_title_text,shop_title_text_rect)
 
     #render all owned creatures
     player_ob.bought.update()
     player_ob.bought.draw(screen)
+
+    #render arrows
+    screen.blit(top_arrow,top_arrow_rect)
+    screen.blit(bottom_arrow,bottom_arrow_rect)
 
     #render score text
     screen.blit(score_text,score_text_rect)

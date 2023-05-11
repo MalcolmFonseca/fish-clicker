@@ -33,7 +33,7 @@ class ShopButton():
 
     def position(self, position_num):
         #position box
-        self.button_rect.top = position_num*settings.window_size[0]/128 + (position_num-1)*settings.window_size[1]/9 + settings.window_size[1]/24 #last term for arrow size
+        self.button_rect.top = position_num*settings.window_size[0]/128 + (position_num-1)*self.button_rect.height + settings.window_size[1]/24 #last term for arrow size
         #position image
         self.image_rect.left = self.button_rect.left
         self.image_rect.centery = self.button_rect.centery
