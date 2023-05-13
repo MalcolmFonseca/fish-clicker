@@ -108,8 +108,11 @@ score_text_rect.centerx = settings.window_size[0]/3
 UPDATE_SCORE = pygame.USEREVENT +1
 def update_score():
     player_ob.score += player_ob.sps
+    #remake text
     global score_text
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    global score_text_rect
+    score_text_rect = score_text.get_rect()
 
 def buy(button):
     player_ob.score -= button.cost
@@ -134,12 +137,10 @@ def toggle_shop():
 
     #reposition text
     if main_shop.minimize == True:
-        score_text_rect.centerx = settings.window_size[0]/2
         shop_title_text_rect.right = close_shop_button_rect.left - settings.window_size[0]/128
     else:
-        score_text_rect.centerx = settings.window_size[0]/3
         shop_title_text_rect.left = seaweed_btn.button_rect.left
-        
+
     #fix box size
     minimized_shop_rect.left = shop_title_text_rect.left - settings.window_size[0]/128
         
@@ -151,12 +152,18 @@ def render():
 
     #check if shop is minimized
     if main_shop.minimize == True:
+        #position score text
+        score_text_rect.centerx = settings.window_size[0]/2
+
         #render minimized shop box
         pygame.draw.rect(screen,brown_color,minimized_shop_rect)
 
         #render minimize button
         screen.blit(open_shop_button_image,open_shop_button_rect)
     else:
+        #position score text
+        score_text_rect.centerx = settings.window_size[0]/3
+
         #render shop box
         pygame.draw.rect(screen,brown_color,main_shop.shop_rect)
     
