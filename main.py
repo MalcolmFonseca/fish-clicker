@@ -21,14 +21,14 @@ player_ob = player.Player()
 main_shop = shop.Shop()
 
 #create shop buttons
-seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'Assets/seaweed.png','stationary')
-seaslug_btn = shopButton.ShopButton("Seaslug",100,1,'Assets/seaslug.png','walking')
-crab_btn = shopButton.ShopButton("Crab",1_100,8,'Assets/crab.png','walking')
-angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'Assets/angelfish.png','swimming')
-clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'Assets/clownfish.png','swimming')
-squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'Assets/squid.png','swimming')
-barracuda_btn = shopButton.ShopButton("Barracuda",1_400_000,1_400,'Assets/barracuda.png','swimming')
-bluewhale_btn = shopButton.ShopButton("Blue Whale",1_400_000,1_400,'Assets/bluewhale.png','swimming')
+seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'stationary','Assets/fishimages/seaweed.png','Assets/shopicons/seaweedShop.png')
+seaslug_btn = shopButton.ShopButton("Seaslug",100,1,'walking','Assets/fishimages/seaslug.png','Assets/shopicons/seaslugShop.png')
+crab_btn = shopButton.ShopButton("Crab",1_100,8,'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
+angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
+clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
+squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
+barracuda_btn = shopButton.ShopButton("Barracuda",1_400_000,1_400,'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
+bluewhale_btn = shopButton.ShopButton("Blue Whale",1_400_000,1_400,'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
 #add buttons to main_shop
 main_shop.all_buttons.append(seaweed_btn)
@@ -129,7 +129,7 @@ def render():
         #check if cost should be red
         button.check_expensive(player_ob.score)
 
-        screen.blit(button.image,button.image_rect)
+        screen.blit(button.icon_image,button.icon_image_rect)
         screen.blit(button.name_text,button.name_text_rect)
         screen.blit(button.cost_text,button.cost_text_rect)
         screen.blit(button.owned_text,button.owned_text_rect)

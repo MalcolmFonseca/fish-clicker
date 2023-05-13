@@ -1,7 +1,7 @@
 import pygame, creature, math, settings
 
 class ShopButton():
-    def __init__(self,name,cost,sps,image_path,creature_type): #creature type is either walking, swimming or stationary
+    def __init__(self,name,cost,sps,creature_type,image_path,icon_image_path): #creature type is either walking, swimming or stationary
         self.button_rect = pygame.Rect((settings.window_size[0]/3)*2+settings.window_size[0]/128,settings.window_size[0]/128,(settings.window_size[0]/3)-settings.window_size[0]/64,settings.window_size[1]/9)
         self.name = name
         self.cost = cost
@@ -11,8 +11,10 @@ class ShopButton():
 
         #image attributes
         self.image_path = image_path
-        self.image = pygame.image.load(image_path)
-        self.image_rect = self.image.get_rect()
+
+        self.icon_image_path = icon_image_path
+        self.icon_image = pygame.image.load(icon_image_path)
+        self.icon_image_rect = self.icon_image.get_rect()
 
         #fonts
         self.big_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/16.6))
@@ -35,11 +37,11 @@ class ShopButton():
         #position box
         self.button_rect.top = position_num*settings.window_size[0]/105 + (position_num-1)*self.button_rect.height + settings.window_size[1]/24 #last term for arrow size
         #position image
-        self.image_rect.left = self.button_rect.left
-        self.image_rect.centery = self.button_rect.centery
+        self.icon_image_rect.left = self.button_rect.left + settings.window_size[0]/170
+        self.icon_image_rect.centery = self.button_rect.centery
         #position name text
-        self.name_text_rect.left = self.image_rect.right + settings.window_size[0]/128
-        self.name_text_rect.centery = self.button_rect.centery
+        self.name_text_rect.left = self.icon_image_rect.right + settings.window_size[0]/128
+        self.name_text_rect.top = self.icon_image_rect.top
         #position cost text
         self.cost_text_rect.right = self.button_rect.right - settings.window_size[0]/128
         self.cost_text_rect.top = self.button_rect.top
