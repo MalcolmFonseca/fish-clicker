@@ -1,4 +1,4 @@
-import pygame,time,shop,shopButton,player,math,creature,settings
+import pygame,shop,shopButton,player,math,settings
 
 pygame.init()
 
