@@ -6,3 +6,4 @@ class Shop():
         self.all_buttons = []
         self.current_buttons = []
         self.current_position = 0
+        self.minimize = False

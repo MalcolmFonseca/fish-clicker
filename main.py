@@ -86,6 +86,18 @@ shop_title_text_rect = shop_title_text.get_rect()
 shop_title_text_rect.left = seaweed_btn.button_rect.left
 shop_title_text_rect.top = 5
 
+#create box and buttons for minimizing shop
+minimized_shop_rect = pygame.Rect(shop_title_text_rect.left - settings.window_size[0]/128,0,settings.window_size[0]/3,top_arrow_rect.height + settings.window_size[1]/90)
+open_shop_button_image = pygame.image.load('Assets/openShop.png')
+open_shop_button_rect = open_shop_button_image.get_rect()
+close_shop_button_image = pygame.image.load('Assets/closeShop.png')
+close_shop_button_rect = close_shop_button_image.get_rect()
+#position each button
+open_shop_button_rect.right = settings.window_size[0] - settings.window_size[0]/128
+open_shop_button_rect.top = settings.window_size[1]/128
+close_shop_button_rect.right = open_shop_button_rect.right
+close_shop_button_rect.top = open_shop_button_rect.top
+
 #create text for score
 score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
 score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
@@ -116,24 +128,56 @@ def click_creature():
     #display effect to show user their clicks are working
     pygame.mouse.get_pos
 
+def toggle_shop():
+    #simple invert so as to not have to write another if, too many as is
+    main_shop.minimize = not main_shop.minimize
+
+    #reposition text
+    if main_shop.minimize == True:
+        score_text_rect.centerx = settings.window_size[0]/2
+        shop_title_text_rect.right = close_shop_button_rect.left - settings.window_size[0]/128
+    else:
+        score_text_rect.centerx = settings.window_size[0]/3
+        shop_title_text_rect.left = seaweed_btn.button_rect.left
+        
+    #fix box size
+    minimized_shop_rect.left = shop_title_text_rect.left - settings.window_size[0]/128
+        
+
 #render method
 def render():
     #render backdrop
     screen.fill(light_water_color)
-    #render shop box
-    pygame.draw.rect(screen,brown_color,main_shop.shop_rect)
 
-    #render buttons
-    for button in main_shop.current_buttons:
-        pygame.draw.rect(screen,sand_color,button.button_rect)
-        #check if cost should be red
-        button.check_expensive(player_ob.score)
+    #check if shop is minimized
+    if main_shop.minimize == True:
+        #render minimized shop box
+        pygame.draw.rect(screen,brown_color,minimized_shop_rect)
 
-        screen.blit(button.icon_image,button.icon_image_rect)
-        screen.blit(button.name_text,button.name_text_rect)
-        screen.blit(button.cost_text,button.cost_text_rect)
-        screen.blit(button.owned_text,button.owned_text_rect)
-        screen.blit(button.sps_text,button.sps_text_rect)
+        #render minimize button
+        screen.blit(open_shop_button_image,open_shop_button_rect)
+    else:
+        #render shop box
+        pygame.draw.rect(screen,brown_color,main_shop.shop_rect)
+    
+        #render minimize button
+        screen.blit(close_shop_button_image,close_shop_button_rect)
+
+        #render item buttons
+        for button in main_shop.current_buttons:
+            pygame.draw.rect(screen,sand_color,button.button_rect)
+            #check if cost should be red
+            button.check_expensive(player_ob.score)
+
+            screen.blit(button.icon_image,button.icon_image_rect)
+            screen.blit(button.name_text,button.name_text_rect)
+            screen.blit(button.cost_text,button.cost_text_rect)
+            screen.blit(button.owned_text,button.owned_text_rect)
+            screen.blit(button.sps_text,button.sps_text_rect)
+        
+        #render arrows
+        screen.blit(top_arrow,top_arrow_rect)
+        screen.blit(bottom_arrow,bottom_arrow_rect)
 
     #render shop title
     screen.blit(shop_title_text,shop_title_text_rect)
@@ -141,10 +185,6 @@ def render():
     #render all owned creatures
     player_ob.bought.update()
     player_ob.bought.draw(screen)
-
-    #render arrows
-    screen.blit(top_arrow,top_arrow_rect)
-    screen.blit(bottom_arrow,bottom_arrow_rect)
 
     #render score text
     screen.blit(score_text,score_text_rect)
@@ -170,20 +210,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
-            if top_arrow_rect.collidepoint(event.pos):
+            if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
                 move_shop("UP")
                 break
-            if bottom_arrow_rect.collidepoint(event.pos):
+            if bottom_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
                 move_shop("DOWN")
                 break
-            for button in main_shop.current_buttons:
-                if button.button_rect.collidepoint(event.pos):
-                    #if player_ob.score > button.cost: #comment out for free shop creatures
-                        buy(button)
-                        break
+            if close_shop_button_rect.collidepoint(event.pos):
+                toggle_shop()
+                break
             for owned_creature in player_ob.bought:
                 if owned_creature.rect.collidepoint(event.pos):
                         click_creature()
+                        break
+            for button in main_shop.current_buttons:
+                if button.button_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                    #if player_ob.score > button.cost: #comment out for free shop creatures
+                        buy(button)
                         break
                         
                     
