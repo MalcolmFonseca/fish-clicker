@@ -58,6 +58,14 @@ def move_shop(direction):
             main_shop.current_buttons.append(main_shop.all_buttons[i])
         except: #will stop adding buttons when no more are available
             break
+    #position buttons
+    position_buttons()
+
+def position_buttons():
+    position = 1
+    for button in main_shop.current_buttons:
+        button.position(position)
+        position += 1
 
 #set current buttons
 move_shop("UP")
@@ -65,7 +73,7 @@ move_shop("UP")
 #create arrows for shop scrolling
 top_arrow = pygame.image.load('Assets/arrow.png')
 top_arrow_rect = top_arrow.get_rect()
-top_arrow_rect.center = [seaweed_btn.button_rect.centerx,seaweed_btn.button_rect.top+settings.window_size[0]/128]
+top_arrow_rect.center = [seaweed_btn.button_rect.centerx,settings.window_size[1]/31]
 
 bottom_arrow = pygame.transform.rotate(top_arrow,180)
 bottom_arrow_rect = bottom_arrow.get_rect()
@@ -98,6 +106,7 @@ def buy(button):
     #update text immediately for more responsive gameplay
     global score_text
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    position_buttons()
 
 def click_creature():
     player_ob.score += 1
@@ -115,10 +124,7 @@ def render():
     pygame.draw.rect(screen,brown_color,main_shop.shop_rect)
 
     #render buttons
-    position = 1
     for button in main_shop.current_buttons:
-        button.position(position)
-        position += 1
         pygame.draw.rect(screen,sand_color,button.button_rect)
         #check if cost should be red
         button.check_expensive(player_ob.score)
