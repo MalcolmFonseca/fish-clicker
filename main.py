@@ -46,20 +46,20 @@ def move_shop(direction):
         #check if fully scrolled up
         if main_shop.current_position != 0 :
             main_shop.current_position -= 7
-            print("upworks")
     elif direction == "DOWN":
         #check if fully scrolled down
-        if main_shop.current_position + 7 < len(main_shop.all_buttons) :
+        if main_shop.current_position + 7 < len(main_shop.unlocked_buttons) :
             main_shop.current_position += 7
-            print("downworks")
+    update_buttons()
+    position_buttons()
+
+def update_buttons():
     main_shop.current_buttons.clear()
     for i in range(main_shop.current_position,main_shop.current_position + 7):
         try:
-            main_shop.current_buttons.append(main_shop.all_buttons[i])
+            main_shop.current_buttons.append(main_shop.unlocked_buttons[i])
         except: #will stop adding buttons when no more are available
             break
-    #position buttons
-    position_buttons()
 
 def position_buttons():
     position = 1
@@ -92,6 +92,13 @@ score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,
 score_text_rect = score_text.get_rect()
 score_text_rect.centerx = settings.window_size[0]/3
 
+#create text for sps
+sps_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/20))
+sps_text = sps_font.render(f'Cps: {player_ob.sps:.1f}',True,(0,0,0))
+sps_text_rect = sps_text.get_rect()
+sps_text_rect.centerx = score_text_rect.centerx
+sps_text_rect.top = score_text_rect.bottom
+
 #create buttons for minimizing shop
 open_shop_button_image = pygame.image.load('Assets/openShop.png')
 open_shop_button_rect = open_shop_button_image.get_rect()
@@ -118,11 +125,20 @@ main_menu = menu.MainMenu()
 UPDATE_SCORE = pygame.USEREVENT +1
 def update_score():
     player_ob.score += player_ob.sps
+    player_ob.total_score += player_ob.sps
     #remake text
     global score_text
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
     global score_text_rect
     score_text_rect = score_text.get_rect()
+    update_unlocks()
+
+def update_unlocks():
+    for button in main_shop.all_buttons:
+        if button.check_unlock(player_ob.total_score):
+            main_shop.unlocked_buttons.append(button)
+            update_buttons()
+            position_buttons()
 
 def buy(button):
     player_ob.score -= button.cost
@@ -131,10 +147,13 @@ def buy(button):
     #update text immediately for more responsive gameplay
     global score_text
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    global sps_text
+    sps_text = sps_font.render(f'Cps: {player_ob.sps:.1f}',True,(0,0,0))
     position_buttons()
 
 def click_creature():
     player_ob.score += 1
+    player_ob.total_score += 1
     #update text immediately for more responsive gameplay
     global score_text
     score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
@@ -204,8 +223,9 @@ def render():
     player_ob.bought.update()
     player_ob.bought.draw(screen)
 
-    #render score text
+    #render score and sps text
     screen.blit(score_text,score_text_rect)
+    screen.blit(sps_text,sps_text_rect)
 
     #render menu if any
     render_menu()
@@ -234,6 +254,7 @@ pygame.time.set_timer(UPDATE_SCORE,1000)
 
 #update screen and set running to true
 render()
+update_score()
 running = True
 #gameloop
 while running:
@@ -245,7 +266,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
-            if main_menu.exit_button_rect.collidepoint(event.pos):
+            if main_menu.exit_button_rect.collidepoint(event.pos) and main_menu.enabled:
                 running = False
             if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
                 move_shop("UP")

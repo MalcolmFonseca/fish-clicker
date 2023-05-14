@@ -8,6 +8,7 @@ class ShopButton():
         self.sps = sps
         self.owned = 0
         self.creature_type = creature_type
+        self.unlocked = False
 
         #image attributes
         self.image_path = image_path
@@ -57,6 +58,13 @@ class ShopButton():
             self.cost_text = self.small_font.render(f'{self.cost}',True,(255,0,0))
         else:
             self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
+
+    def check_unlock(self,player_total_score):
+        if player_total_score >= self.cost and self.unlocked == False:
+            self.unlocked = True
+            return True
+        else:
+            return False
 
     def buy(self):
         #update cost and owned #
