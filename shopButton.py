@@ -25,13 +25,13 @@ class ShopButton():
         self.name_text = self.big_font.render(f'{self.name}',True,(0,0,0))
         self.name_text_rect = self.name_text.get_rect()
 
-        self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
+        self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(0,0,0))
         self.cost_text_rect = self.cost_text.get_rect()
 
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
         self.owned_text_rect = self.owned_text.get_rect()
 
-        self.sps_text = self.small_font.render(f'Cps: {self.sps}',True,(0,0,0))
+        self.sps_text = self.small_font.render(f'Cps: {settings.num_to_word(self.sps)}',True,(0,0,0))
         self.sps_text_rect = self.sps_text.get_rect()
 
     def position(self, position_num):
@@ -55,9 +55,9 @@ class ShopButton():
     
     def check_expensive(self,player_score):
         if player_score < self.cost:
-            self.cost_text = self.small_font.render(f'{self.cost}',True,(255,0,0))
+            self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(255,0,0))
         else:
-            self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
+            self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(0,0,0))
 
     def check_unlock(self,player_total_score):
         if player_total_score >= self.cost and self.unlocked == False:
@@ -72,7 +72,7 @@ class ShopButton():
         self.cost += math.ceil(self.cost*.15)
 
         #update text
-        self.cost_text = self.small_font.render(f'{self.cost}',True,(0,0,0))
+        self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(0,0,0))
         self.cost_text_rect = self.cost_text.get_rect()
 
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))

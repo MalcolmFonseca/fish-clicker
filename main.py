@@ -27,8 +27,8 @@ crab_btn = shopButton.ShopButton("Crab",1_100,8,'walking','Assets/fishimages/cra
 angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
 clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
 squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
-barracuda_btn = shopButton.ShopButton("Barracuda",1_400_000,1_400,'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
-bluewhale_btn = shopButton.ShopButton("Blue Whale",1_400_000,1_400,'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
+barracuda_btn = shopButton.ShopButton("Barracuda",71e18,1.1e12,'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
+bluewhale_btn = shopButton.ShopButton("Blue Whale",540e24,510e12,'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
 #add buttons to main_shop
 main_shop.all_buttons.append(seaweed_btn)
@@ -88,13 +88,13 @@ shop_title_text_rect.top = 5
 
 #create text for score
 score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
-score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
 score_text_rect = score_text.get_rect()
 score_text_rect.centerx = settings.window_size[0]/3
 
 #create text for sps
 sps_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/20))
-sps_text = sps_font.render(f'Cps: {player_ob.sps:.1f}',True,(0,0,0))
+sps_text = sps_font.render(f'Cps: {settings.num_to_word(player_ob.sps)}',True,(0,0,0))
 sps_text_rect = sps_text.get_rect()
 sps_text_rect.centerx = score_text_rect.centerx
 sps_text_rect.top = score_text_rect.bottom
@@ -128,7 +128,7 @@ def update_score():
     player_ob.total_score += player_ob.sps
     #remake text
     global score_text
-    score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     global score_text_rect
     score_text_rect = score_text.get_rect()
     update_unlocks()
@@ -146,9 +146,9 @@ def buy(button):
     player_ob.bought.add(button.buy())
     #update text immediately for more responsive gameplay
     global score_text
-    score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     global sps_text
-    sps_text = sps_font.render(f'Cps: {player_ob.sps:.1f}',True,(0,0,0))
+    sps_text = sps_font.render(f'Cps: {settings.num_to_word(player_ob.sps)}',True,(0,0,0))
     position_buttons()
 
 def click_creature():
@@ -156,7 +156,7 @@ def click_creature():
     player_ob.total_score += 1
     #update text immediately for more responsive gameplay
     global score_text
-    score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     #display effect to show user their clicks are working
     pygame.mouse.get_pos
 
