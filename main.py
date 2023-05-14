@@ -1,4 +1,4 @@
-import pygame,shop,shopButton,player,math,settings
+import pygame,shop,shopButton,player,math,settings,menu
 
 pygame.init()
 
@@ -98,6 +98,14 @@ open_shop_button_rect.top = settings.window_size[1]/128
 close_shop_button_rect.right = open_shop_button_rect.right
 close_shop_button_rect.top = open_shop_button_rect.top
 
+#create button for menu
+menu_button = pygame.image.load('Assets/menu.png')
+menu_button_rect = menu_button.get_rect()
+menu_button_rect.top = settings.window_size[1]/128
+menu_button_rect.left = settings.window_size[1]/128
+#create menus
+main_menu = menu.MainMenu()
+
 #create text for score
 score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
 score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
@@ -136,7 +144,7 @@ def toggle_shop():
     main_shop.minimize = not main_shop.minimize
 
     #reposition text
-    if main_shop.minimize == True:
+    if main_shop.minimize:
         shop_title_text_rect.right = close_shop_button_rect.left - settings.window_size[0]/128
     else:
         shop_title_text_rect.left = seaweed_btn.button_rect.left
@@ -151,7 +159,7 @@ def render():
     screen.fill(light_water_color)
 
     #check if shop is minimized
-    if main_shop.minimize == True:
+    if main_shop.minimize:
         #position score text
         score_text_rect.centerx = settings.window_size[0]/2
 
@@ -189,6 +197,9 @@ def render():
     #render shop title
     screen.blit(shop_title_text,shop_title_text_rect)
 
+    #render menu button
+    screen.blit(menu_button,menu_button_rect)
+
     #render all owned creatures
     player_ob.bought.update()
     player_ob.bought.draw(screen)
@@ -196,7 +207,14 @@ def render():
     #render score text
     screen.blit(score_text,score_text_rect)
 
+    #render menu if any
+    render_menu()
+
     pygame.display.flip()
+
+def render_menu():
+    if main_menu.enabled:
+        screen.blit(main_menu.exit_text,main_menu.exit_text_rect)
 
 #make game clock
 clock = pygame.time.Clock()
@@ -217,6 +235,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
+            if menu_button_rect.collidepoint(event.pos):
+                main_menu.enabled = True
+                break
+            if main_menu.exit_button_rect.collidepoint(event.pos) and main_menu.enabled:
+                running = False
             if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
                 move_shop("UP")
                 break
