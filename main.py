@@ -216,6 +216,9 @@ def render():
         screen.blit(top_arrow,top_arrow_rect)
         screen.blit(bottom_arrow,bottom_arrow_rect)
 
+    #position sps text
+    sps_text_rect.centerx = score_text_rect.centerx
+
     #render shop title
     screen.blit(shop_title_text,shop_title_text_rect)
 

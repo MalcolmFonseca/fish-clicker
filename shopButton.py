@@ -31,7 +31,7 @@ class ShopButton():
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
         self.owned_text_rect = self.owned_text.get_rect()
 
-        self.sps_text = self.small_font.render(f'CPS: {self.sps}',True,(0,0,0))
+        self.sps_text = self.small_font.render(f'Cps: {self.sps}',True,(0,0,0))
         self.sps_text_rect = self.sps_text.get_rect()
 
     def position(self, position_num):
