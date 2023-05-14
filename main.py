@@ -190,8 +190,6 @@ def render():
     else:
         #position score text
         score_text_rect.centerx = settings.window_size[0]/3
-        if main_menu.enabled:
-            score_text_rect.centerx = settings.window_size[0]/2
 
         #render shop box
         pygame.draw.rect(screen,main_shop.shop_rect.border_color,main_shop.shop_rect.border_rect)
@@ -240,7 +238,6 @@ def render():
 
 def render_menu():
     if main_menu.enabled:
-
         #draw menu box
         pygame.draw.rect(screen,main_menu.menu_rect.border_color,main_menu.menu_rect.border_rect)
         pygame.draw.rect(screen,main_menu.menu_rect.inner_color,main_menu.menu_rect.inner_rect)
@@ -248,6 +245,9 @@ def render_menu():
         #render exit button
         pygame.draw.rect(screen,sand_color,main_menu.exit_button_rect)
         screen.blit(main_menu.exit_text,main_menu.exit_text_rect)
+        #render options button
+        pygame.draw.rect(screen,sand_color,main_menu.options_button_rect)
+        screen.blit(main_menu.options_text,main_menu.options_text_rect)
 
 #make game clock
 clock = pygame.time.Clock()
