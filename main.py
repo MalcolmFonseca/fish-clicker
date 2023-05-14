@@ -9,10 +9,10 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 settings.init(screen.get_size())
 
 #load palette
-light_water_color = pygame.color.Color('#D4FAFC')
+light_water_color = pygame.color.Color('#C0FDFB')
 blue_color = pygame.color.Color('#B8E7E1')
-sand_color = pygame.color.Color('#FFEEB3')
-brown_color = pygame.color.Color('#9E6F21')
+sand_color = pygame.color.Color('#FFE5AD')
+brown_color = pygame.color.Color('#D08C39')
 
 #create player object
 player_ob = player.Player()
