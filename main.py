@@ -1,4 +1,4 @@
-import pygame,shop,shopButton,player,math,settings,menu
+import pygame,shop,shopButton,player,math,settings,menu,borderedRect
 
 pygame.init()
 
@@ -86,8 +86,13 @@ shop_title_text_rect = shop_title_text.get_rect()
 shop_title_text_rect.left = seaweed_btn.button_rect.left
 shop_title_text_rect.top = 5
 
-#create box and buttons for minimizing shop
-minimized_shop_rect = pygame.Rect(shop_title_text_rect.left - settings.window_size[0]/128,0,settings.window_size[0]/3,top_arrow_rect.height + settings.window_size[1]/90)
+#create text for score
+score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
+score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
+score_text_rect = score_text.get_rect()
+score_text_rect.centerx = settings.window_size[0]/3
+
+#create buttons for minimizing shop
 open_shop_button_image = pygame.image.load('Assets/openShop.png')
 open_shop_button_rect = open_shop_button_image.get_rect()
 close_shop_button_image = pygame.image.load('Assets/closeShop.png')
@@ -98,6 +103,9 @@ open_shop_button_rect.top = settings.window_size[1]/128
 close_shop_button_rect.right = open_shop_button_rect.right
 close_shop_button_rect.top = open_shop_button_rect.top
 
+#create minimized shop box
+minimized_shop_rect = borderedRect.bordered_rect(close_shop_button_rect.left - settings.window_size[0]/64 - shop_title_text_rect.width,0,settings.window_size[0]-shop_title_text_rect.left,top_arrow_rect.height + settings.window_size[1]/90,settings.window_size[0]/384,brown_color,(0,0,0))
+
 #create button for menu
 menu_button = pygame.image.load('Assets/menu.png')
 menu_button_rect = menu_button.get_rect()
@@ -105,12 +113,6 @@ menu_button_rect.top = settings.window_size[1]/128
 menu_button_rect.left = settings.window_size[1]/128
 #create menus
 main_menu = menu.MainMenu()
-
-#create text for score
-score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
-score_text = score_font.render(f'Chum: {math.trunc(player_ob.score)}',True,(0,0,0))
-score_text_rect = score_text.get_rect()
-score_text_rect.centerx = settings.window_size[0]/3
 
 #function and event object to update score every 1 second
 UPDATE_SCORE = pygame.USEREVENT +1
@@ -148,9 +150,6 @@ def toggle_shop():
         shop_title_text_rect.right = close_shop_button_rect.left - settings.window_size[0]/128
     else:
         shop_title_text_rect.left = seaweed_btn.button_rect.left
-
-    #fix box size
-    minimized_shop_rect.left = shop_title_text_rect.left - settings.window_size[0]/128
         
 
 #render method
@@ -164,16 +163,20 @@ def render():
         score_text_rect.centerx = settings.window_size[0]/2
 
         #render minimized shop box
-        pygame.draw.rect(screen,brown_color,minimized_shop_rect)
+        pygame.draw.rect(screen,minimized_shop_rect.border_color,minimized_shop_rect.border_rect)
+        pygame.draw.rect(screen,minimized_shop_rect.inner_color,minimized_shop_rect.inner_rect)
 
         #render minimize button
         screen.blit(open_shop_button_image,open_shop_button_rect)
     else:
         #position score text
         score_text_rect.centerx = settings.window_size[0]/3
+        if main_menu.enabled:
+            score_text_rect.centerx = settings.window_size[0]/2
 
         #render shop box
-        pygame.draw.rect(screen,brown_color,main_shop.shop_rect)
+        pygame.draw.rect(screen,main_shop.shop_rect.border_color,main_shop.shop_rect.border_rect)
+        pygame.draw.rect(screen,main_shop.shop_rect.inner_color,main_shop.shop_rect.inner_rect)
     
         #render minimize button
         screen.blit(close_shop_button_image,close_shop_button_rect)
@@ -197,9 +200,6 @@ def render():
     #render shop title
     screen.blit(shop_title_text,shop_title_text_rect)
 
-    #render menu button
-    screen.blit(menu_button,menu_button_rect)
-
     #render all owned creatures
     player_ob.bought.update()
     player_ob.bought.draw(screen)
@@ -210,10 +210,20 @@ def render():
     #render menu if any
     render_menu()
 
+    #render menu button
+    screen.blit(menu_button,menu_button_rect)
+
     pygame.display.flip()
 
 def render_menu():
     if main_menu.enabled:
+
+        #draw menu box
+        pygame.draw.rect(screen,main_menu.menu_rect.border_color,main_menu.menu_rect.border_rect)
+        pygame.draw.rect(screen,main_menu.menu_rect.inner_color,main_menu.menu_rect.inner_rect)
+
+        #render exit button
+        pygame.draw.rect(screen,sand_color,main_menu.exit_button_rect)
         screen.blit(main_menu.exit_text,main_menu.exit_text_rect)
 
 #make game clock
@@ -235,10 +245,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
-            if menu_button_rect.collidepoint(event.pos):
-                main_menu.enabled = True
-                break
-            if main_menu.exit_button_rect.collidepoint(event.pos) and main_menu.enabled:
+            if main_menu.exit_button_rect.collidepoint(event.pos):
                 running = False
             if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
                 move_shop("UP")
@@ -251,14 +258,16 @@ while running:
                 break
             for owned_creature in player_ob.bought:
                 if owned_creature.rect.collidepoint(event.pos):
-                        click_creature()
-                        break
+                    click_creature()
+                    break
             for button in main_shop.current_buttons:
                 if button.button_rect.collidepoint(event.pos) and main_shop.minimize == False:
                     #if player_ob.score > button.cost: #comment out for free shop creatures
                         buy(button)
                         break
-                        
+            if menu_button_rect.collidepoint(event.pos):
+                    main_menu.enabled = not main_menu.enabled
+                    break            
                     
     render()
     clock.tick(30)
