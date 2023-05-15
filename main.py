@@ -148,6 +148,9 @@ def buy(button):
     score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     global sps_text
     sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
+    global sps_text_rect
+    sps_text_rect = sps_text.get_rect()
+    sps_text_rect.top = score_text_rect.bottom
     position_buttons()
 
 def click_creature():
