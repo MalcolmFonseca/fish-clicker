@@ -4,6 +4,7 @@ class ShopButton():
     def __init__(self,name,cost,sps,creature_type,image_path,icon_image_path): #creature type is either walking, swimming or stationary
         self.button_rect = pygame.Rect((util.window_size[0]/3)*2+util.window_size[0]/128,util.window_size[0]/128,(util.window_size[0]/3)-util.window_size[0]/64,util.window_size[1]/9)
         self.name = name
+        self.base_cost = cost
         self.cost = cost
         self.sps = sps
         self.owned = 0
@@ -69,7 +70,7 @@ class ShopButton():
     def buy(self):
         #update cost and owned #
         self.owned += 1
-        self.cost += math.ceil(self.cost*.15)
+        self.cost = math.ceil(self.base_cost * math.pow(1.15,self.owned))
 
         #update text
         self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
@@ -78,6 +79,26 @@ class ShopButton():
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
         self.owned_text_rect = self.owned_text.get_rect()
         
+        #create correct creature
+        if self.creature_type == 'swimming':
+            return creature.SwimmingCreature(self.image_path)
+        elif self.creature_type == 'walking':
+            return creature.WalkingCreature(self.image_path)
+        else:
+            return creature.StationaryCreature(self.image_path)
+    
+    #for use loading data
+    def add(self):
+        #update cost
+        self.cost = math.ceil(self.base_cost * math.pow(1.15,self.owned))
+
+        #update text
+        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
+        self.cost_text_rect = self.cost_text.get_rect()
+
+        self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
+        self.owned_text_rect = self.owned_text.get_rect()
+
         #create correct creature
         if self.creature_type == 'swimming':
             return creature.SwimmingCreature(self.image_path)

@@ -1,4 +1,4 @@
-import pygame,shop,shopButton,player,math,util,menu,borderedRect
+import pygame,shop,shopButton,player,math,util,menu,borderedRect,save
 
 pygame.init()
 
@@ -131,7 +131,48 @@ def update_score():
     global score_text_rect
     score_text_rect = score_text.get_rect()
     update_unlocks()
+##################################################################### LOADING DATA
+def load_purchases(player_data):
+    for button in main_shop.all_buttons:
+        #load
+        button.owned = player_data["bought"][f"{button.name}"]
 
+        #create all bought creatures
+        for n in range(0,button.owned):
+            player_ob.bought.add(button.add())
+
+def load_unlocks(player_data):
+    main_shop.unlocked_buttons.clear()
+    for button in main_shop.all_buttons:
+        #load save
+        button.unlocked = player_data["unlocked"][f"{button.name}"]
+
+        #unlock button if already unlocked
+        if button.unlocked == True:
+            main_shop.unlocked_buttons.append(button)
+            update_buttons()
+            position_buttons()
+
+def load_player(player_data):
+    player_ob.score = player_data["score"]
+    player_ob.total_score = player_data["total_score"]
+    player_ob.sps = player_data["sps"]
+
+    #fix sps text
+    global sps_text
+    sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
+    global sps_text_rect
+    sps_text_rect = sps_text.get_rect()
+    sps_text_rect.top = score_text_rect.bottom
+
+def load_data(player_data):
+    if player_data == False:
+        pass
+    else:
+        load_purchases(player_data)
+        load_unlocks(player_data)
+        load_player(player_data)
+#####################################################################
 def update_unlocks():
     for button in main_shop.all_buttons:
         if button.check_unlock(player_ob.total_score):
@@ -257,7 +298,8 @@ clock = pygame.time.Clock()
 #update player score every 1 second
 pygame.time.set_timer(UPDATE_SCORE,1000)
 
-#update screen and set running to true
+#update screen, load data and set running to true
+load_data(save.load_data())
 render()
 update_score()
 running = True
@@ -271,29 +313,32 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
-            if main_menu.exit_button_rect.collidepoint(event.pos) and main_menu.enabled:
-                running = False
-            if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
-                move_shop("UP")
-                break
-            if bottom_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
-                move_shop("DOWN")
-                break
-            if close_shop_button_rect.collidepoint(event.pos):
-                toggle_shop()
-                break
-            for owned_creature in player_ob.bought:
-                if owned_creature.rect.collidepoint(event.pos):
-                    click_creature()
-                    break
-            for button in main_shop.current_buttons:
-                if button.button_rect.collidepoint(event.pos) and main_shop.minimize == False:
-                    #if player_ob.score > button.cost: #comment out for free shop creatures
-                        buy(button)
-                        break
             if menu_button_rect.collidepoint(event.pos):
-                    main_menu.enabled = not main_menu.enabled
-                    break            
+                        main_menu.enabled = not main_menu.enabled
+                        break   
+            if main_menu.enabled:
+                if main_menu.exit_button_rect.collidepoint(event.pos):
+                    save.save_data(player_ob,main_shop)
+                    running = False   
+            else:
+                if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                    move_shop("UP")
+                    break
+                if bottom_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                    move_shop("DOWN")
+                    break
+                if close_shop_button_rect.collidepoint(event.pos):
+                    toggle_shop()
+                    break
+                for owned_creature in player_ob.bought:
+                    if owned_creature.rect.collidepoint(event.pos):
+                        click_creature()
+                        break
+                for button in main_shop.current_buttons:
+                    if button.button_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                        #if player_ob.score > button.cost: #comment out for free shop creatures
+                            buy(button)
+                            break         
                     
     render()
     clock.tick(30)

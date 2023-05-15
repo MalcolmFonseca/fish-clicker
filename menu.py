@@ -16,7 +16,7 @@ class MainMenu(Menu):
         self.exit_button_rect = pygame.Rect(0,0,(util.window_size[0]/6)-util.window_size[0]/32,util.window_size[1]/16)
         self.exit_button_rect.centerx = self.menu_rect.border_rect.centerx
         self.exit_button_rect.bottom = self.menu_rect.border_rect.bottom - util.window_size[1]/28
-        self.exit_text = self.font.render('Exit Game',True,(0,0,0))
+        self.exit_text = self.font.render('Save and Exit',True,(0,0,0))
         self.exit_text_rect = self.exit_text.get_rect()
         self.exit_text_rect.center = self.exit_button_rect.center
 
@@ -25,5 +25,5 @@ class MainMenu(Menu):
         self.options_button_rect.centerx = self.menu_rect.border_rect.centerx
         self.options_button_rect.bottom = self.exit_button_rect.top - util.window_size[1]/28
         self.options_text = self.font.render('Options',True,(0,0,0))
-        self.options_text_rect = self.exit_text.get_rect()
+        self.options_text_rect = self.options_text.get_rect()
         self.options_text_rect.center = self.options_button_rect.center
