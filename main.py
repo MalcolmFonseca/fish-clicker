@@ -321,15 +321,6 @@ while running:
                     save.save_data(player_ob,main_shop)
                     running = False   
             else:
-                if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
-                    move_shop("UP")
-                    break
-                if bottom_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
-                    move_shop("DOWN")
-                    break
-                if close_shop_button_rect.collidepoint(event.pos):
-                    toggle_shop()
-                    break
                 for owned_creature in player_ob.bought:
                     if owned_creature.rect.collidepoint(event.pos):
                         click_creature()
@@ -339,7 +330,15 @@ while running:
                         #if player_ob.score > button.cost: #comment out for free shop creatures
                             buy(button)
                             break         
-                    
+            if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                move_shop("UP")
+                break
+            if bottom_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                move_shop("DOWN")
+                break
+            if close_shop_button_rect.collidepoint(event.pos):
+                toggle_shop()
+                break        
     render()
     clock.tick(30)
 
