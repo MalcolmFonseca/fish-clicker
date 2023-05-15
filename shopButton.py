@@ -1,8 +1,8 @@
-import pygame, creature, math, settings
+import pygame, creature, math, util
 
 class ShopButton():
     def __init__(self,name,cost,sps,creature_type,image_path,icon_image_path): #creature type is either walking, swimming or stationary
-        self.button_rect = pygame.Rect((settings.window_size[0]/3)*2+settings.window_size[0]/128,settings.window_size[0]/128,(settings.window_size[0]/3)-settings.window_size[0]/64,settings.window_size[1]/9)
+        self.button_rect = pygame.Rect((util.window_size[0]/3)*2+util.window_size[0]/128,util.window_size[0]/128,(util.window_size[0]/3)-util.window_size[0]/64,util.window_size[1]/9)
         self.name = name
         self.cost = cost
         self.sps = sps
@@ -18,46 +18,46 @@ class ShopButton():
         self.icon_image_rect = self.icon_image.get_rect()
 
         #fonts
-        self.big_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/16.6))
-        self.small_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/27))
+        self.big_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/16.6))
+        self.small_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/27))
 
         #create text
         self.name_text = self.big_font.render(f'{self.name}',True,(0,0,0))
         self.name_text_rect = self.name_text.get_rect()
 
-        self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(0,0,0))
+        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
         self.cost_text_rect = self.cost_text.get_rect()
 
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
         self.owned_text_rect = self.owned_text.get_rect()
 
-        self.sps_text = self.small_font.render(f'Cps: {settings.num_to_word(self.sps)}',True,(0,0,0))
+        self.sps_text = self.small_font.render(f'Cps: {util.num_to_word(self.sps)}',True,(0,0,0))
         self.sps_text_rect = self.sps_text.get_rect()
 
     def position(self, position_num):
         #position box
-        self.button_rect.top = position_num*settings.window_size[0]/105 + (position_num-1)*self.button_rect.height + settings.window_size[1]/24 #last term for arrow size
+        self.button_rect.top = position_num*util.window_size[0]/105 + (position_num-1)*self.button_rect.height + util.window_size[1]/24 #last term for arrow size
         #position image
-        self.icon_image_rect.left = self.button_rect.left + settings.window_size[0]/170
+        self.icon_image_rect.left = self.button_rect.left + util.window_size[0]/170
         self.icon_image_rect.centery = self.button_rect.centery
         #position name text
-        self.name_text_rect.left = self.icon_image_rect.right + settings.window_size[0]/128
+        self.name_text_rect.left = self.icon_image_rect.right + util.window_size[0]/128
         self.name_text_rect.top = self.icon_image_rect.top
         #position cost text
-        self.cost_text_rect.right = self.button_rect.right - settings.window_size[0]/128
+        self.cost_text_rect.right = self.button_rect.right - util.window_size[0]/128
         self.cost_text_rect.top = self.button_rect.top
         #position owned text
         self.owned_text_rect.right = self.cost_text_rect.right
-        self.owned_text_rect.centery = self.button_rect.centery + settings.window_size[1]/27
+        self.owned_text_rect.centery = self.button_rect.centery + util.window_size[1]/27
         #position sps text
         self.sps_text_rect.left = self.name_text_rect.left
         self.sps_text_rect.bottom = self.owned_text_rect.bottom
     
     def check_expensive(self,player_score):
         if player_score < self.cost:
-            self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(255,0,0))
+            self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(255,0,0))
         else:
-            self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(0,0,0))
+            self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
 
     def check_unlock(self,player_total_score):
         if player_total_score >= self.cost and self.unlocked == False:
@@ -72,7 +72,7 @@ class ShopButton():
         self.cost += math.ceil(self.cost*.15)
 
         #update text
-        self.cost_text = self.small_font.render(f'{settings.num_to_word(self.cost)}',True,(0,0,0))
+        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
         self.cost_text_rect = self.cost_text.get_rect()
 
         self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))

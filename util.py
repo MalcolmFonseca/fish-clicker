@@ -20,10 +20,6 @@ def init(current_size):
     }
 
 def num_to_word(num):
-    #return num if too small
-    if num < 1e6:
-        return num
-    
     current_key = 1
     ending = ""
     for key in numwords:

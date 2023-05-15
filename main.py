@@ -1,12 +1,11 @@
-import pygame,shop,shopButton,player,math,settings,menu,borderedRect
+import pygame,shop,shopButton,player,math,util,menu,borderedRect
 
 pygame.init()
 
 #set fullscreen
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
-#sync settings between classes
-settings.init(screen.get_size())
+util.init(screen.get_size())
 
 #load palette
 light_water_color = pygame.color.Color('#C0FDFB')
@@ -73,28 +72,28 @@ move_shop("UP")
 #create arrows for shop scrolling
 top_arrow = pygame.image.load('Assets/arrow.png')
 top_arrow_rect = top_arrow.get_rect()
-top_arrow_rect.center = [seaweed_btn.button_rect.centerx,settings.window_size[1]/31]
+top_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]/31]
 
 bottom_arrow = pygame.transform.rotate(top_arrow,180)
 bottom_arrow_rect = bottom_arrow.get_rect()
-bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,settings.window_size[1]-settings.window_size[1]/31]
+bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]-util.window_size[1]/31]
 
 #create text for shop
-title_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/22))
+title_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/22))
 shop_title_text = title_font.render('Shop',True,(0,0,0))
 shop_title_text_rect = shop_title_text.get_rect()
 shop_title_text_rect.left = seaweed_btn.button_rect.left
 shop_title_text_rect.top = 5
 
 #create text for score
-score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/13.5))
-score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
+score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/13.5))
+score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
 score_text_rect = score_text.get_rect()
-score_text_rect.centerx = settings.window_size[0]/3
+score_text_rect.centerx = util.window_size[0]/3
 
 #create text for sps
-sps_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(settings.window_size[1]/20))
-sps_text = sps_font.render(f'Cps: {settings.num_to_word(player_ob.sps)}',True,(0,0,0))
+sps_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/20))
+sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
 sps_text_rect = sps_text.get_rect()
 sps_text_rect.centerx = score_text_rect.centerx
 sps_text_rect.top = score_text_rect.bottom
@@ -105,19 +104,19 @@ open_shop_button_rect = open_shop_button_image.get_rect()
 close_shop_button_image = pygame.image.load('Assets/closeShop.png')
 close_shop_button_rect = close_shop_button_image.get_rect()
 #position each button
-open_shop_button_rect.right = settings.window_size[0] - settings.window_size[0]/128
-open_shop_button_rect.top = settings.window_size[1]/128
+open_shop_button_rect.right = util.window_size[0] - util.window_size[0]/128
+open_shop_button_rect.top = util.window_size[1]/128
 close_shop_button_rect.right = open_shop_button_rect.right
 close_shop_button_rect.top = open_shop_button_rect.top
 
 #create minimized shop box
-minimized_shop_rect = borderedRect.bordered_rect(close_shop_button_rect.left - settings.window_size[0]/64 - shop_title_text_rect.width,0,settings.window_size[0]-shop_title_text_rect.left,top_arrow_rect.height + settings.window_size[1]/90,settings.window_size[0]/384,brown_color,(0,0,0))
+minimized_shop_rect = borderedRect.bordered_rect(close_shop_button_rect.left - util.window_size[0]/64 - shop_title_text_rect.width,0,util.window_size[0]-shop_title_text_rect.left,top_arrow_rect.height + util.window_size[1]/90,util.window_size[0]/384,brown_color,(0,0,0))
 
 #create button for menu
 menu_button = pygame.image.load('Assets/menu.png')
 menu_button_rect = menu_button.get_rect()
-menu_button_rect.top = settings.window_size[1]/128
-menu_button_rect.left = settings.window_size[1]/128
+menu_button_rect.top = util.window_size[1]/128
+menu_button_rect.left = util.window_size[1]/128
 #create menus
 main_menu = menu.MainMenu()
 
@@ -128,7 +127,7 @@ def update_score():
     player_ob.total_score += player_ob.sps
     #remake text
     global score_text
-    score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     global score_text_rect
     score_text_rect = score_text.get_rect()
     update_unlocks()
@@ -146,9 +145,9 @@ def buy(button):
     player_ob.bought.add(button.buy())
     #update text immediately for more responsive gameplay
     global score_text
-    score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     global sps_text
-    sps_text = sps_font.render(f'Cps: {settings.num_to_word(player_ob.sps)}',True,(0,0,0))
+    sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
     position_buttons()
 
 def click_creature():
@@ -156,7 +155,7 @@ def click_creature():
     player_ob.total_score += 1
     #update text immediately for more responsive gameplay
     global score_text
-    score_text = score_font.render(f'Chum: {settings.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
+    score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
     #display effect to show user their clicks are working
     pygame.mouse.get_pos
 
@@ -166,7 +165,7 @@ def toggle_shop():
 
     #reposition text
     if main_shop.minimize:
-        shop_title_text_rect.right = close_shop_button_rect.left - settings.window_size[0]/128
+        shop_title_text_rect.right = close_shop_button_rect.left - util.window_size[0]/128
     else:
         shop_title_text_rect.left = seaweed_btn.button_rect.left
         
@@ -179,7 +178,7 @@ def render():
     #check if shop is minimized
     if main_shop.minimize:
         #position score text
-        score_text_rect.centerx = settings.window_size[0]/2
+        score_text_rect.centerx = util.window_size[0]/2
 
         #render minimized shop box
         pygame.draw.rect(screen,minimized_shop_rect.border_color,minimized_shop_rect.border_rect)
@@ -189,7 +188,7 @@ def render():
         screen.blit(open_shop_button_image,open_shop_button_rect)
     else:
         #position score text
-        score_text_rect.centerx = settings.window_size[0]/3
+        score_text_rect.centerx = util.window_size[0]/3
 
         #render shop box
         pygame.draw.rect(screen,main_shop.shop_rect.border_color,main_shop.shop_rect.border_rect)
