@@ -13,6 +13,11 @@ blue_color = pygame.color.Color('#B8E7E1')
 sand_color = pygame.color.Color('#FFE5AD')
 brown_color = pygame.color.Color('#D08C39')
 
+#load background
+background = pygame.image.load('Assets/background.png').convert()
+background = pygame.transform.scale(background,util.window_size)
+background_rect = background.get_rect()
+
 #create player object
 player_ob = player.Player()
 
@@ -248,7 +253,7 @@ def toggle_shop():
 #render method
 def render():
     #render backdrop
-    screen.fill(light_water_color)
+    screen.blit(background,background_rect)
 
     #check if shop is minimized
     if main_shop.minimize:
