@@ -3,7 +3,7 @@ import pygame,random,util
 class Creature(pygame.sprite.Sprite):
     def __init__(self,image_path):
         super().__init__()
-        self.image = pygame.image.load(image_path)
+        self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.bottom = util.window_size[1]
         self.rect.centerx = random.randrange(0,util.window_size[0])

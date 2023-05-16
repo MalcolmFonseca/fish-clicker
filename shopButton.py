@@ -15,7 +15,7 @@ class ShopButton():
         self.image_path = image_path
 
         self.icon_image_path = icon_image_path
-        self.icon_image = pygame.image.load(icon_image_path)
+        self.icon_image = pygame.image.load(icon_image_path).convert()
         self.icon_image_rect = self.icon_image.get_rect()
 
         #fonts

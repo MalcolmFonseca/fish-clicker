@@ -101,7 +101,7 @@ def position_buttons():
 move_shop("UP")
 
 #create arrows for shop scrolling
-top_arrow = pygame.image.load('Assets/arrow.png')
+top_arrow = pygame.image.load('Assets/arrow.png').convert_alpha()
 top_arrow_rect = top_arrow.get_rect()
 top_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]/31]
 
@@ -130,9 +130,9 @@ sps_text_rect.centerx = score_text_rect.centerx
 sps_text_rect.top = score_text_rect.bottom
 
 #create buttons for minimizing shop
-open_shop_button_image = pygame.image.load('Assets/openShop.png')
+open_shop_button_image = pygame.image.load('Assets/openShop.png').convert()
 open_shop_button_rect = open_shop_button_image.get_rect()
-close_shop_button_image = pygame.image.load('Assets/closeShop.png')
+close_shop_button_image = pygame.image.load('Assets/closeShop.png').convert()
 close_shop_button_rect = close_shop_button_image.get_rect()
 #position each button
 open_shop_button_rect.right = util.window_size[0] - util.window_size[0]/128
@@ -144,7 +144,7 @@ close_shop_button_rect.top = open_shop_button_rect.top
 minimized_shop_rect = borderedRect.bordered_rect(close_shop_button_rect.left - util.window_size[0]/64 - shop_title_text_rect.width,0,util.window_size[0]-shop_title_text_rect.left,top_arrow_rect.height + util.window_size[1]/90,util.window_size[0]/384,brown_color,(0,0,0))
 
 #create button for menu
-menu_button = pygame.image.load('Assets/menu.png')
+menu_button = pygame.image.load('Assets/menu.png').convert()
 menu_button_rect = menu_button.get_rect()
 menu_button_rect.top = util.window_size[1]/128
 menu_button_rect.left = util.window_size[1]/128
