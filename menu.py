@@ -2,7 +2,7 @@ import pygame, util, math, borderedRect
 
 class Menu():
     def __init__(self):
-        self.menu_rect = borderedRect.bordered_rect(0,0,util.window_size[0]/6,util.window_size[1]/2,util.window_size[0]/384,pygame.color.Color('#D08C39'),(0,0,0))
+        self.menu_rect = borderedRect.bordered_rect(0,0,util.window_size[0]/6,util.window_size[1]/4,util.window_size[0]/384,pygame.color.Color('#D08C39'),(0,0,0))
         self.enabled = False
 
 class MainMenu(Menu):

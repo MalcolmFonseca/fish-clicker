@@ -145,9 +145,6 @@ open_shop_button_rect.top = util.window_size[1]/128
 close_shop_button_rect.right = open_shop_button_rect.right
 close_shop_button_rect.top = open_shop_button_rect.top
 
-#create minimized shop box
-minimized_shop_rect = borderedRect.bordered_rect(close_shop_button_rect.left - util.window_size[0]/64 - shop_title_text_rect.width,0,util.window_size[0]-shop_title_text_rect.left,top_arrow_rect.height + util.window_size[1]/90,util.window_size[0]/384,brown_color,(0,0,0))
-
 #create button for menu
 menu_button = pygame.image.load('Assets/menu.png').convert()
 menu_button_rect = menu_button.get_rect()
@@ -260,10 +257,6 @@ def render():
         #position score text
         score_text_rect.centerx = util.window_size[0]/2
 
-        #render minimized shop box
-        pygame.draw.rect(screen,minimized_shop_rect.border_color,minimized_shop_rect.border_rect)
-        pygame.draw.rect(screen,minimized_shop_rect.inner_color,minimized_shop_rect.inner_rect)
-
         #render minimize button
         screen.blit(open_shop_button_image,open_shop_button_rect)
     else:
@@ -273,6 +266,9 @@ def render():
         #render shop box
         pygame.draw.rect(screen,main_shop.shop_rect.border_color,main_shop.shop_rect.border_rect)
         pygame.draw.rect(screen,main_shop.shop_rect.inner_color,main_shop.shop_rect.inner_rect)
+
+        #render shop title
+        screen.blit(shop_title_text,shop_title_text_rect)
     
         #render minimize button
         screen.blit(close_shop_button_image,close_shop_button_rect)
@@ -295,9 +291,6 @@ def render():
 
     #position sps text
     sps_text_rect.centerx = score_text_rect.centerx
-
-    #render shop title
-    screen.blit(shop_title_text,shop_title_text_rect)
 
     #render all owned creatures
     player_ob.bought.update()
