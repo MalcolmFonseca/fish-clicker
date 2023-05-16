@@ -21,9 +21,6 @@ background_rect = background.get_rect()
 #create player object
 player_ob = player.Player()
 
-#create main game shop
-main_shop = shop.Shop()
-
 #create dictionary storing pricing tiers for easier changes down the line
 #format cost,sps
 price_dict = {
@@ -55,6 +52,7 @@ price_keys = list(price_dict.keys())
 seaweed_btn = shopButton.ShopButton("Seaweed",price_keys[0],price_dict[price_keys[0]],'stationary','Assets/fishimages/seaweed.png','Assets/shopicons/seaweedShop.png')
 coral_btn = shopButton.ShopButton("Coral",price_keys[1],price_dict[price_keys[1]],'stationary','Assets/fishimages/coral.png','Assets/shopicons/coralShop.png')
 seaslug_btn = shopButton.ShopButton("Seaslug",price_keys[2],price_dict[price_keys[2]],'walking','Assets/fishimages/seaslug.png','Assets/shopicons/seaslugShop.png')
+seahorse_btn = shopButton.ShopButton("Sea Horse",price_keys[2],price_dict[price_keys[2]],'swimming','Assets/fishimages/seahorse.png','Assets/shopicons/seahorseShop.png')
 crab_btn = shopButton.ShopButton("Crab",price_keys[3],price_dict[price_keys[3]],'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
 angelfish_btn = shopButton.ShopButton("Angelfish",price_keys[4],price_dict[price_keys[4]],'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
 clownfish_btn = shopButton.ShopButton("Clownfish",price_keys[5],price_dict[price_keys[5]],'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
@@ -63,42 +61,30 @@ squid_btn = shopButton.ShopButton("Squid",price_keys[7],price_dict[price_keys[7]
 barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[8],price_dict[price_keys[8]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
 bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[9],price_dict[price_keys[9]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
-#add buttons to main_shop
-main_shop.all_buttons.append(seaweed_btn)
-main_shop.all_buttons.append(coral_btn)
-main_shop.all_buttons.append(seaslug_btn)
-main_shop.all_buttons.append(crab_btn)
-main_shop.all_buttons.append(angelfish_btn)
-main_shop.all_buttons.append(clownfish_btn)
-main_shop.all_buttons.append(cuttlefish_btn)
-main_shop.all_buttons.append(squid_btn)
-main_shop.all_buttons.append(barracuda_btn)
-main_shop.all_buttons.append(bluewhale_btn)
-
 #make function for scrolling through shop
 def move_shop(direction):
     if direction == "UP":
         #check if fully scrolled up
-        if main_shop.current_position != 0 :
-            main_shop.current_position -= 7
+        if util.main_shop.current_position != 0 :
+            util.main_shop.current_position -= 7
     elif direction == "DOWN":
         #check if fully scrolled down
-        if main_shop.current_position + 7 < len(main_shop.unlocked_buttons) :
-            main_shop.current_position += 7
+        if util.main_shop.current_position + 7 < len(util.main_shop.unlocked_buttons) :
+            util.main_shop.current_position += 7
     update_buttons()
     position_buttons()
 
 def update_buttons():
-    main_shop.current_buttons.clear()
-    for i in range(main_shop.current_position,main_shop.current_position + 7):
+    util.main_shop.current_buttons.clear()
+    for i in range(util.main_shop.current_position,util.main_shop.current_position + 7):
         try:
-            main_shop.current_buttons.append(main_shop.unlocked_buttons[i])
+            util.main_shop.current_buttons.append(util.main_shop.unlocked_buttons[i])
         except: #will stop adding buttons when no more are available
             break
 
 def position_buttons():
     position = 1
-    for button in main_shop.current_buttons:
+    for button in util.main_shop.current_buttons:
         button.position(position)
         position += 1
 
@@ -166,7 +152,7 @@ def update_score():
     update_unlocks()
 ##################################################################### LOADING DATA
 def load_purchases(player_data):
-    for button in main_shop.all_buttons:
+    for button in util.main_shop.all_buttons:
         #load
         button.owned = player_data["bought"][f"{button.name}"]
 
@@ -175,14 +161,14 @@ def load_purchases(player_data):
             player_ob.bought.add(button.add())
 
 def load_unlocks(player_data):
-    main_shop.unlocked_buttons.clear()
-    for button in main_shop.all_buttons:
+    util.main_shop.unlocked_buttons.clear()
+    for button in util.main_shop.all_buttons:
         #load save
         button.unlocked = player_data["unlocked"][f"{button.name}"]
 
         #unlock button if already unlocked
         if button.unlocked == True:
-            main_shop.unlocked_buttons.append(button)
+            util.main_shop.unlocked_buttons.append(button)
             update_buttons()
             position_buttons()
 
@@ -207,9 +193,9 @@ def load_data(player_data):
         load_player(player_data)
 #####################################################################
 def update_unlocks():
-    for button in main_shop.all_buttons:
+    for button in util.main_shop.all_buttons:
         if button.check_unlock(player_ob.total_score):
-            main_shop.unlocked_buttons.append(button)
+            util.main_shop.unlocked_buttons.append(button)
             update_buttons()
             position_buttons()
 
@@ -238,10 +224,10 @@ def click_creature():
 
 def toggle_shop():
     #simple invert so as to not have to write another if, too many as is
-    main_shop.minimize = not main_shop.minimize
+    util.main_shop.minimize = not util.main_shop.minimize
 
     #reposition text
-    if main_shop.minimize:
+    if util.main_shop.minimize:
         shop_title_text_rect.right = close_shop_button_rect.left - util.window_size[0]/128
     else:
         shop_title_text_rect.left = seaweed_btn.button_rect.left
@@ -253,7 +239,7 @@ def render():
     screen.blit(background,background_rect)
 
     #check if shop is minimized
-    if main_shop.minimize:
+    if util.main_shop.minimize:
         #position score text
         score_text_rect.centerx = util.window_size[0]/2
 
@@ -264,8 +250,8 @@ def render():
         score_text_rect.centerx = util.window_size[0]/3
 
         #render shop box
-        pygame.draw.rect(screen,main_shop.shop_rect.border_color,main_shop.shop_rect.border_rect)
-        pygame.draw.rect(screen,main_shop.shop_rect.inner_color,main_shop.shop_rect.inner_rect)
+        pygame.draw.rect(screen,util.main_shop.shop_rect.border_color,util.main_shop.shop_rect.border_rect)
+        pygame.draw.rect(screen,util.main_shop.shop_rect.inner_color,util.main_shop.shop_rect.inner_rect)
 
         #render shop title
         screen.blit(shop_title_text,shop_title_text_rect)
@@ -274,7 +260,7 @@ def render():
         screen.blit(close_shop_button_image,close_shop_button_rect)
 
         #render item buttons
-        for button in main_shop.current_buttons:
+        for button in util.main_shop.current_buttons:
             pygame.draw.rect(screen,sand_color,button.button_rect)
             #check if cost should be red
             button.check_expensive(player_ob.score)
@@ -347,22 +333,22 @@ while running:
                         break   
             if main_menu.enabled:
                 if main_menu.exit_button_rect.collidepoint(event.pos):
-                    save.save_data(player_ob,main_shop)
+                    save.save_data(player_ob,util.main_shop)
                     running = False   
             else:
                 for owned_creature in player_ob.bought:
                     if owned_creature.rect.collidepoint(event.pos):
                         click_creature()
                         break
-                for button in main_shop.current_buttons:
-                    if button.button_rect.collidepoint(event.pos) and main_shop.minimize == False:
+                for button in util.main_shop.current_buttons:
+                    if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                         #if player_ob.score > button.cost: #comment out for free shop creatures
                             buy(button)
                             break         
-            if top_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
+            if top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                 move_shop("UP")
                 break
-            if bottom_arrow_rect.collidepoint(event.pos) and main_shop.minimize == False:
+            if bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                 move_shop("DOWN")
                 break
             if close_shop_button_rect.collidepoint(event.pos):

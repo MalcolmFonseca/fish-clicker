@@ -1,4 +1,4 @@
-import math
+import shop,pygame
 
 def init(current_size):
     global window_size
@@ -18,6 +18,9 @@ def init(current_size):
         1e30:"Nonillion",
         1e33:"Decillion"
     }
+
+    global main_shop
+    main_shop = shop.Shop()
 
 def num_to_word(num):
     current_key = 1

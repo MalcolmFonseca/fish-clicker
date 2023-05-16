@@ -35,6 +35,9 @@ class ShopButton():
         self.sps_text = self.small_font.render(f'Cps: {util.num_to_word(self.sps)}',True,(0,0,0))
         self.sps_text_rect = self.sps_text.get_rect()
 
+        #add self to all_buttons in shop
+        util.main_shop.all_buttons.append(self)
+
     def position(self, position_num):
         #position box
         self.button_rect.top = position_num*util.window_size[0]/105 + (position_num-1)*self.button_rect.height + util.window_size[1]/24 #last term for arrow size
