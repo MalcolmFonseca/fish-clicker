@@ -19,22 +19,53 @@ player_ob = player.Player()
 #create main game shop
 main_shop = shop.Shop()
 
+#create dictionary storing pricing tiers for easier changes down the line
+#format cost,sps
+price_dict = {
+    15:.1,
+    100:1,
+    1_100:8,
+    12_000:47,
+    130_000:260,
+    1.4e6:1_400,
+    20e6:7_800,
+    330e6:44_000,
+    5.1e9:260_000,
+    75e9:1.6e6,
+    1e12:10e6,
+    14e12:65e6,
+    170e12:430e6,
+    2.1e15:2.9e9,
+    26e15:21e9,
+    310e15:150e9,
+    71e18:1.1e12,
+    12e21:8.3e12,
+    1.9e24:64e12,
+    540e27:510e12
+}
+
+price_keys = list(price_dict.keys())
+
 #create shop buttons
-seaweed_btn = shopButton.ShopButton("Seaweed",15,.1,'stationary','Assets/fishimages/seaweed.png','Assets/shopicons/seaweedShop.png')
-seaslug_btn = shopButton.ShopButton("Seaslug",100,1,'walking','Assets/fishimages/seaslug.png','Assets/shopicons/seaslugShop.png')
-crab_btn = shopButton.ShopButton("Crab",1_100,8,'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
-angelfish_btn = shopButton.ShopButton("Angelfish",12_000,47,'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
-clownfish_btn = shopButton.ShopButton("Clownfish",130_000,260,'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
-squid_btn = shopButton.ShopButton("Squid",1_400_000,1_400,'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
-barracuda_btn = shopButton.ShopButton("Barracuda",71e18,1.1e12,'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
-bluewhale_btn = shopButton.ShopButton("Blue Whale",540e24,510e12,'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
+seaweed_btn = shopButton.ShopButton("Seaweed",price_keys[0],price_dict[price_keys[0]],'stationary','Assets/fishimages/seaweed.png','Assets/shopicons/seaweedShop.png')
+coral_btn = shopButton.ShopButton("Coral",price_keys[1],price_dict[price_keys[1]],'stationary','Assets/fishimages/coral.png','Assets/shopicons/coralShop.png')
+seaslug_btn = shopButton.ShopButton("Seaslug",price_keys[2],price_dict[price_keys[2]],'walking','Assets/fishimages/seaslug.png','Assets/shopicons/seaslugShop.png')
+crab_btn = shopButton.ShopButton("Crab",price_keys[3],price_dict[price_keys[3]],'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
+angelfish_btn = shopButton.ShopButton("Angelfish",price_keys[4],price_dict[price_keys[4]],'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
+clownfish_btn = shopButton.ShopButton("Clownfish",price_keys[5],price_dict[price_keys[5]],'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
+cuttlefish_btn = shopButton.ShopButton("Cuttlefish",price_keys[6],price_dict[price_keys[6]],'swimming','Assets/fishimages/cuttlefish.png','Assets/shopicons/cuttlefishShop.png')
+squid_btn = shopButton.ShopButton("Squid",price_keys[7],price_dict[price_keys[7]],'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
+barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[8],price_dict[price_keys[8]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
+bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[9],price_dict[price_keys[9]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
 #add buttons to main_shop
 main_shop.all_buttons.append(seaweed_btn)
+main_shop.all_buttons.append(coral_btn)
 main_shop.all_buttons.append(seaslug_btn)
 main_shop.all_buttons.append(crab_btn)
 main_shop.all_buttons.append(angelfish_btn)
 main_shop.all_buttons.append(clownfish_btn)
+main_shop.all_buttons.append(cuttlefish_btn)
 main_shop.all_buttons.append(squid_btn)
 main_shop.all_buttons.append(barracuda_btn)
 main_shop.all_buttons.append(bluewhale_btn)
