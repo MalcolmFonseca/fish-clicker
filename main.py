@@ -219,8 +219,6 @@ def click_creature():
     #update text immediately for more responsive gameplay
     global score_text
     score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
-    #display effect to show user their clicks are working
-    pygame.mouse.get_pos
 
 def toggle_shop():
     #simple invert so as to not have to write another if, too many as is
