@@ -278,7 +278,9 @@ def render():
 
     #render all owned creatures
     player_ob.bought.update()
-    player_ob.bought.draw(screen)
+    for creature in player_ob.bought:
+        if creature.dead == False:
+            screen.blit(creature.image,creature.rect)
 
     #render score and sps text
     screen.blit(score_text,score_text_rect)

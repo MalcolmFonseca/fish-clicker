@@ -10,8 +10,8 @@ class Creature(pygame.sprite.Sprite):
         self.rect.bottom = util.window_size[1]
         self.rect.centerx = random.randrange(0,util.window_size[0])
         self.speed = 0
-        self.shrink_image = pygame.transform.scale(self.image,(.9*self.rect.width,.9*self.rect.height))
-        self.shrink_image_flipped = pygame.transform.flip(self.shrink_image,True,False)
+        self.dead = False
+        self.dead_timer = 0
 
     def update(self):
         #randomly change direction
@@ -25,15 +25,10 @@ class Creature(pygame.sprite.Sprite):
             self.image = self.base_image
 
         #animation for clicking
+        self.dead = False  
         mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):
-            if pygame.mouse.get_pressed()[0]:
-                if self.speed < 0:
-                    self.image = self.shrink_image_flipped
-                else:
-                    self.image = self.shrink_image
-            else:
-                pass   
+        if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+                self.dead = True
 
         #keep creature in bounds
         if self.rect.left < 0:
@@ -57,13 +52,10 @@ class StationaryCreature(Creature):
     #override update method to prevent movement
     def update(self):
         #animation for clicking
-        self.image = self.base_image 
+        self.dead = False  
         mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):
-            if pygame.mouse.get_pressed()[0]:    
-                self.image = self.shrink_image
-            else:
-                pass  
+        if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+                self.dead = True 
 
 class SwimmingCreature(Creature):
     def __init__(self, image_path):
