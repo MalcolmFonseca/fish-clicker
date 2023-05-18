@@ -56,7 +56,6 @@ class Creature(pygame.sprite.Sprite):
 class StationaryCreature(Creature):
     def __init__(self, image_path):
         super().__init__(image_path)
-        self.rect.bottom = util.window_size[1] + util.window_size[1]/100
 
     #override update method to prevent movement
     def update(self):
