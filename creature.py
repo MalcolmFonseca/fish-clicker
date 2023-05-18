@@ -24,11 +24,15 @@ class Creature(pygame.sprite.Sprite):
         else:
             self.image = self.base_image
 
-        #animation for clicking
-        self.dead = False  
+        #animation for slicing
+        if self.dead_timer == 0:
+            self.dead = False
+        else:
+            self.dead_timer -= 1
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
                 self.dead = True
+                self.dead_timer = 100
 
         #keep creature in bounds
         if self.rect.left < 0:
@@ -51,11 +55,15 @@ class StationaryCreature(Creature):
 
     #override update method to prevent movement
     def update(self):
-        #animation for clicking
-        self.dead = False  
+        #animation for slicing
+        if self.dead_timer == 0:
+            self.dead = False
+        else:
+            self.dead_timer -= 1  
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
                 self.dead = True 
+                self.dead_timer = 100
 
 class SwimmingCreature(Creature):
     def __init__(self, image_path):

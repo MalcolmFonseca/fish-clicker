@@ -154,8 +154,10 @@ def update_score():
 def load_purchases(player_data):
     for button in util.main_shop.all_buttons:
         #load
-        button.owned = player_data["bought"][f"{button.name}"]
-
+        try:
+            button.owned = player_data["bought"][f"{button.name}"]
+        except:
+            button.owned = 0
         #create all bought creatures
         for n in range(0,button.owned):
             player_ob.bought.add(button.add())
@@ -164,7 +166,10 @@ def load_unlocks(player_data):
     util.main_shop.unlocked_buttons.clear()
     for button in util.main_shop.all_buttons:
         #load save
-        button.unlocked = player_data["unlocked"][f"{button.name}"]
+        try:
+            button.unlocked = player_data["unlocked"][f"{button.name}"]
+        except:
+            button.unlocked = False
 
         #unlock button if already unlocked
         if button.unlocked == True:
@@ -173,9 +178,18 @@ def load_unlocks(player_data):
             position_buttons()
 
 def load_player(player_data):
-    player_ob.score = player_data["score"]
-    player_ob.total_score = player_data["total_score"]
-    player_ob.sps = player_data["sps"]
+    try:
+        player_ob.score = player_data["score"]
+    except:
+        player_ob.score = 15
+    try:
+        player_ob.total_score = player_data["total_score"]
+    except:
+        player_ob.total_score = 15
+    try:
+        player_ob.sps = player_data["sps"]
+    except:
+        player_ob.sps = .1
 
     #fix sps text
     global sps_text
@@ -212,13 +226,6 @@ def buy(button):
     sps_text_rect = sps_text.get_rect()
     sps_text_rect.top = score_text_rect.bottom
     position_buttons()
-
-def click_creature():
-    player_ob.score += 1
-    player_ob.total_score += 1
-    #update text immediately for more responsive gameplay
-    global score_text
-    score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
 
 def toggle_shop():
     #simple invert so as to not have to write another if, too many as is
@@ -336,10 +343,6 @@ while running:
                     save.save_data(player_ob,util.main_shop)
                     running = False   
             else:
-                for owned_creature in player_ob.bought:
-                    if owned_creature.rect.collidepoint(event.pos):
-                        click_creature()
-                        break
                 for button in util.main_shop.current_buttons:
                     if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                         #if player_ob.score > button.cost: #comment out for free shop creatures
