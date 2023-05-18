@@ -1,8 +1,11 @@
-import shop,pygame
+import shop,pygame,gore
 
-def init(current_size):
+def init(current_screen):
+    #screen
+    global screen 
+    screen = current_screen
     global window_size
-    window_size = current_size
+    window_size = screen.get_size()
 
     #dict for num_to_word function
     global numwords
@@ -21,6 +24,11 @@ def init(current_size):
 
     global main_shop
     main_shop = shop.Shop()
+
+    #gore
+    global gore_ob
+    gore_ob = gore.Gore()
+    
 
 def num_to_word(num):
     current_key = 1

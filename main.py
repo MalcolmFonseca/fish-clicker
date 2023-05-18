@@ -5,7 +5,7 @@ pygame.init()
 #set fullscreen
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
-util.init(screen.get_size())
+util.init(screen)
 
 #load palette
 light_water_color = pygame.color.Color('#C0FDFB')
@@ -288,6 +288,15 @@ def render():
     for creature in player_ob.bought:
         if creature.dead == False:
             screen.blit(creature.image,creature.rect)
+
+    #render gore
+    for group in util.gore_ob.gore_list:
+        if pygame.sprite in group == False:
+            util.gore_ob.gore_list.remove(group)
+            continue
+        group.update()
+        for blood in group:
+            pygame.draw.rect(screen,(255,0,0),blood.rect)
 
     #render score and sps text
     screen.blit(score_text,score_text_rect)
