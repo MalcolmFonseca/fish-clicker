@@ -1,4 +1,4 @@
-import pygame,shop,shopButton,player,math,util,menu,borderedRect,save
+import pygame,shopButton,math,util,menu,save
 
 pygame.init()
 
@@ -19,7 +19,7 @@ background = pygame.transform.scale(background,util.window_size)
 background_rect = background.get_rect()
 
 #create dictionary storing pricing tiers for easier changes down the line
-#format cost,sps
+#format is cost:sps
 price_dict = {
     15:.1,
     100:1,
@@ -158,14 +158,9 @@ def load_unlocks(player_data):
 def load_player(player_data):
     try:
         util.player_ob.score = player_data["score"]
-    except:
-        pass
-    try:
         util.player_ob.total_score = player_data["total_score"]
-    except:
-        pass
-    try:
         util.player_ob.sps = player_data["sps"]
+        util.player_ob.kills = player_data["kills"]
     except:
         pass
 

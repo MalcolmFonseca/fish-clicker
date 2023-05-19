@@ -23,6 +23,7 @@ def save_data(player_ob,shop):
         "score": player_ob.score,
         "total_score": player_ob.total_score,
         "sps": player_ob.sps,
+        "kills": player_ob.kills,
         "bought": count_bought(shop),
         "unlocked": check_unlocked(shop)
     }

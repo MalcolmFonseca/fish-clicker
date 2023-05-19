@@ -1,4 +1,4 @@
-import pygame, util, random
+import pygame, random
 
 class Gore():
     def __init__(self):

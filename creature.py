@@ -50,9 +50,10 @@ class Creature(pygame.sprite.Sprite):
         self.dead = True
         util.gore_ob.splatter(self.rect.center)
         self.dead_timer = 200
+        util.player_ob.add_score(1)
+        util.player_ob.kills += 1
 
             
-
 class StationaryCreature(Creature):
     def __init__(self, image_path):
         super().__init__(image_path)

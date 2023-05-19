@@ -1,4 +1,4 @@
-import shop,pygame,gore,player
+import shop,gore,player
 
 def init(current_screen):
     #screen
