@@ -1,4 +1,4 @@
-import pygame,shopButton,math,util,menu,save
+import pygame,shopButton,math,util,menu,save,background
 
 pygame.init()
 
@@ -6,17 +6,13 @@ pygame.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 util.init(screen)
+background.init()
 
 #load palette
 light_water_color = pygame.color.Color('#C0FDFB')
 blue_color = pygame.color.Color('#B8E7E1')
 sand_color = pygame.color.Color('#FFE5AD')
 brown_color = pygame.color.Color('#D08C39')
-
-#load background
-background = pygame.image.load('Assets/background.png').convert()
-background = pygame.transform.scale(background,util.window_size)
-background_rect = background.get_rect()
 
 #create dictionary storing pricing tiers for easier changes down the line
 #format is cost:sps
@@ -198,7 +194,7 @@ def toggle_shop():
 #render method
 def render():
     #render backdrop
-    screen.blit(background,background_rect)
+    screen.blit(background.image,background.rect)
 
     #check if shop is minimized
     if util.main_shop.minimize:
