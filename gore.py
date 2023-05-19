@@ -18,7 +18,7 @@ class Blood(pygame.sprite.Sprite):
         self.rect = pygame.Rect(0,0,4,4)
         self.rect.center = pos
         self.speed = [10*(random.randint(0,20)/10-1),10*(random.randint(0,20)/10-1)]
-        self.timer = 20
+        self.timer = random.randint(15,25)
 
     def update(self):
         self.speed[1] += .5

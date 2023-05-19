@@ -18,9 +18,6 @@ background = pygame.image.load('Assets/background.png').convert()
 background = pygame.transform.scale(background,util.window_size)
 background_rect = background.get_rect()
 
-#create player object
-player_ob = player.Player()
-
 #create dictionary storing pricing tiers for easier changes down the line
 #format cost,sps
 price_dict = {
@@ -52,14 +49,14 @@ price_keys = list(price_dict.keys())
 seaweed_btn = shopButton.ShopButton("Seaweed",price_keys[0],price_dict[price_keys[0]],'stationary','Assets/fishimages/seaweed.png','Assets/shopicons/seaweedShop.png')
 coral_btn = shopButton.ShopButton("Coral",price_keys[1],price_dict[price_keys[1]],'stationary','Assets/fishimages/coral.png','Assets/shopicons/coralShop.png')
 seaslug_btn = shopButton.ShopButton("Seaslug",price_keys[2],price_dict[price_keys[2]],'walking','Assets/fishimages/seaslug.png','Assets/shopicons/seaslugShop.png')
-seahorse_btn = shopButton.ShopButton("Sea Horse",price_keys[2],price_dict[price_keys[2]],'swimming','Assets/fishimages/seahorse.png','Assets/shopicons/seahorseShop.png')
-crab_btn = shopButton.ShopButton("Crab",price_keys[3],price_dict[price_keys[3]],'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
-angelfish_btn = shopButton.ShopButton("Angelfish",price_keys[4],price_dict[price_keys[4]],'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
-clownfish_btn = shopButton.ShopButton("Clownfish",price_keys[5],price_dict[price_keys[5]],'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
-cuttlefish_btn = shopButton.ShopButton("Cuttlefish",price_keys[6],price_dict[price_keys[6]],'swimming','Assets/fishimages/cuttlefish.png','Assets/shopicons/cuttlefishShop.png')
-squid_btn = shopButton.ShopButton("Squid",price_keys[7],price_dict[price_keys[7]],'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
-barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[8],price_dict[price_keys[8]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
-bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[9],price_dict[price_keys[9]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
+seahorse_btn = shopButton.ShopButton("Sea Horse",price_keys[3],price_dict[price_keys[3]],'swimming','Assets/fishimages/seahorse.png','Assets/shopicons/seahorseShop.png')
+crab_btn = shopButton.ShopButton("Crab",price_keys[4],price_dict[price_keys[4]],'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
+angelfish_btn = shopButton.ShopButton("Angelfish",price_keys[5],price_dict[price_keys[5]],'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
+clownfish_btn = shopButton.ShopButton("Clownfish",price_keys[6],price_dict[price_keys[6]],'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
+cuttlefish_btn = shopButton.ShopButton("Cuttlefish",price_keys[7],price_dict[price_keys[7]],'swimming','Assets/fishimages/cuttlefish.png','Assets/shopicons/cuttlefishShop.png')
+squid_btn = shopButton.ShopButton("Squid",price_keys[8],price_dict[price_keys[8]],'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
+barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[9],price_dict[price_keys[9]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
+bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[10],price_dict[price_keys[10]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
 #make function for scrolling through shop
 def move_shop(direction):
@@ -107,19 +104,6 @@ shop_title_text_rect = shop_title_text.get_rect()
 shop_title_text_rect.left = seaweed_btn.button_rect.left
 shop_title_text_rect.top = 5
 
-#create text for score
-score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/13.5))
-score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
-score_text_rect = score_text.get_rect()
-score_text_rect.centerx = util.window_size[0]/3
-
-#create text for sps
-sps_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/20))
-sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
-sps_text_rect = sps_text.get_rect()
-sps_text_rect.centerx = score_text_rect.centerx
-sps_text_rect.top = score_text_rect.bottom
-
 #create buttons for minimizing shop
 open_shop_button_image = pygame.image.load('Assets/openShop.png').convert()
 open_shop_button_rect = open_shop_button_image.get_rect()
@@ -142,13 +126,7 @@ main_menu = menu.MainMenu()
 #function and event object to update score every 1 second
 UPDATE_SCORE = pygame.USEREVENT +1
 def update_score():
-    player_ob.score += player_ob.sps
-    player_ob.total_score += player_ob.sps
-    #remake text
-    global score_text
-    score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
-    global score_text_rect
-    score_text_rect = score_text.get_rect()
+    util.player_ob.add_score(util.player_ob.sps)
     update_unlocks()
 ##################################################################### LOADING DATA
 def load_purchases(player_data):
@@ -160,7 +138,7 @@ def load_purchases(player_data):
             button.owned = 0
         #create all bought creatures
         for n in range(0,button.owned):
-            player_ob.bought.add(button.add())
+            util.player_ob.bought.add(button.add())
 
 def load_unlocks(player_data):
     util.main_shop.unlocked_buttons.clear()
@@ -179,24 +157,17 @@ def load_unlocks(player_data):
 
 def load_player(player_data):
     try:
-        player_ob.score = player_data["score"]
+        util.player_ob.score = player_data["score"]
     except:
-        player_ob.score = 15
+        pass
     try:
-        player_ob.total_score = player_data["total_score"]
+        util.player_ob.total_score = player_data["total_score"]
     except:
-        player_ob.total_score = 15
+        pass
     try:
-        player_ob.sps = player_data["sps"]
+        util.player_ob.sps = player_data["sps"]
     except:
-        player_ob.sps = .1
-
-    #fix sps text
-    global sps_text
-    sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
-    global sps_text_rect
-    sps_text_rect = sps_text.get_rect()
-    sps_text_rect.top = score_text_rect.bottom
+        pass
 
 def load_data(player_data):
     if player_data == False:
@@ -208,23 +179,15 @@ def load_data(player_data):
 #####################################################################
 def update_unlocks():
     for button in util.main_shop.all_buttons:
-        if button.check_unlock(player_ob.total_score):
+        if button.check_unlock():
             util.main_shop.unlocked_buttons.append(button)
             update_buttons()
             position_buttons()
 
 def buy(button):
-    player_ob.score -= button.cost
-    player_ob.sps += button.sps
-    player_ob.bought.add(button.buy())
-    #update text immediately for more responsive gameplay
-    global score_text
-    score_text = score_font.render(f'Chum: {util.num_to_word(math.trunc(player_ob.score))}',True,(0,0,0))
-    global sps_text
-    sps_text = sps_font.render(f'Cps: {util.num_to_word(player_ob.sps)}',True,(0,0,0))
-    global sps_text_rect
-    sps_text_rect = sps_text.get_rect()
-    sps_text_rect.top = score_text_rect.bottom
+    util.player_ob.add_score(-button.cost)
+    util.player_ob.add_sps(button.sps)
+    util.player_ob.bought.add(button.buy())
     position_buttons()
 
 def toggle_shop():
@@ -236,7 +199,6 @@ def toggle_shop():
         shop_title_text_rect.right = close_shop_button_rect.left - util.window_size[0]/128
     else:
         shop_title_text_rect.left = seaweed_btn.button_rect.left
-        
 
 #render method
 def render():
@@ -246,13 +208,13 @@ def render():
     #check if shop is minimized
     if util.main_shop.minimize:
         #position score text
-        score_text_rect.centerx = util.window_size[0]/2
+        util.player_ob.score_text_rect.centerx = util.window_size[0]/2
 
         #render minimize button
         screen.blit(open_shop_button_image,open_shop_button_rect)
     else:
         #position score text
-        score_text_rect.centerx = util.window_size[0]/3
+        util.player_ob.score_text_rect.centerx = util.window_size[0]/3
 
         #render shop box
         pygame.draw.rect(screen,util.main_shop.shop_rect.border_color,util.main_shop.shop_rect.border_rect)
@@ -268,7 +230,7 @@ def render():
         for button in util.main_shop.current_buttons:
             pygame.draw.rect(screen,sand_color,button.button_rect)
             #check if cost should be red
-            button.check_expensive(player_ob.score)
+            button.check_expensive()
 
             screen.blit(button.icon_image,button.icon_image_rect)
             screen.blit(button.name_text,button.name_text_rect)
@@ -281,11 +243,11 @@ def render():
         screen.blit(bottom_arrow,bottom_arrow_rect)
 
     #position sps text
-    sps_text_rect.centerx = score_text_rect.centerx
+    util.player_ob.sps_text_rect.centerx = util.player_ob.score_text_rect.centerx
 
     #render all owned creatures
-    player_ob.bought.update()
-    for creature in player_ob.bought:
+    util.player_ob.bought.update()
+    for creature in util.player_ob.bought:
         if creature.dead == False:
             screen.blit(creature.image,creature.rect)
 
@@ -296,11 +258,11 @@ def render():
             continue
         group.update()
         for blood in group:
-            pygame.draw.rect(screen,(255,0,0),blood.rect)
+            pygame.draw.rect(screen,'#D40404',blood.rect)
 
     #render score and sps text
-    screen.blit(score_text,score_text_rect)
-    screen.blit(sps_text,sps_text_rect)
+    screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
+    screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
 
     #render menu if any
     render_menu()
@@ -349,12 +311,12 @@ while running:
                         break   
             if main_menu.enabled:
                 if main_menu.exit_button_rect.collidepoint(event.pos):
-                    save.save_data(player_ob,util.main_shop)
+                    save.save_data(util.player_ob,util.main_shop)
                     running = False   
             else:
                 for button in util.main_shop.current_buttons:
                     if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                        #if player_ob.score > button.cost: #comment out for free shop creatures
+                        #if util.player_ob.score > button.cost: #comment out for free shop creatures
                             buy(button)
                             break         
             if top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:

@@ -1,4 +1,4 @@
-import shop,pygame,gore
+import shop,pygame,gore,player
 
 def init(current_screen):
     #screen
@@ -21,6 +21,10 @@ def init(current_screen):
         1e30:"Nonillion",
         1e33:"Decillion"
     }
+
+    #player
+    global player_ob
+    player_ob = player.Player()
 
     global main_shop
     main_shop = shop.Shop()

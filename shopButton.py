@@ -57,14 +57,14 @@ class ShopButton():
         self.sps_text_rect.left = self.name_text_rect.left
         self.sps_text_rect.bottom = self.owned_text_rect.bottom
     
-    def check_expensive(self,player_score):
-        if player_score < self.cost:
+    def check_expensive(self):
+        if util.player_ob.score < self.cost:
             self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(255,0,0))
         else:
             self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
 
-    def check_unlock(self,player_total_score):
-        if player_total_score >= self.cost and self.unlocked == False:
+    def check_unlock(self):
+        if util.player_ob.total_score >= self.cost and self.unlocked == False:
             self.unlocked = True
             return True
         else:
