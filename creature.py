@@ -48,7 +48,10 @@ class Creature(pygame.sprite.Sprite):
 
     def die(self):
         self.dead = True
-        util.gore_ob.splatter(self.rect.center)
+        if self.rect.width > 200:
+            util.gore_ob.splatter(self.rect.center,size = 15)
+        else: 
+            util.gore_ob.splatter(self.rect.center)
         self.dead_timer = 200
         util.player_ob.add_score(1)
         util.player_ob.kills += 1
