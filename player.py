@@ -25,7 +25,11 @@ class Player():
             self.total_score += change
         self.score_text = self.score_font.render(f'Chum: {util.num_to_word(math.trunc(self.score))}',True,(0,0,0))
         self.score_text_rect = self.score_text.get_rect()
-        self.score_text_rect.centerx = util.window_size[0]/3
+        #position score text
+        if util.main_shop.minimize:
+            self.score_text_rect.centerx = util.window_size[0]/2
+        else:
+            self.score_text_rect.centerx = util.window_size[0]/3
     
     def add_sps(self,change):
         self.sps += change

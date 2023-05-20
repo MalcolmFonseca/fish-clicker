@@ -286,6 +286,7 @@ pygame.time.set_timer(UPDATE_SCORE,1000)
 load_data(save.load_data())
 render()
 update_score()
+background.update()
 running = True
 #gameloop
 while running:
