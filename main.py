@@ -84,21 +84,10 @@ def position_buttons():
 #set current buttons
 move_shop("UP")
 
-#create arrows for shop scrolling
-top_arrow = pygame.image.load('Assets/arrow.png').convert_alpha()
-top_arrow_rect = top_arrow.get_rect()
-top_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]/31]
-
-bottom_arrow = pygame.transform.rotate(top_arrow,180)
-bottom_arrow_rect = bottom_arrow.get_rect()
-bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]-util.window_size[1]/31]
-
-#create text for shop
-title_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/22))
-shop_title_text = title_font.render('Shop',True,(0,0,0))
-shop_title_text_rect = shop_title_text.get_rect()
-shop_title_text_rect.left = seaweed_btn.button_rect.left
-shop_title_text_rect.top = 5
+#position shop buttons
+util.main_shop.title_text_rect.left = seaweed_btn.button_rect.left
+util.main_shop.top_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]/31]
+util.main_shop.bottom_arrow_rect.center = [seaweed_btn.button_rect.centerx,util.window_size[1]-util.window_size[1]/31]
 
 #create buttons for minimizing shop
 open_shop_button_image = pygame.image.load('Assets/openShop.png').convert()
@@ -187,51 +176,14 @@ def toggle_shop():
 
     #reposition text
     if util.main_shop.minimize:
-        shop_title_text_rect.right = close_shop_button_rect.left - util.window_size[0]/128
+        util.main_shop.title_text_rect.right = close_shop_button_rect.left - util.window_size[0]/128
     else:
-        shop_title_text_rect.left = seaweed_btn.button_rect.left
+        util.main_shop.title_text_rect.left = seaweed_btn.button_rect.left
 
 #render method
 def render():
     #render backdrop
     screen.blit(background.image,background.rect)
-
-    #check if shop is minimized
-    if util.main_shop.minimize:
-        #position score text
-        util.player_ob.score_text_rect.centerx = util.window_size[0]/2
-
-        #render minimize button
-        screen.blit(open_shop_button_image,open_shop_button_rect)
-    else:
-        #position score text
-        util.player_ob.score_text_rect.centerx = util.window_size[0]/3
-
-        #render shop box
-        pygame.draw.rect(screen,util.main_shop.shop_rect.border_color,util.main_shop.shop_rect.border_rect)
-        pygame.draw.rect(screen,util.main_shop.shop_rect.inner_color,util.main_shop.shop_rect.inner_rect)
-
-        #render shop title
-        screen.blit(shop_title_text,shop_title_text_rect)
-    
-        #render minimize button
-        screen.blit(close_shop_button_image,close_shop_button_rect)
-
-        #render item buttons
-        for button in util.main_shop.current_buttons:
-            pygame.draw.rect(screen,sand_color,button.button_rect)
-            #check if cost should be red
-            button.check_expensive()
-
-            screen.blit(button.icon_image,button.icon_image_rect)
-            screen.blit(button.name_text,button.name_text_rect)
-            screen.blit(button.cost_text,button.cost_text_rect)
-            screen.blit(button.owned_text,button.owned_text_rect)
-            screen.blit(button.sps_text,button.sps_text_rect)
-        
-        #render arrows
-        screen.blit(top_arrow,top_arrow_rect)
-        screen.blit(bottom_arrow,bottom_arrow_rect)
 
     #position sps text
     util.player_ob.sps_text_rect.centerx = util.player_ob.score_text_rect.centerx
@@ -260,6 +212,21 @@ def render():
 
     #render menu button
     screen.blit(menu_button,menu_button_rect)
+    #check if shop is minimized
+    if util.main_shop.minimize:
+        #position score text
+        util.player_ob.score_text_rect.centerx = util.window_size[0]/2
+
+        #render maximize button
+        screen.blit(open_shop_button_image,open_shop_button_rect)
+    else:
+        #position score text
+        util.player_ob.score_text_rect.centerx = util.window_size[0]/3
+
+        util.main_shop.render()
+    
+        #render minimize button
+        screen.blit(close_shop_button_image,close_shop_button_rect)
 
     pygame.display.flip()
 
@@ -311,10 +278,10 @@ while running:
                         #if util.player_ob.score > button.cost: #comment out for free shop creatures
                             buy(button)
                             break         
-            if top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+            if util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                 move_shop("UP")
                 break
-            if bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+            if util.main_shop.bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                 move_shop("DOWN")
                 break
             if close_shop_button_rect.collidepoint(event.pos):
