@@ -242,6 +242,9 @@ def render_menu():
         #render options button
         pygame.draw.rect(screen,sand_color,main_menu.options_button_rect)
         screen.blit(main_menu.options_text,main_menu.options_text_rect)
+        #render save button
+        pygame.draw.rect(screen,sand_color,main_menu.save_button_rect)
+        screen.blit(main_menu.save_text,main_menu.save_text_rect)
 
 #make game clock
 clock = pygame.time.Clock()
@@ -272,6 +275,9 @@ while running:
                 if main_menu.exit_button_rect.collidepoint(event.pos):
                     save.save_data(util.player_ob,util.main_shop)
                     running = False   
+                if main_menu.save_button_rect.collidepoint(event.pos):
+                    save.save_data(util.player_ob,util.main_shop)
+                    main_menu.enabled = False
             else:
                 for button in util.main_shop.current_buttons:
                     if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
