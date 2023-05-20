@@ -1,6 +1,18 @@
-import shop,gore,player
+import shop,gore,player,pygame,menuSystem
 
 def init(current_screen):
+    global running
+    running = True
+    #colors
+    global light_water_color
+    light_water_color = pygame.color.Color('#C0FDFB')
+    global blue_color
+    blue_color = pygame.color.Color('#B8E7E1')
+    global sand_color
+    sand_color = pygame.color.Color('#FFE5AD')
+    global brown_color
+    brown_color = pygame.color.Color('#D08C39')
+
     #screen
     global screen 
     screen = current_screen
@@ -26,8 +38,13 @@ def init(current_screen):
     global player_ob
     player_ob = player.Player()
 
+    #shop
     global main_shop
     main_shop = shop.Shop()
+
+    #menu system
+    global menu_system
+    menu_system = menuSystem.MenuSystem()
 
     #gore
     global gore_ob

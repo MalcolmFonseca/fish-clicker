@@ -1,4 +1,4 @@
-import pygame,shopButton,math,util,menu,save,background
+import pygame,shopButton,util,save,background
 
 pygame.init()
 
@@ -7,12 +7,6 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 util.init(screen)
 background.init()
-
-#load palette
-light_water_color = pygame.color.Color('#C0FDFB')
-blue_color = pygame.color.Color('#B8E7E1')
-sand_color = pygame.color.Color('#FFE5AD')
-brown_color = pygame.color.Color('#D08C39')
 
 #create dictionary storing pricing tiers for easier changes down the line
 #format is cost:sps
@@ -105,8 +99,6 @@ menu_button = pygame.image.load('Assets/menu.png').convert()
 menu_button_rect = menu_button.get_rect()
 menu_button_rect.top = util.window_size[1]/128
 menu_button_rect.left = util.window_size[1]/128
-#create menus
-main_menu = menu.MainMenu()
 
 #function and event object to update score every 1 second
 UPDATE_SCORE = pygame.USEREVENT +1
@@ -208,7 +200,8 @@ def render():
     screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
 
     #render menu if any
-    render_menu()
+    if util.menu_system.enabled:
+        util.menu_system.render()
 
     #render menu button
     screen.blit(menu_button,menu_button_rect)
@@ -230,54 +223,34 @@ def render():
 
     pygame.display.flip()
 
-def render_menu():
-    if main_menu.enabled:
-        #draw menu box
-        pygame.draw.rect(screen,main_menu.menu_rect.border_color,main_menu.menu_rect.border_rect)
-        pygame.draw.rect(screen,main_menu.menu_rect.inner_color,main_menu.menu_rect.inner_rect)
-
-        #render exit button
-        pygame.draw.rect(screen,sand_color,main_menu.exit_button_rect)
-        screen.blit(main_menu.exit_text,main_menu.exit_text_rect)
-        #render options button
-        pygame.draw.rect(screen,sand_color,main_menu.options_button_rect)
-        screen.blit(main_menu.options_text,main_menu.options_text_rect)
-        #render save button
-        pygame.draw.rect(screen,sand_color,main_menu.save_button_rect)
-        screen.blit(main_menu.save_text,main_menu.save_text_rect)
-
 #make game clock
 clock = pygame.time.Clock()
 
 #update player score every 1 second
 pygame.time.set_timer(UPDATE_SCORE,1000)
 
-#update screen, load data and set running to true
+#update screen, load data
 load_data(save.load_data())
 render()
 update_score()
 background.update()
-running = True
 #gameloop
-while running:
+while util.running:
     #event loop
     for event in pygame.event.get():
         #event check for score update    
         if event.type == UPDATE_SCORE:
             update_score()    
         if event.type == pygame.QUIT:
-            running = False
+            util.running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
             if menu_button_rect.collidepoint(event.pos):
-                        main_menu.enabled = not main_menu.enabled
+                        util.menu_system.toggle()
                         break   
-            if main_menu.enabled:
-                if main_menu.exit_button_rect.collidepoint(event.pos):
-                    save.save_data(util.player_ob,util.main_shop)
-                    running = False   
-                if main_menu.save_button_rect.collidepoint(event.pos):
-                    save.save_data(util.player_ob,util.main_shop)
-                    main_menu.enabled = False
+            if util.menu_system.enabled:
+                for button in util.menu_system.current_menu.buttons:
+                    if button.rect.collidepoint(event.pos):
+                        util.menu_system.current_menu.press(button)
             else:
                 for button in util.main_shop.current_buttons:
                     if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:

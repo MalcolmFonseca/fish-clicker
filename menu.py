@@ -1,40 +1,38 @@
-import pygame, util, math, borderedRect
+import pygame, util, borderedRect, menuButton, save
 
 class Menu():
     def __init__(self):
         self.menu_rect = borderedRect.bordered_rect(0,0,util.window_size[0]/6,util.window_size[1]/3.5,util.window_size[0]/384,pygame.color.Color('#D08C39'),(0,0,0))
         self.enabled = False
+        self.buttons = []
+        self.text = {}
+    
+    def press(self,button):
+        util.menu_system.current_menu = button.submenu
 
 class MainMenu(Menu):
     def __init__(self):
         super().__init__()
 
         #make buttons for each submenu and exiting game
-        self.font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/20))
-        default_button = pygame.Rect(0,0,(util.window_size[0]/6)-util.window_size[0]/64,util.window_size[1]/16)
-        default_button.centerx = self.menu_rect.border_rect.centerx
+        self.buttons.append(menuButton.MenuButton('Save and Exit')) 
+        self.buttons.append(menuButton.MenuButton('Options',submenu=OptionsMenu())) 
+        self.buttons.append(menuButton.MenuButton('Save'))
 
-        #exit button
-        self.exit_button_rect = pygame.Rect(default_button)
-        self.exit_button_rect.bottom = self.menu_rect.border_rect.bottom - util.window_size[1]/56
-        self.exit_text = self.font.render('Save and Exit',True,(0,0,0))
-        self.exit_text_rect = self.exit_text.get_rect()
-        self.exit_text_rect.center = self.exit_button_rect.center
+        for i,button in enumerate(self.buttons):
+            button.rect.centerx = self.menu_rect.border_rect.centerx
+            button.rect.bottom = self.menu_rect.border_rect.bottom - (i+1)*(util.window_size[1]/56) - i*button.rect.height
+            button.text_rect.center = button.rect.center
 
-        #options button
-        self.options_button_rect = pygame.Rect(default_button)
-        self.options_button_rect.bottom = self.exit_button_rect.top - util.window_size[1]/56
-        self.options_text = self.font.render('Options',True,(0,0,0))
-        self.options_text_rect = self.options_text.get_rect()
-        self.options_text_rect.center = self.options_button_rect.center
-
-        #save button
-        self.save_button_rect = pygame.Rect(default_button)
-        self.save_button_rect.bottom = self.options_button_rect.top - util.window_size[1]/56
-        self.save_text = self.font.render('Save',True,(0,0,0))
-        self.save_text_rect = self.save_text.get_rect()
-        self.save_text_rect.center = self.save_button_rect.center
-
+    def press(self,button):
+        if button.name == 'Save and Exit':
+            save.save_data(util.player_ob,util.main_shop)
+            util.running = False
+        elif button.name == 'Save':
+            save.save_data(util.player_ob,util.main_shop)
+        else:
+            util.menu_system.current_menu = button.submenu
+        
 class OptionsMenu(Menu):
     def __init__(self):
         super().__init__()
