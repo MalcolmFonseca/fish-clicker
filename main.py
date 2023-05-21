@@ -39,14 +39,15 @@ price_keys = list(price_dict.keys())
 seaweed_btn = shopButton.ShopButton("Seaweed",price_keys[0],price_dict[price_keys[0]],'stationary','Assets/fishimages/seaweed.png','Assets/shopicons/seaweedShop.png')
 coral_btn = shopButton.ShopButton("Coral",price_keys[1],price_dict[price_keys[1]],'stationary','Assets/fishimages/coral.png','Assets/shopicons/coralShop.png')
 seaslug_btn = shopButton.ShopButton("Seaslug",price_keys[2],price_dict[price_keys[2]],'walking','Assets/fishimages/seaslug.png','Assets/shopicons/seaslugShop.png')
-seahorse_btn = shopButton.ShopButton("Sea Horse",price_keys[3],price_dict[price_keys[3]],'swimming','Assets/fishimages/seahorse.png','Assets/shopicons/seahorseShop.png')
-crab_btn = shopButton.ShopButton("Crab",price_keys[4],price_dict[price_keys[4]],'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
-angelfish_btn = shopButton.ShopButton("Angelfish",price_keys[5],price_dict[price_keys[5]],'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
-clownfish_btn = shopButton.ShopButton("Clownfish",price_keys[6],price_dict[price_keys[6]],'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
-cuttlefish_btn = shopButton.ShopButton("Cuttlefish",price_keys[7],price_dict[price_keys[7]],'swimming','Assets/fishimages/cuttlefish.png','Assets/shopicons/cuttlefishShop.png')
-squid_btn = shopButton.ShopButton("Squid",price_keys[8],price_dict[price_keys[8]],'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
-barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[9],price_dict[price_keys[9]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
-bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[10],price_dict[price_keys[10]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
+shrimp_btn = shopButton.ShopButton("Shrimp",price_keys[3],price_dict[price_keys[3]],'swimming','Assets/fishimages/shrimp.png','Assets/shopicons/shrimpShop.png')
+seahorse_btn = shopButton.ShopButton("Sea Horse",price_keys[4],price_dict[price_keys[4]],'swimming','Assets/fishimages/seahorse.png','Assets/shopicons/seahorseShop.png')
+crab_btn = shopButton.ShopButton("Crab",price_keys[5],price_dict[price_keys[5]],'walking','Assets/fishimages/crab.png','Assets/shopicons/crabShop.png')
+angelfish_btn = shopButton.ShopButton("Angelfish",price_keys[6],price_dict[price_keys[6]],'swimming','Assets/fishimages/angelfish.png','Assets/shopicons/angelfishShop.png')
+clownfish_btn = shopButton.ShopButton("Clownfish",price_keys[7],price_dict[price_keys[7]],'swimming','Assets/fishimages/clownfish.png','Assets/shopicons/clownfishShop.png')
+cuttlefish_btn = shopButton.ShopButton("Cuttlefish",price_keys[8],price_dict[price_keys[8]],'swimming','Assets/fishimages/cuttlefish.png','Assets/shopicons/cuttlefishShop.png')
+squid_btn = shopButton.ShopButton("Squid",price_keys[9],price_dict[price_keys[9]],'swimming','Assets/fishimages/squid.png','Assets/shopicons/squidShop.png')
+barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[10],price_dict[price_keys[10]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
+bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[11],price_dict[price_keys[11]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
 #make function for scrolling through shop
 def move_shop(direction):
@@ -275,8 +276,8 @@ while util.running:
                 break
             if close_shop_button_rect.collidepoint(event.pos):
                 toggle_shop()
-                break        
+                break
     render()
     clock.tick(30)
 
-pygame.quit()    
+pygame.quit()
