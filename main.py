@@ -180,6 +180,8 @@ def render():
     #position sps text
     util.player_ob.sps_text_rect.centerx = util.player_ob.score_text_rect.centerx
 
+    render_shop()
+
     #render all owned creatures
     util.player_ob.bought.update()
     for creature in util.player_ob.bought:
@@ -198,30 +200,31 @@ def render():
     #render score and sps text
     screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
     screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
+    
+    if util.settings['Shop In Front']:
+        render_shop()
 
     #render menu if any
     if util.menu_system.enabled:
         util.menu_system.render()
-
     #render menu button
     screen.blit(menu_button,menu_button_rect)
+
+    pygame.display.flip()
+
+def render_shop():
     #check if shop is minimized
     if util.main_shop.minimize:
         #position score text
         util.player_ob.score_text_rect.centerx = util.window_size[0]/2
-
         #render maximize button
         screen.blit(open_shop_button_image,open_shop_button_rect)
     else:
+        util.main_shop.render()
         #position score text
         util.player_ob.score_text_rect.centerx = util.window_size[0]/3
-
-        util.main_shop.render()
-    
         #render minimize button
         screen.blit(close_shop_button_image,close_shop_button_rect)
-
-    pygame.display.flip()
 
 #make game clock
 clock = pygame.time.Clock()
@@ -251,6 +254,9 @@ while util.running:
                 for button in util.menu_system.current_menu.buttons:
                     if button.rect.collidepoint(event.pos):
                         util.menu_system.current_menu.press(button)
+                for box in util.menu_system.current_menu.check_boxes:
+                    if box.get_rect().collidepoint(event.pos):
+                        util.menu_system.current_menu.check(box)
             else:
                 for button in util.main_shop.current_buttons:
                     if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:

@@ -1,6 +1,12 @@
 import shop,gore,player,pygame,menuSystem
 
 def init(current_screen):
+    #settings user can change
+    global settings
+    settings = {
+        'Shop In Front':False
+    }
+
     global running
     running = True
     #colors
