@@ -1,4 +1,4 @@
-import pygame,shopButton,util,save,background
+import pygame,shopButton,util,save,background,knife
 
 pygame.init()
 
@@ -210,6 +210,9 @@ def render():
     #render menu button
     screen.blit(menu_button,menu_button_rect)
 
+    #render knife button
+    screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
+
     pygame.display.flip()
 
 def render_shop():
@@ -248,8 +251,10 @@ while util.running:
             util.running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
             if menu_button_rect.collidepoint(event.pos):
-                        util.menu_system.toggle()
-                        break   
+                util.menu_system.toggle()
+                break
+            if util.knife_ob.rect.collidepoint(event.pos):
+                util.knife_ob.enabled = not util.knife_ob.enabled
             if util.menu_system.enabled:
                 for button in util.menu_system.current_menu.buttons:
                     if button.rect.collidepoint(event.pos):
@@ -262,7 +267,7 @@ while util.running:
                     if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                         #if util.player_ob.score > button.cost: #comment out for free shop creatures
                             buy(button)
-                            break         
+                            break
             if util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                 move_shop("UP")
                 break

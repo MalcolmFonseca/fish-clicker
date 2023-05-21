@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save
+import shop,gore,player,pygame,menuSystem,save,knife
 
 def init(current_screen):
     #settings user can change
@@ -62,6 +62,11 @@ def init(current_screen):
     #gore
     global gore_ob
     gore_ob = gore.Gore()
+
+    #knife
+    global knife_ob
+    knife_ob = knife.Knife()
+
     
 
 def num_to_word(num):
