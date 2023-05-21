@@ -1,11 +1,18 @@
-import shop,gore,player,pygame,menuSystem
+import shop,gore,player,pygame,menuSystem,save
 
 def init(current_screen):
     #settings user can change
     global settings
-    settings = {
-        'Shop In Front':False
-    }
+    player_data = save.load_data()
+    if player_data == False:
+        pass
+    else:
+        try:
+            settings = player_data["settings"]
+        except:
+            settings = {
+            'Shop In Front':False
+        }
 
     global running
     running = True

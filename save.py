@@ -1,4 +1,4 @@
-import json, os, io
+import json, os, io, util
 
 def count_bought(shop):
     #make empty dict to be populated
@@ -25,7 +25,8 @@ def save_data(player_ob,shop):
         "sps": player_ob.sps,
         "kills": player_ob.kills,
         "bought": count_bought(shop),
-        "unlocked": check_unlocked(shop)
+        "unlocked": check_unlocked(shop),
+        "settings": util.settings
     }
 
     #write to json file
