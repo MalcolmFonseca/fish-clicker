@@ -262,12 +262,11 @@ while util.running:
                 for box in util.menu_system.current_menu.check_boxes:
                     if box.get_rect().collidepoint(event.pos):
                         util.menu_system.current_menu.check(box)
-            else:
-                for button in util.main_shop.current_buttons:
-                    if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                        #if util.player_ob.score > button.cost: #comment out for free shop creatures
-                            buy(button)
-                            break
+            for button in util.main_shop.current_buttons:
+                if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+                    #if util.player_ob.score > button.cost: #comment out for free shop creatures
+                        buy(button)
+                        break
             if util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                 move_shop("UP")
                 break
