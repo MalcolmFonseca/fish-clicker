@@ -214,6 +214,9 @@ def render():
     #render knife button
     screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
 
+    #render scene button
+    screen.blit(util.scene_button.image,util.scene_button.rect)
+
     pygame.display.flip()
 
 def render_shop():
@@ -256,6 +259,8 @@ while util.running:
                 break
             if util.knife_ob.rect.collidepoint(event.pos):
                 util.knife_ob.enabled = not util.knife_ob.enabled
+            if util.scene_button.rect.collidepoint(event.pos):
+                util.scene_button.press()
             if util.menu_system.enabled:
                 for button in util.menu_system.current_menu.buttons:
                     if button.rect.collidepoint(event.pos):

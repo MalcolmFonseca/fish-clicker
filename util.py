@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton
 
 def init(current_screen):
     #settings user can change
@@ -67,7 +67,9 @@ def init(current_screen):
     global knife_ob
     knife_ob = knife.Knife()
 
-    
+    #scenebutton
+    global scene_button
+    scene_button = sceneButton.SceneButton()
 
 def num_to_word(num):
     current_key = 1
