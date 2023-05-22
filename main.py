@@ -1,4 +1,4 @@
-import pygame,shopButton,util,save,background,knife
+import pygame,shopButton,util,save,background
 
 pygame.init()
 

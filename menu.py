@@ -1,4 +1,4 @@
-import pygame, util, borderedRect, menuButton, save, checkBox, math
+import pygame, util, borderedRect, menuButton, save, checkBox
 
 class Menu():
     def __init__(self):
