@@ -1,6 +1,9 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple
 
 def init(current_screen):
+    #event object for score update
+    global UPDATE_SCORE
+    UPDATE_SCORE = pygame.USEREVENT +1
     #settings user can change
     global settings
     player_data = save.load_data()
@@ -13,6 +16,10 @@ def init(current_screen):
             settings = {
             'Shop In Front':False
         }
+
+    #make game clock
+    global clock
+    clock = pygame.time.Clock()
 
     global running
     running = True
@@ -71,6 +78,9 @@ def init(current_screen):
     global scene_button
     scene_button = sceneButton.SceneButton()
 
+    #init bloodtemple scene
+    bloodtemple.init()
+
 def num_to_word(num):
     current_key = 1
     ending = ""
@@ -83,3 +93,8 @@ def num_to_word(num):
 
     return_val = float(num/current_key) 
     return f'{str(round(return_val, 3) if return_val % 1 else int(return_val))} {ending}'
+
+#function and event object to update score every 1 second
+def update_score():
+    player_ob.add_score(player_ob.sps)
+    menu_system.update_unlocks()

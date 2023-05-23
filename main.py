@@ -1,5 +1,4 @@
 import pygame,shopButton,util,save,background
-
 pygame.init()
 
 #set fullscreen
@@ -59,22 +58,8 @@ def move_shop(direction):
         #check if fully scrolled down
         if util.main_shop.current_position + 7 < len(util.main_shop.unlocked_buttons) :
             util.main_shop.current_position += 7
-    update_buttons()
-    position_buttons()
-
-def update_buttons():
-    util.main_shop.current_buttons.clear()
-    for i in range(util.main_shop.current_position,util.main_shop.current_position + 7):
-        try:
-            util.main_shop.current_buttons.append(util.main_shop.unlocked_buttons[i])
-        except: #will stop adding buttons when no more are available
-            break
-
-def position_buttons():
-    position = 1
-    for button in util.main_shop.current_buttons:
-        button.position(position)
-        position += 1
+    util.menu_system.update_buttons()
+    util.menu_system.position_buttons()
 
 #set current buttons
 move_shop("UP")
@@ -95,17 +80,6 @@ open_shop_button_rect.top = util.window_size[1]/128
 close_shop_button_rect.right = open_shop_button_rect.right
 close_shop_button_rect.top = open_shop_button_rect.top
 
-#create button for menu
-menu_button = pygame.image.load('Assets/menu.png').convert()
-menu_button_rect = menu_button.get_rect()
-menu_button_rect.top = util.window_size[1]/128
-menu_button_rect.left = util.window_size[1]/128
-
-#function and event object to update score every 1 second
-UPDATE_SCORE = pygame.USEREVENT +1
-def update_score():
-    util.player_ob.add_score(util.player_ob.sps)
-    update_unlocks()
 ##################################################################### LOADING DATA
 def load_purchases(player_data):
     for button in util.main_shop.all_buttons:
@@ -130,14 +104,16 @@ def load_unlocks(player_data):
         #unlock button if already unlocked
         if button.unlocked == True:
             util.main_shop.unlocked_buttons.append(button)
-            update_buttons()
-            position_buttons()
+            util.menu_system.update_buttons()
+            util.menu_system.position_buttons()
 
 def load_player(player_data):
     try:
         util.player_ob.score = player_data["score"]
         util.player_ob.total_score = player_data["total_score"]
         util.player_ob.sps = player_data["sps"]
+        #render sps text before screen shows
+        util.player_ob.add_sps(0)
         util.player_ob.kills = player_data["kills"]
     except:
         pass
@@ -150,18 +126,12 @@ def load_data(player_data):
         load_unlocks(player_data)
         load_player(player_data)
 #####################################################################
-def update_unlocks():
-    for button in util.main_shop.all_buttons:
-        if button.check_unlock():
-            util.main_shop.unlocked_buttons.append(button)
-            update_buttons()
-            position_buttons()
 
 def buy(button):
     util.player_ob.add_score(-button.cost)
     util.player_ob.add_sps(button.sps)
     util.player_ob.bought.add(button.buy())
-    position_buttons()
+    util.menu_system.position_buttons()
 
 def toggle_shop():
     #simple invert so as to not have to write another if, too many as is
@@ -209,7 +179,7 @@ def render():
     if util.menu_system.enabled:
         util.menu_system.render()
     #render menu button
-    screen.blit(menu_button,menu_button_rect)
+    screen.blit(util.menu_system.menu_button,util.menu_system.menu_button_rect)
 
     #render knife button
     screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
@@ -233,28 +203,25 @@ def render_shop():
         #render minimize button
         screen.blit(close_shop_button_image,close_shop_button_rect)
 
-#make game clock
-clock = pygame.time.Clock()
-
 #update player score every 1 second
-pygame.time.set_timer(UPDATE_SCORE,1000)
+pygame.time.set_timer(util.UPDATE_SCORE,1000)
 
 #update screen, load data
 load_data(save.load_data())
 render()
-update_score()
+util.update_score()
 background.update()
 #gameloop
 while util.running:
     #event loop
     for event in pygame.event.get():
         #event check for score update    
-        if event.type == UPDATE_SCORE:
-            update_score()    
+        if event.type == util.UPDATE_SCORE:
+            util.update_score()    
         if event.type == pygame.QUIT:
             util.running = False
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
-            if menu_button_rect.collidepoint(event.pos):
+            if util.menu_system.menu_button_rect.collidepoint(event.pos):
                 util.menu_system.toggle()
                 break
             if util.knife_ob.rect.collidepoint(event.pos):
@@ -283,6 +250,6 @@ while util.running:
                 toggle_shop()
                 break
     render()
-    clock.tick(30)
+    util.clock.tick(30)
 
 pygame.quit()

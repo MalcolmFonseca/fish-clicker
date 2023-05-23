@@ -1,4 +1,4 @@
-import pygame, util, borderedRect, menuButton, save, checkBox
+import pygame, util, borderedRect, menuButton, save, checkBox, bloodtemple
 
 class Menu():
     def __init__(self):
@@ -33,6 +33,7 @@ class MainMenu(Menu):
     def press(self,button):
         if button.name == 'Save and Exit':
             save.save_data(util.player_ob,util.main_shop)
+            bloodtemple.running = False
             util.running = False
         elif button.name == 'Save':
             save.save_data(util.player_ob,util.main_shop)
