@@ -17,6 +17,8 @@ class ShopButton():
         self.icon_image_path = icon_image_path
         self.icon_image = pygame.image.load(icon_image_path).convert()
         self.icon_image_rect = self.icon_image.get_rect()
+        self.icon_image = pygame.transform.scale(self.icon_image,[self.icon_image_rect.width*util.scale[0],self.icon_image_rect.height*util.scale[1]])
+        self.icon_image_rect = self.icon_image.get_rect()
 
         #fonts
         self.big_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/16.6))
