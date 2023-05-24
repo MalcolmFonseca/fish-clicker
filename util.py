@@ -38,6 +38,8 @@ def init(current_screen):
     screen = current_screen
     global window_size
     window_size = screen.get_size()
+    global scale
+    scale = [window_size[0]/1920,window_size[1]/1080]
 
     #dict for num_to_word function
     global numwords

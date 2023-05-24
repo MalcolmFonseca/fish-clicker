@@ -4,6 +4,7 @@ class Shop():
     def __init__(self):
         self.image = pygame.image.load('Assets/shop.png').convert()
         self.rect = self.image.get_rect()
+        self.image = pygame.transform.scale(self.image,[self.rect.width*util.scale[0],self.rect.height*util.scale[1]])
         self.rect.bottomright = [util.window_size[0],util.window_size[1]]
         self.all_buttons = []
         self.unlocked_buttons = []
