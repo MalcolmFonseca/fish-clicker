@@ -1,13 +1,22 @@
 import util,pygame,background
 
 def init():
+    #temple
     global temple_image
     temple_image = pygame.image.load('Assets/temple/bloodtemple.png').convert_alpha()
     global temple_rect
     temple_rect = temple_image.get_rect()
+    temple_image = pygame.transform.scale(temple_image,[temple_rect.width*util.scale[0],temple_rect.height*util.scale[1]])
+    temple_rect = temple_image.get_rect()
+    temple_rect.bottom = util.window_size[1]
+    temple_rect.centerx = util.window_size[0]/2
+
+    #book
     global book_image
     book_image = pygame.image.load('Assets/temple/book.png').convert_alpha()
     global book_rect
+    book_rect = book_image.get_rect()
+    book_image = pygame.transform.scale(book_image,[book_rect.width*util.scale[0],book_rect.height*util.scale[1]])
     book_rect = book_image.get_rect()
     book_rect.centerx = util.window_size[0]/2
     book_rect.centery = util.window_size[1]/3.5
