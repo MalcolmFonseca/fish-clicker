@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,relicMenu
 
 def init(current_screen):
     #event object for score update
@@ -77,6 +77,10 @@ def init(current_screen):
     #scenebutton
     global scene_button
     scene_button = sceneButton.SceneButton()
+
+    #relicmenu
+    global relic_menu
+    relic_menu = relicMenu.RelicMenu()
 
     #init bloodtemple scene
     bloodtemple.init()
