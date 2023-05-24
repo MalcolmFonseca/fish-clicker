@@ -2,7 +2,9 @@ import pygame, util, borderedRect, math
 
 class Shop():
     def __init__(self):
-        self.shop_rect = borderedRect.bordered_rect((util.window_size[0]/3)*2,0,util.window_size[0]/3,util.window_size[1],util.window_size[0]/384,pygame.color.Color('#D08C39'),(0,0,0))
+        self.image = pygame.image.load('Assets/shop.png').convert()
+        self.rect = self.image.get_rect()
+        self.rect.bottomright = [util.window_size[0],util.window_size[1]]
         self.all_buttons = []
         self.unlocked_buttons = []
         self.current_buttons = []
@@ -22,8 +24,7 @@ class Shop():
 
     def render(self):
         #render shop box
-        pygame.draw.rect(util.screen,self.shop_rect.border_color,util.main_shop.shop_rect.border_rect)
-        pygame.draw.rect(util.screen,util.main_shop.shop_rect.inner_color,util.main_shop.shop_rect.inner_rect)
+        util.screen.blit(self.image,self.rect)
         #render shop title
         util.screen.blit(self.title_text,self.title_text_rect)
         #render item buttons
