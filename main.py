@@ -58,8 +58,8 @@ def move_shop(direction):
         #check if fully scrolled down
         if util.main_shop.current_position + 7 < len(util.main_shop.unlocked_buttons) :
             util.main_shop.current_position += 7
-    util.menu_system.update_buttons()
-    util.menu_system.position_buttons()
+    util.main_shop.update_buttons()
+    util.main_shop.position_buttons()
 
 #set current buttons
 move_shop("UP")
@@ -104,8 +104,8 @@ def load_unlocks(player_data):
         #unlock button if already unlocked
         if button.unlocked == True:
             util.main_shop.unlocked_buttons.append(button)
-            util.menu_system.update_buttons()
-            util.menu_system.position_buttons()
+            util.main_shop.update_buttons()
+            util.main_shop.position_buttons()
 
 def load_player(player_data):
     try:
@@ -131,7 +131,7 @@ def buy(button):
     util.player_ob.add_score(-button.cost)
     util.player_ob.add_sps(button.sps)
     util.player_ob.bought.add(button.buy())
-    util.menu_system.position_buttons()
+    util.main_shop.position_buttons()
 
 def toggle_shop():
     #simple invert so as to not have to write another if, too many as is

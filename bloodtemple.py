@@ -30,6 +30,9 @@ def render():
     #render scene button
     util.screen.blit(util.scene_button.image,util.scene_button.rect)
 
+    #update creatures to respawn in background
+    util.player_ob.bought.update()
+
     pygame.display.flip()
 
 def enter():

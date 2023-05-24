@@ -97,4 +97,4 @@ def num_to_word(num):
 #function and event object to update score every 1 second
 def update_score():
     player_ob.add_score(player_ob.sps)
-    menu_system.update_unlocks()
+    main_shop.update_unlocks()

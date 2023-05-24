@@ -40,3 +40,24 @@ class Shop():
         #render arrows
         util.screen.blit(self.top_arrow,self.top_arrow_rect)
         util.screen.blit(self.bottom_arrow,self.bottom_arrow_rect)
+    
+    def update_buttons(self):
+        self.current_buttons.clear()
+        for i in range(self.current_position,self.current_position + 7):
+            try:
+                self.current_buttons.append(self.unlocked_buttons[i])
+            except: #will stop adding buttons when no more are available
+                break
+
+    def position_buttons(self):
+        position = 1
+        for button in self.current_buttons:
+            button.position(position)
+            position += 1
+    
+    def update_unlocks(self):
+        for button in self.all_buttons:
+            if button.check_unlock():
+                self.unlocked_buttons.append(button)
+                self.update_buttons()
+                self.position_buttons()
