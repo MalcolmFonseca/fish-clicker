@@ -31,7 +31,7 @@ class Shop():
         util.screen.blit(self.title_text,self.title_text_rect)
         #render item buttons
         for button in util.main_shop.current_buttons:
-            pygame.draw.rect(util.screen,'#FFE5AD',button.button_rect)
+            util.screen.blit(button.button_image,button.button_rect)
             #check if cost should be red
             button.check_expensive()
 

@@ -2,7 +2,12 @@ import pygame, creature, math, util
 
 class ShopButton():
     def __init__(self,name,cost,sps,creature_type,image_path,icon_image_path): #creature type is either walking, swimming or stationary
-        self.button_rect = pygame.Rect((util.window_size[0]/3)*2+util.window_size[0]/128,util.window_size[0]/128,(util.window_size[0]/3)-util.window_size[0]/64,util.window_size[1]/9)
+        self.button_image = pygame.image.load('Assets/shopbutton.png').convert()
+        self.button_rect = self.button_image.get_rect()
+        self.button_image = pygame.transform.scale(self.button_image,[self.button_rect.width*util.scale[0],self.button_rect.height*util.scale[1]])
+        self.button_rect = self.button_image.get_rect()
+        self.button_rect.left = (util.window_size[0]/3)*2+util.window_size[0]/128
+
         self.name = name
         self.base_cost = cost
         self.cost = cost
@@ -51,10 +56,10 @@ class ShopButton():
         self.name_text_rect.top = self.icon_image_rect.top
         #position cost text
         self.cost_text_rect.right = self.button_rect.right - util.window_size[0]/128
-        self.cost_text_rect.top = self.button_rect.top
+        self.cost_text_rect.top = self.button_rect.top + 7
         #position owned text
         self.owned_text_rect.right = self.cost_text_rect.right
-        self.owned_text_rect.centery = self.button_rect.centery + util.window_size[1]/27
+        self.owned_text_rect.centery = self.button_rect.centery + util.window_size[1]/27 -2
         #position sps text
         self.sps_text_rect.left = self.name_text_rect.left
         self.sps_text_rect.bottom = self.owned_text_rect.bottom
