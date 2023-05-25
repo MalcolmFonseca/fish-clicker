@@ -1,4 +1,4 @@
-import pygame, util, borderedRect, math
+import pygame, util, math
 
 class Shop():
     def __init__(self):
@@ -41,8 +41,10 @@ class Shop():
             util.screen.blit(button.owned_text,button.owned_text_rect)
             util.screen.blit(button.sps_text,button.sps_text_rect)
         #render arrows
-        util.screen.blit(self.top_arrow,self.top_arrow_rect)
-        util.screen.blit(self.bottom_arrow,self.bottom_arrow_rect)
+        if self.current_position != 0:
+            util.screen.blit(self.top_arrow,self.top_arrow_rect)
+        if util.main_shop.current_position + 7 < len(util.main_shop.unlocked_buttons):
+            util.screen.blit(self.bottom_arrow,self.bottom_arrow_rect)
     
     def update_buttons(self):
         self.current_buttons.clear()
@@ -64,3 +66,16 @@ class Shop():
                 self.unlocked_buttons.append(button)
                 self.update_buttons()
                 self.position_buttons()
+    
+    #make function for scrolling through shop
+    def move_shop(self,direction):
+        if direction == "UP":
+            #check if fully scrolled up
+            if self.current_position != 0 :
+                self.current_position -= 7
+        elif direction == "DOWN":
+            #check if fully scrolled down
+            if self.current_position + 7 < len(self.unlocked_buttons) :
+                self.current_position += 7
+        self.update_buttons()
+        self.position_buttons()

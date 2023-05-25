@@ -48,21 +48,8 @@ squid_btn = shopButton.ShopButton("Squid",price_keys[9],price_dict[price_keys[9]
 barracuda_btn = shopButton.ShopButton("Barracuda",price_keys[10],price_dict[price_keys[10]],'swimming','Assets/fishimages/barracuda.png','Assets/shopicons/barracudaShop.png')
 bluewhale_btn = shopButton.ShopButton("Blue Whale",price_keys[11],price_dict[price_keys[11]],'swimming','Assets/fishimages/bluewhale.png','Assets/shopicons/bluewhaleShop.png')
 
-#make function for scrolling through shop
-def move_shop(direction):
-    if direction == "UP":
-        #check if fully scrolled up
-        if util.main_shop.current_position != 0 :
-            util.main_shop.current_position -= 7
-    elif direction == "DOWN":
-        #check if fully scrolled down
-        if util.main_shop.current_position + 7 < len(util.main_shop.unlocked_buttons) :
-            util.main_shop.current_position += 7
-    util.main_shop.update_buttons()
-    util.main_shop.position_buttons()
-
 #set current buttons
-move_shop("UP")
+util.main_shop.move_shop("UP")
 
 #position shop buttons
 util.main_shop.title_text_rect.left = seaweed_btn.button_rect.left
@@ -241,10 +228,10 @@ while util.running:
                         buy(button)
                         break
             if util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                move_shop("UP")
+                util.main_shop.move_shop("UP")
                 break
             if util.main_shop.bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                move_shop("DOWN")
+                util.main_shop.move_shop("DOWN")
                 break
             if close_shop_button_rect.collidepoint(event.pos):
                 toggle_shop()
