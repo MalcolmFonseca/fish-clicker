@@ -9,6 +9,7 @@ class RelicMenu():
         self.rect = self.image.get_rect()
 
         self.enabled = False
+        self.bought = []
 
         #close button
         self.close_button = pygame.image.load('Assets/temple/closerelicmenu.png').convert_alpha()
