@@ -39,9 +39,9 @@ def render():
     util.screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
     util.screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
 
-    #render relic menu if open
-    if util.relic_menu.enabled:
-        util.relic_menu.render()
+    #render sigil menu if open
+    if util.sigil_menu.enabled:
+        util.sigil_menu.render()
 
     #render menu if any
     if util.menu_system.enabled:
@@ -77,10 +77,14 @@ def enter():
                     util.scene_button.press()
                     running = False
                 if book_rect.collidepoint(event.pos):
-                    util.relic_menu.enabled = True
+                    util.sigil_menu.enabled = True
                     break
-                if util.relic_menu.close_button_rect.collidepoint(event.pos):
-                    util.relic_menu.enabled = False
+                for sigil in util.sigil_menu.all_sigils:
+                    if sigil.rect.collidepoint(event.pos):
+                        sigil.buy()
+                        break
+                if util.sigil_menu.close_button_rect.collidepoint(event.pos):
+                    util.sigil_menu.enabled = False
                     break
                 if util.menu_system.enabled:
                     for button in util.menu_system.current_menu.buttons:

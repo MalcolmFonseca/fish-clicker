@@ -1,31 +1,40 @@
 import json, os, io, util
 
-def count_bought(shop):
+def count_bought():
     #make empty dict to be populated
     bought = {}
 
-    for button in shop.all_buttons:
+    for button in util.main_shop.all_buttons:
         bought[button.name] = button.owned
 
     return bought
 
-def check_unlocked(shop):
+def check_unlocked():
     unlocked = {}
 
-    for button in shop.all_buttons:
+    for button in util.main_shop.all_buttons:
         unlocked[button.name] = button.unlocked
 
     return unlocked
 
-def save_data(player_ob,shop):
+def check_sigils():
+    sigils = {}
+
+    for sigil in util.sigil_menu.all_sigils:
+        sigils[sigil.name] = sigil.bought
+
+    return sigils
+
+def save_data():
     #create dict with player data
     player_data = {
-        "score": player_ob.score,
-        "total_score": player_ob.total_score,
-        "sps": player_ob.sps,
-        "kills": player_ob.kills,
-        "bought": count_bought(shop),
-        "unlocked": check_unlocked(shop),
+        "score": util.player_ob.score,
+        "total_score": util.player_ob.total_score,
+        "sps": util.player_ob.sps,
+        "kills": util.player_ob.kills,
+        "bought": count_bought(),
+        "unlocked": check_unlocked(),
+        "sigils": check_sigils(), 
         "settings": util.settings
     }
 

@@ -32,11 +32,11 @@ class MainMenu(Menu):
 
     def press(self,button):
         if button.name == 'Save and Exit':
-            save.save_data(util.player_ob,util.main_shop)
+            save.save_data()
             bloodtemple.running = False
             util.running = False
         elif button.name == 'Save':
-            save.save_data(util.player_ob,util.main_shop)
+            save.save_data()
         else:
             util.menu_system.current_menu = button.submenu
         

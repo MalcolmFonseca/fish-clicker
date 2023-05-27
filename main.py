@@ -105,6 +105,13 @@ def load_player(player_data):
     except:
         pass
 
+def load_sigils(player_data):
+    for sigil in util.sigil_menu.all_sigils:
+        try:
+            sigil.bought = player_data["sigils"][f"{sigil.name}"]
+        except:
+            sigil.bought = False
+
 def load_data(player_data):
     if player_data == False:
         pass
@@ -112,6 +119,7 @@ def load_data(player_data):
         load_purchases(player_data)
         load_unlocks(player_data)
         load_player(player_data)
+        load_sigils(player_data)
 #####################################################################
 
 def buy(button):
