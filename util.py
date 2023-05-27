@@ -104,3 +104,8 @@ def num_to_word(num):
 def update_score():
     player_ob.add_score(player_ob.sps)
     main_shop.update_unlocks()
+
+def color_image(surface,current_color,wanted_color):
+    var = pygame.PixelArray(surface)
+    var.replace((current_color), wanted_color)
+    del var

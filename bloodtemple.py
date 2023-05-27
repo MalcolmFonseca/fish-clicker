@@ -52,6 +52,14 @@ def render():
     #render scene button
     util.screen.blit(util.scene_button.image,util.scene_button.rect)
 
+    for group in util.gore_ob.gore_list:
+        if pygame.sprite in group == False:
+            util.gore_ob.gore_list.remove(group)
+            continue
+        group.update()
+        for blood in group:
+            pygame.draw.rect(util.screen,'#D40404',blood.rect)
+
     #update creatures to respawn in background
     util.player_ob.bought.update()
 
