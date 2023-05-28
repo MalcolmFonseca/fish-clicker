@@ -57,8 +57,6 @@ def render():
             util.gore_ob.gore_list.remove(group)
             continue
         group.update()
-        for blood in group:
-            pygame.draw.rect(util.screen,'#D40404',blood.rect)
 
     #update creatures to respawn in background
     util.player_ob.bought.update()

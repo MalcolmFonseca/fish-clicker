@@ -160,8 +160,6 @@ def render():
             util.gore_ob.gore_list.remove(group)
             continue
         group.update()
-        for blood in group:
-            pygame.draw.rect(screen,'#D40404',blood.rect)
 
     #render score and sps text
     screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
@@ -237,7 +235,7 @@ while util.running:
                         util.menu_system.current_menu.check(box)
             for button in util.main_shop.current_buttons:
                 if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                    #if util.player_ob.score > button.cost: #comment out for free shop creatures
+                    if util.player_ob.score > button.cost: #comment out for free shop creatures
                         buy(button)
                         break
             if util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:

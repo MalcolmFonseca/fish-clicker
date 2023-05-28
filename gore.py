@@ -17,14 +17,15 @@ class Blood(pygame.sprite.Sprite):
         super().__init__()
         self.rect = pygame.Rect(0,0,size,size)
         self.rect.center = pos
-        self.speed = [500*(random.randint(0,20)/10-1),500*(random.randint(0,20)/10-1)]
-        self.timer = random.randint(15,25)
+        self.speed = [10*(random.randint(0,20)/10-1),10*(random.randint(0,20)/10-1)]
+        self.timer = random.random()
 
     def update(self):
         self.speed[1] += .75
-        self.rect.center = [self.rect.centerx+self.speed[0]*(util.clock_time/1000),self.rect.centery+self.speed[1]*(util.clock_time/1000)]
-        self.timer -= 1
-        if self.timer < 7:
+        self.rect.center = [self.rect.centerx+self.speed[0],self.rect.centery+self.speed[1]]
+        self.timer -= util.clock_time/1000
+        if self.timer < 1/4:
             self.rect = self.rect.inflate(-1,-1)
-        if self.timer == 0:
+        pygame.draw.rect(util.screen,'#D40404',self.rect)
+        if self.timer <= 0:
             self.kill()
