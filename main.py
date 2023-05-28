@@ -179,6 +179,9 @@ def render():
     #render knife button
     screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
 
+    #render bomb sigil
+    screen.blit(util.bomb_sigil.image,util.bomb_sigil.rect)
+
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
 

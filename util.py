@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil
 
 def init(current_screen):
     #event object for score update
@@ -75,6 +75,10 @@ def init(current_screen):
     #knife
     global knife_ob
     knife_ob = knife.Knife()
+
+    #bomb sigil
+    global bomb_sigil
+    bomb_sigil = bombSigil.BombSigil()
 
     #scenebutton
     global scene_button
