@@ -25,10 +25,10 @@ class Creature(pygame.sprite.Sprite):
             self.image = self.base_image
 
         #animation for slicing
-        if self.dead_timer == 0:
+        if self.dead_timer <= 0:
             self.dead = False
         else:
-            self.dead_timer -= 1
+            self.dead_timer -= util.clock_time/1000
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
                 if util.knife_ob.enabled:
@@ -53,7 +53,7 @@ class Creature(pygame.sprite.Sprite):
             util.gore_ob.splatter(self.rect.center,size = 15)
         else: 
             util.gore_ob.splatter(self.rect.center)
-        self.dead_timer = 200
+        self.dead_timer = 5
         util.player_ob.add_score(1)
         util.player_ob.kills += 1
         background.update()
@@ -67,10 +67,10 @@ class StationaryCreature(Creature):
     #override update method to prevent movement
     def update(self):
         #animation for slicing
-        if self.dead_timer == 0:
+        if self.dead_timer <= 0:
             self.dead = False
         else:
-            self.dead_timer -= 1  
+            self.dead_timer -= util.clock_time/1000 
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
             if util.knife_ob.enabled:
@@ -80,9 +80,9 @@ class SwimmingCreature(Creature):
     def __init__(self, image_path):
         super().__init__(image_path)
         self.rect.top = random.randrange(0,util.window_size[1]-self.rect.height)
-        self.speed = 5
+        self.speed = 2.5
 
 class WalkingCreature(Creature):
     def __init__(self, image_path):
         super().__init__(image_path)
-        self.speed = 2
+        self.speed = 1

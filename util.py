@@ -20,6 +20,8 @@ def init(current_screen):
     #make game clock
     global clock
     clock = pygame.time.Clock()
+    global clock_time
+    clock_time = clock.tick(60)
 
     global running
     running = True

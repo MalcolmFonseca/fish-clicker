@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, random, util
 
 class Gore():
     def __init__(self):
@@ -17,12 +17,12 @@ class Blood(pygame.sprite.Sprite):
         super().__init__()
         self.rect = pygame.Rect(0,0,size,size)
         self.rect.center = pos
-        self.speed = [15*(random.randint(0,20)/10-1),15*(random.randint(0,20)/10-1)]
+        self.speed = [500*(random.randint(0,20)/10-1),500*(random.randint(0,20)/10-1)]
         self.timer = random.randint(15,25)
 
     def update(self):
         self.speed[1] += .75
-        self.rect.center = [self.rect.centerx+self.speed[0],self.rect.centery+self.speed[1]]
+        self.rect.center = [self.rect.centerx+self.speed[0]*(util.clock_time/1000),self.rect.centery+self.speed[1]*(util.clock_time/1000)]
         self.timer -= 1
         if self.timer < 7:
             self.rect = self.rect.inflate(-1,-1)

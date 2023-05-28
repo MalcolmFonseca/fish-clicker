@@ -180,7 +180,7 @@ def render():
     screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
 
     #render bomb sigil
-    screen.blit(util.bomb_sigil.image,util.bomb_sigil.rect)
+    util.bomb_sigil.render()
 
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
@@ -224,6 +224,8 @@ while util.running:
                 break
             if util.knife_ob.rect.collidepoint(event.pos):
                 util.knife_ob.enabled = not util.knife_ob.enabled
+            if util.bomb_sigil.rect.collidepoint(event.pos):
+                util.bomb_sigil.press()
             if util.scene_button.rect.collidepoint(event.pos):
                 util.scene_button.press()
             if util.menu_system.enabled:
@@ -248,6 +250,6 @@ while util.running:
                 toggle_shop()
                 break
     render()
-    util.clock.tick(30)
+    util.clock_time = util.clock.tick(60)
 
 pygame.quit()
