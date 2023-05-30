@@ -10,3 +10,5 @@ make kill upgrades
 	"bomb"
 
 add prehistoric fish
+
+optimize gore

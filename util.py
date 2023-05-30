@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning
 
 def init(current_screen):
     #event object for score update
@@ -25,15 +25,6 @@ def init(current_screen):
 
     global running
     running = True
-    #colors
-    global light_water_color
-    light_water_color = pygame.color.Color('#C0FDFB')
-    global blue_color
-    blue_color = pygame.color.Color('#B8E7E1')
-    global sand_color
-    sand_color = pygame.color.Color('#FFE5AD')
-    global brown_color
-    brown_color = pygame.color.Color('#D08C39')
 
     #screen
     global screen 
@@ -81,6 +72,10 @@ def init(current_screen):
     #bomb sigil
     global bomb_sigil
     bomb_sigil = bombSigil.BombSigil()
+
+    #blood lightning
+    global blood_lightning
+    blood_lightning = bloodLightning.BloodLightning()
 
     #scenebutton
     global scene_button

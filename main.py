@@ -180,6 +180,9 @@ def render():
     #render bomb sigil
     util.bomb_sigil.render()
 
+    #render bloodlightning
+    util.blood_lightning.render()
+
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
 
@@ -249,5 +252,4 @@ while util.running:
                 break
     render()
     util.clock_time = util.clock.tick(60)
-
 pygame.quit()

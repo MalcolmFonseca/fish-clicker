@@ -24,11 +24,11 @@ class MenuSystem():
 
         #render rects
         for rect in self.current_menu.rects:
-            pygame.draw.rect(util.screen,util.sand_color,rect)
+            pygame.draw.rect(util.screen,'#FFE5AD',rect)
 
         #render buttons
         for button in self.current_menu.buttons:
-            pygame.draw.rect(util.screen,util.sand_color,button.rect)
+            pygame.draw.rect(util.screen,'#FFE5AD',button.rect)
             util.screen.blit(button.text,button.text_rect)
 
         #render check boxes
