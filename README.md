@@ -5,10 +5,9 @@ TODO:
 
 fix hitbox on whale
 
-make kill upgrades
-	lightning
-	"bomb"
+add sigils:
+	- 
+	- 
+	- 
 
 add prehistoric fish
-
-optimize gore
