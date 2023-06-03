@@ -4,10 +4,10 @@ class Gore():
     def __init__(self):
         self.gore_list = []
     
-    def splatter(self,pos,size=5):
+    def splatter(self,pos,size=10):
         gore_group = pygame.sprite.Group()
 
-        for n in range(0,100):
+        for n in range(0,50):
             gore_group.add(Blood(pos,size))
 
         self.gore_list.append(gore_group)
@@ -15,17 +15,15 @@ class Gore():
 class Blood(pygame.sprite.Sprite):
     def __init__(self,pos,size):
         super().__init__()
-        self.rect = pygame.Rect(0,0,size,size)
-        self.rect.center = pos
+        self.pos = pos
+        self.size = size
         self.speed = [10*(random.randint(0,20)/10-1),10*(random.randint(0,20)/10-1)]
         self.timer = random.random()
 
     def update(self):
         self.speed[1] += .75
-        self.rect.center = [self.rect.centerx+self.speed[0],self.rect.centery+self.speed[1]]
+        self.pos = [self.pos[0]+self.speed[0],self.pos[1]+self.speed[1]]
         self.timer -= util.clock_time/1000
-        if self.timer < 1/4:
-            self.rect = self.rect.inflate(-1,-1)
-        pygame.draw.rect(util.screen,'#D40404',self.rect)
+        pygame.draw.circle(util.screen,'#D40404',self.pos,self.timer*self.size)
         if self.timer <= 0:
             self.kill()

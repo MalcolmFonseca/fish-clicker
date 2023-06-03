@@ -81,6 +81,7 @@ def enter():
                     break
                 if util.scene_button.rect.collidepoint(event.pos):
                     util.scene_button.press()
+                    background.update()
                     running = False
                 if book_rect.collidepoint(event.pos):
                     util.sigil_menu.enabled = True

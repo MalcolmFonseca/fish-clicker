@@ -1,4 +1,4 @@
-import pygame,random,util,background
+import pygame,random,util
 
 class Creature(pygame.sprite.Sprite):
     def __init__(self,image_path):
@@ -51,13 +51,12 @@ class Creature(pygame.sprite.Sprite):
         if self.dead == False:
             self.dead = True
             if self.rect.width > 200:
-                util.gore_ob.splatter(self.rect.center,size = 15)
+                util.gore_ob.splatter(self.rect.center,size = 20)
             else: 
                 util.gore_ob.splatter(self.rect.center)
             self.dead_timer = 5
             util.player_ob.add_score(1)
             util.player_ob.kills += 1
-            background.update()
         
 
             
