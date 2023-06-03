@@ -164,6 +164,9 @@ def render():
     #render score and sps text
     screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
     screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
+
+    #render bloodlightning
+    util.blood_lightning.render()
     
     if util.settings['Shop In Front']:
         render_shop()
@@ -179,9 +182,6 @@ def render():
 
     #render bomb sigil
     util.bomb_sigil.render()
-
-    #render bloodlightning
-    util.blood_lightning.render()
 
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
