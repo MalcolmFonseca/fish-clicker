@@ -49,6 +49,10 @@ def render():
     #render menu button
     util.screen.blit(util.menu_system.menu_button,util.menu_system.menu_button_rect)
 
+    #render bomb sigil
+    if any(sigil.name == "Mass Hemorrhage" and sigil.bought for sigil in util.sigil_menu.all_sigils):
+        util.bomb_sigil.render()
+
     #render scene button
     util.screen.blit(util.scene_button.image,util.scene_button.rect)
 
@@ -101,4 +105,4 @@ def enter():
                         if box.get_rect().collidepoint(event.pos):
                             util.menu_system.current_menu.check(box)
         render()
-        util.clock.tick(30)
+        util.clock.tick(60)

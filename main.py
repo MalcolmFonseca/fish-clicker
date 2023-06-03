@@ -164,6 +164,10 @@ def render():
     #render score and sps text
     screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
     screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
+
+    #render bloodlightning
+    if any(sigil.name == "Blood Lightning" and sigil.bought for sigil in util.sigil_menu.all_sigils):
+        util.blood_lightning.render()
     
     if util.settings['Shop In Front']:
         render_shop()
@@ -178,10 +182,8 @@ def render():
     screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
 
     #render bomb sigil
-    util.bomb_sigil.render()
-
-    #render bloodlightning
-    util.blood_lightning.render()
+    if any(sigil.name == "Mass Hemorrhage" and sigil.bought for sigil in util.sigil_menu.all_sigils):
+        util.bomb_sigil.render()
 
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
