@@ -13,7 +13,6 @@ class SceneButton():
         if self.state == 'Ocean':
             self.state = 'Temple'
             self.image = self.ocean_image
-            util.knife_ob.enabled = False
             bloodtemple.enter()
         else:
             self.state = 'Ocean'

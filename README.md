@@ -6,7 +6,7 @@ TODO:
 fix hitbox on whale
 
 add sigils:
-	- 
+	- Ascension
 	- 
 	- 
 

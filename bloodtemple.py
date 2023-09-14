@@ -53,6 +53,9 @@ def render():
     if any(sigil.name == "Mass Hemorrhage" and sigil.bought for sigil in util.sigil_menu.all_sigils):
         util.bomb_sigil.render()
 
+    #render knife button
+    util.screen.blit(util.knife_ob.get_image(),util.knife_ob.rect)
+
     #render scene button
     util.screen.blit(util.scene_button.image,util.scene_button.rect)
 
