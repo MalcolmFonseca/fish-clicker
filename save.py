@@ -32,6 +32,7 @@ def save_data():
         "total_score": util.player_ob.total_score,
         "sps": util.player_ob.sps,
         "kills": util.player_ob.kills,
+        "blood": util.player_ob.blood,
         "bought": count_bought(),
         "unlocked": check_unlocked(),
         "sigils": check_sigils(), 

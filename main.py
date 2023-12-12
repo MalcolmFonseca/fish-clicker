@@ -102,6 +102,7 @@ def load_player(player_data):
         #render sps text before screen shows
         util.player_ob.add_sps(0)
         util.player_ob.kills = player_data["kills"]
+        util.player_ob.blood = player_data["blood"]
     except:
         pass
 

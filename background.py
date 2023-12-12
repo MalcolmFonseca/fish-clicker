@@ -21,7 +21,7 @@ def update():
     global rect
     #make background more red
     if util.player_ob.kills < 20_000:
-        pass
+        image = pygame.image.load('Assets/backgrounds/background.png').convert()
     elif util.player_ob.kills > 100_000:
         image = blood_images[4]
     elif util.player_ob.kills > 80_000:

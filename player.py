@@ -7,6 +7,7 @@ class Player():
         self.sps = .1
         self.bought = pygame.sprite.Group()
         self.kills = 0
+        self.blood = 0
         #score text
         self.score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/13.5))
         self.score_text = self.score_font.render(f'Chum: {util.num_to_word(math.trunc(self.score))}',True,(0,0,0))
