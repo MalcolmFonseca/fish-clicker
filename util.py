@@ -8,14 +8,12 @@ def init(current_screen):
     global settings
     player_data = save.load_data()
     if player_data == False:
-        pass
-    else:
-        try:
-            settings = player_data["settings"]
-        except:
-            settings = {
+        #load default settings
+        settings = {
             'Shop In Front':False
         }
+    else:
+        settings = player_data["settings"]
 
     #make game clock
     global clock

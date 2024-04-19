@@ -8,6 +8,7 @@ class Player():
         self.bought = pygame.sprite.Group()
         self.kills = 0
         self.blood = 0
+        self.ascensions = 0
         #score text
         self.score_font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/13.5))
         self.score_text = self.score_font.render(f'Chum: {util.num_to_word(math.trunc(self.score))}',True,(0,0,0))
@@ -38,3 +39,6 @@ class Player():
         self.sps_text_rect = self.sps_text.get_rect()
         self.sps_text_rect.centerx = self.score_text_rect.centerx
         self.sps_text_rect.top = self.score_text_rect.bottom
+
+    def ascend(self):
+        self.ascensions += 1

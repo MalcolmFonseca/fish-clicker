@@ -36,6 +36,7 @@ def save_data():
         "bought": count_bought(),
         "unlocked": check_unlocked(),
         "sigils": check_sigils(), 
+        "ascensions": util.player_ob.ascensions,
         "settings": util.settings
     }
 

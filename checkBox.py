@@ -11,7 +11,10 @@ class CheckBox():
         self.on_rect = self.on_image.get_rect()
         self.off_image = pygame.image.load('Assets/offbox.png').convert()
         self.off_rect = self.off_image.get_rect()
-        self.on = util.settings[name]
+        try:
+            self.on = util.settings[name]
+        except:
+            self.on = False
 
     def get_image(self):
         if self.on:
