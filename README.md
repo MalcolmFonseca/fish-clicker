@@ -7,6 +7,8 @@ fix hitbox on whale
 
 add sigils:
 	- Ascension
+		- Animation
+		- Sigil Image
 	- 
 	- 
 

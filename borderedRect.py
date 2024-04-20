@@ -1,3 +1,5 @@
+#an artifact from when i needed to test out functionalities before I designed the UI
+
 import pygame
 
 class bordered_rect():
