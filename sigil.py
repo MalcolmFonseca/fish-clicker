@@ -26,3 +26,6 @@ class Sigil():
             #ascension is handled with other sigils, this is its clause
             if self.name == "Ascension":
                 util.player_ob.ascend()
+
+    def reset(self):
+        self.bought = False

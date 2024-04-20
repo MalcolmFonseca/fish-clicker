@@ -67,62 +67,6 @@ open_shop_button_rect.top = util.window_size[1]/128
 close_shop_button_rect.right = open_shop_button_rect.right
 close_shop_button_rect.top = open_shop_button_rect.top
 
-##################################################################### LOADING DATA
-def load_purchases(player_data):
-    for button in util.main_shop.all_buttons:
-        #load
-        try:
-            button.owned = player_data["bought"][f"{button.name}"]
-        except:
-            button.owned = 0
-        #create all bought creatures
-        for n in range(0,button.owned):
-            util.player_ob.bought.add(button.add())
-
-def load_unlocks(player_data):
-    util.main_shop.unlocked_buttons.clear()
-    for button in util.main_shop.all_buttons:
-        #load save
-        try:
-            button.unlocked = player_data["unlocked"][f"{button.name}"]
-        except:
-            button.unlocked = False
-
-        #unlock button if already unlocked
-        if button.unlocked == True:
-            util.main_shop.unlocked_buttons.append(button)
-            util.main_shop.update_buttons()
-            util.main_shop.position_buttons()
-
-def load_player(player_data):
-    try:
-        util.player_ob.score = player_data["score"]
-        util.player_ob.total_score = player_data["total_score"]
-        util.player_ob.sps = player_data["sps"]
-        #render sps text before screen shows
-        util.player_ob.add_sps(0)
-        util.player_ob.kills = player_data["kills"]
-        util.player_ob.blood = player_data["blood"]
-    except:
-        pass
-
-def load_sigils(player_data):
-    for sigil in util.sigil_menu.all_sigils:
-        try:
-            sigil.bought = player_data["sigils"][f"{sigil.name}"]
-        except:
-            sigil.bought = False
-
-def load_data(player_data):
-    if player_data == False:
-        pass
-    else:
-        load_purchases(player_data)
-        load_unlocks(player_data)
-        load_player(player_data)
-        load_sigils(player_data)
-#####################################################################
-
 def buy(button):
     util.player_ob.add_score(-button.cost)
     util.player_ob.add_sps(button.sps)
@@ -209,7 +153,7 @@ def render_shop():
 pygame.time.set_timer(util.UPDATE_SCORE,1000)
 
 #update screen, load data
-load_data(save.load_data())
+save.load(save.load_data())
 render()
 util.update_score()
 background.update()

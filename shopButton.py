@@ -32,12 +32,8 @@ class ShopButton():
         #create text
         self.name_text = self.big_font.render(f'{self.name}',True,(0,0,0))
         self.name_text_rect = self.name_text.get_rect()
+        self.update_text()
 
-        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
-        self.cost_text_rect = self.cost_text.get_rect()
-
-        self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
-        self.owned_text_rect = self.owned_text.get_rect()
 
         self.sps_text = self.small_font.render(f'Cps: {util.num_to_word(self.sps)}',True,(0,0,0))
         self.sps_text_rect = self.sps_text.get_rect()
@@ -63,6 +59,13 @@ class ShopButton():
         #position sps text
         self.sps_text_rect.left = self.name_text_rect.left
         self.sps_text_rect.bottom = self.owned_text_rect.bottom
+
+    def update_text(self):
+        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
+        self.cost_text_rect = self.cost_text.get_rect()
+
+        self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
+        self.owned_text_rect = self.owned_text.get_rect()
     
     def check_expensive(self):
         if util.player_ob.score < self.cost:
@@ -82,12 +85,7 @@ class ShopButton():
         self.owned += 1
         self.cost = math.ceil(self.base_cost * math.pow(1.15,self.owned))
 
-        #update text
-        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
-        self.cost_text_rect = self.cost_text.get_rect()
-
-        self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
-        self.owned_text_rect = self.owned_text.get_rect()
+        self.update_text()
         
         #create correct creature
         if self.creature_type == 'swimming':
@@ -103,11 +101,7 @@ class ShopButton():
         self.cost = math.ceil(self.base_cost * math.pow(1.15,self.owned))
 
         #update text
-        self.cost_text = self.small_font.render(f'{util.num_to_word(self.cost)}',True,(0,0,0))
-        self.cost_text_rect = self.cost_text.get_rect()
-
-        self.owned_text = self.small_font.render(f'Owned: {self.owned}',True,(0,0,0))
-        self.owned_text_rect = self.owned_text.get_rect()
+        self.update_text()
 
         #create correct creature
         if self.creature_type == 'swimming':
@@ -116,3 +110,7 @@ class ShopButton():
             return creature.WalkingCreature(self.image_path)
         else:
             return creature.StationaryCreature(self.image_path)
+        
+    def reset(self):
+        self.owned = 0
+        self.cost = math.ceil(self.base_cost * math.pow(1.15,self.owned))

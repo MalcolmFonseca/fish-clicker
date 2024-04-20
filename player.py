@@ -35,6 +35,9 @@ class Player():
     
     def add_sps(self,change):
         self.sps += change
+        self.update_sps_text()
+
+    def update_sps_text(self):
         self.sps_text = self.sps_font.render(f'Cps: {util.num_to_word(self.sps)}',True,(0,0,0))
         self.sps_text_rect = self.sps_text.get_rect()
         self.sps_text_rect.centerx = self.score_text_rect.centerx
@@ -42,3 +45,15 @@ class Player():
 
     def ascend(self):
         self.ascensions += 1
+        #clear all purchases
+        for button in util.main_shop.all_buttons:
+            button.reset()
+        for sigil in util.sigil_menu.all_sigils:
+            sigil.reset()
+
+        self.bought = pygame.sprite.Group()
+        #clear score
+        self.score = 15
+        self.sps = .1
+        self.update_sps_text()
+        self.blood = 0
