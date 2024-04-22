@@ -5,8 +5,6 @@ TODO:
 
 make scroll wheel scroll shop
 
-allow toggle knife in temple
-
 fix hitbox on whale
 
 add sigils:

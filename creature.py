@@ -31,7 +31,7 @@ class Creature(pygame.sprite.Sprite):
             self.dead_timer -= util.clock_time/1000
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
-                if util.knife_ob.enabled:
+                if util.knife_ob.enabled and util.scene_button.state == "Ocean":
                     self.die()
 
         #keep creature in bounds

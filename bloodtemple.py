@@ -93,6 +93,8 @@ def enter():
                 if book_rect.collidepoint(event.pos):
                     util.sigil_menu.enabled = True
                     break
+                if util.knife_ob.rect.collidepoint(event.pos):
+                    util.knife_ob.enabled = not util.knife_ob.enabled
                 for sigil in util.sigil_menu.all_sigils:
                     if sigil.rect.collidepoint(event.pos):
                         sigil.buy()
