@@ -166,37 +166,42 @@ while util.running:
             util.update_score()    
         if event.type == pygame.QUIT:
             util.running = False
+        elif event.type == pygame.MOUSEWHEEL: #not checking for mouse position on scroll, doesnt really effect gameplay
+            if event.y < 0: #scroll down
+                util.main_shop.move_shop("DOWN")
+            elif event.y > 0: #scroll up
+                util.main_shop.move_shop("UP")
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
             if util.menu_system.menu_button_rect.collidepoint(event.pos):
                 util.menu_system.toggle()
                 break
-            if util.knife_ob.rect.collidepoint(event.pos):
+            elif util.knife_ob.rect.collidepoint(event.pos):
                 util.knife_ob.enabled = not util.knife_ob.enabled
-            if util.bomb_sigil.rect.collidepoint(event.pos):
+            elif util.bomb_sigil.rect.collidepoint(event.pos):
                 util.bomb_sigil.press()
-            if util.scene_button.rect.collidepoint(event.pos):
+            elif util.scene_button.rect.collidepoint(event.pos):
                 util.scene_button.press()
-            if util.menu_system.enabled:
+            elif util.menu_system.enabled:
                 for button in util.menu_system.current_menu.buttons:
                     if button.rect.collidepoint(event.pos):
                         util.menu_system.current_menu.press(button)
                 for box in util.menu_system.current_menu.check_boxes:
                     if box.get_rect().collidepoint(event.pos):
                         util.menu_system.current_menu.check(box)
+            elif util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+                util.main_shop.move_shop("UP")
+                break
+            elif util.main_shop.bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+                util.main_shop.move_shop("DOWN")
+                break
+            elif close_shop_button_rect.collidepoint(event.pos):
+                toggle_shop()
+                break
             for button in util.main_shop.current_buttons:
                 if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
                     if util.player_ob.score > button.cost: #comment out for free shop creatures
                         buy(button)
                         break
-            if util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                util.main_shop.move_shop("UP")
-                break
-            if util.main_shop.bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                util.main_shop.move_shop("DOWN")
-                break
-            if close_shop_button_rect.collidepoint(event.pos):
-                toggle_shop()
-                break
     render()
     util.clock_time = util.clock.tick(60)
 pygame.quit()
