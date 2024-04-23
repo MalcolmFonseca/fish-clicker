@@ -11,4 +11,14 @@ add sigils:
 	- 
 	- 
 
-add prehistoric fish
+add fish:
+	- prehistoric fish
+	- octopus
+	- lionfish
+	- jellyfish
+	- manta ray
+	- eel/moray eel
+	- turtle
+	- clam
+	- anemone (not certain, might be too many ground creatures)
+	- shark

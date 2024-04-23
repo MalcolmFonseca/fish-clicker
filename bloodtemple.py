@@ -68,6 +68,9 @@ def render():
     #update creatures to respawn in background
     util.player_ob.bought.update()
 
+    #update cursor
+    util.cursor.update()
+
     pygame.display.flip()
 
 def enter():

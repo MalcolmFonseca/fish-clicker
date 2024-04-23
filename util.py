@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning, cursor
 
 def init(current_screen):
     #event object for score update
@@ -58,6 +58,10 @@ def init(current_screen):
     #menu system
     global menu_system
     menu_system = menuSystem.MenuSystem()
+
+    #cursor
+    global cursor
+    cursor = cursor.Cursor()
 
     #gore
     global gore_ob

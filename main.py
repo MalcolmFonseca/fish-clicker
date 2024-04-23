@@ -133,6 +133,9 @@ def render():
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
 
+    #update cursor
+    util.cursor.update()
+
     pygame.display.flip()
 
 def render_shop():
