@@ -22,6 +22,7 @@ class SigilMenu():
     def populate_sigils(self):
         self.all_sigils.append(sigil.Sigil('Blood Lightning','Assets/sigils/bloodLightningSigil.png',0,[util.window_size[0]/6,util.window_size[1]/4.5]))
         self.all_sigils.append(sigil.Sigil('Mass Hemorrhage','Assets/sigils/massHemorrhageSigil.png',0,[500,500]))
+        self.all_sigils.append(sigil.Sigil('Dark Familiar','Assets/sigils/massHemorrhageSigil.png',0,[1000,500]))
         self.all_sigils.append(sigil.Sigil('Ascension','Assets/sigils/ascensionSigil.png',0,[util.window_size[0]/2,util.window_size[1]/2]))
 
     def render(self):

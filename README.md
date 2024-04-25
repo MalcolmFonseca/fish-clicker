@@ -3,12 +3,10 @@ Cookie Clicker inspired game with an aquatic theme
 
 TODO:
 
-fix hitbox on whale
-
 add sigils:
 	- Ascension
 		- Animation
-	- 
+	- Demonic Familiar
 	- 
 
 add fish:
@@ -22,3 +20,5 @@ add fish:
 	- clam
 	- anemone (not certain, might be too many ground creatures)
 	- shark
+
+fix hitbox on whale

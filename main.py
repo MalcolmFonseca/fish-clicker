@@ -113,6 +113,9 @@ def render():
     #render bloodlightning
     if any(sigil.name == "Blood Lightning" and sigil.bought for sigil in util.sigil_menu.all_sigils):
         util.blood_lightning.render()
+
+    if any(sigil.name == "Dark Familiar" and sigil.bought for sigil in util.sigil_menu.all_sigils):
+        util.dark_familiar.render()
     
     if util.settings['Shop In Front']:
         render_shop()
@@ -174,7 +177,13 @@ while util.running:
                 util.main_shop.move_shop("DOWN")
             elif event.y > 0: #scroll up
                 util.main_shop.move_shop("UP")
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: #for dragging
+            if util.dark_familiar.rect.collidepoint(event.pos):
+                util.dark_familiar.dragging = True
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: #handle player left click
+            #release drag
+            if util.dark_familiar.dragging == True:
+                util.dark_familiar.dragging = False
             if util.menu_system.menu_button_rect.collidepoint(event.pos):
                 util.menu_system.toggle()
                 break

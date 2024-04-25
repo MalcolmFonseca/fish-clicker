@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning, cursor
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning,cursor,darkFamiliar
 
 def init(current_screen):
     #event object for score update
@@ -74,6 +74,10 @@ def init(current_screen):
     #bomb sigil
     global bomb_sigil
     bomb_sigil = bombSigil.BombSigil()
+
+    #dark familiar
+    global dark_familiar
+    dark_familiar = darkFamiliar.DarkFamiliar()
 
     #blood lightning
     global blood_lightning
