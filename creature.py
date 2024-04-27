@@ -33,8 +33,6 @@ class Creature(pygame.sprite.Sprite):
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
                 if util.knife_ob.enabled and util.scene_button.state == "Ocean":
                     self.die()
-        if self.rect.colliderect(util.dark_familiar.rect) and self.dead == False and util.dark_familiar.dragging == False:
-            self.die()
         #keep creature in bounds
         if self.rect.left < 0:
             self.rect.left = 0
@@ -75,8 +73,6 @@ class StationaryCreature(Creature):
         if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
             if util.knife_ob.enabled:
                 self.die()
-        if self.rect.colliderect(util.dark_familiar.rect) and self.dead == False and util.dark_familiar.dragging == False:
-            self.die()
 
 class SwimmingCreature(Creature):
     def __init__(self, image_path):

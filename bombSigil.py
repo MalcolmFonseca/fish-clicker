@@ -2,7 +2,7 @@ import pygame,util,math
 
 class BombSigil():
     def __init__(self):
-        self.image = pygame.image.load('Assets/bombBox.png').convert()
+        self.image = pygame.image.load('Assets/sigilpowers/bombBox.png').convert()
         self.rect = self.image.get_rect()
         self.rect.bottomleft = [util.window_size[0]/128,util.window_size[1] - 3*util.window_size[0]/128 - 2*self.rect.height]
         self.cooldown = 60

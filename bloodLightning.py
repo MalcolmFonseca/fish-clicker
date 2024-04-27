@@ -2,7 +2,7 @@ import pygame,util,random
 
 class BloodLightning():
     def __init__(self):
-        self.image = pygame.image.load('Assets/bloodlightning.png').convert_alpha()
+        self.image = pygame.image.load('Assets/sigilpowers/bloodlightning.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(0,util.window_size[0])
         self.timer = 1.5
