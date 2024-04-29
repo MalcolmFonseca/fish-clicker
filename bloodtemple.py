@@ -69,7 +69,7 @@ def render():
     util.player_ob.bought.update()
 
     #update cursor
-    util.cursor.update()
+    util.cursor_ob.update()
 
     pygame.display.flip()
 

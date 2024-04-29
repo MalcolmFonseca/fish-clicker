@@ -137,7 +137,7 @@ def render():
     screen.blit(util.scene_button.image,util.scene_button.rect)
 
     #update cursor
-    util.cursor.update()
+    util.cursor_ob.update()
 
     pygame.display.flip()
 

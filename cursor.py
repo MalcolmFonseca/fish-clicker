@@ -9,10 +9,12 @@ class Cursor(pygame.sprite.Sprite):
         self.image = pygame.image.load('Assets/cursor.png').convert_alpha()
         self.knife_image = pygame.image.load('Assets/knifecursor.png').convert_alpha()
         self.rect = self.image.get_rect()
+        self.enabled = True
 
     def update(self):
-        self.rect.center = pygame.mouse.get_pos()
-        if util.knife_ob.enabled:
-            util.screen.blit(self.knife_image,self.rect)
-        else:
-            util.screen.blit(self.image,self.rect)
+        if self.enabled:
+            self.rect.center = pygame.mouse.get_pos()
+            if util.knife_ob.enabled:
+                util.screen.blit(self.knife_image,self.rect)
+            else:
+                util.screen.blit(self.image,self.rect)
