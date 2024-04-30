@@ -23,6 +23,7 @@ class SigilMenu():
         self.all_sigils.append(sigil.Sigil('Blood Lightning','Assets/sigils/bloodLightningSigil.png',0,'Lightning strikes periodically.',[util.window_size[0]/6,util.window_size[1]/4.5]))
         self.all_sigils.append(sigil.Sigil('Mass Hemorrhage','Assets/sigils/massHemorrhageSigil.png',0,'Each minute you can conjure a spell that destroys all fish.',[500,500]))
         self.all_sigils.append(sigil.Sigil('Dark Familiar','Assets/sigils/darkFamiliarSigil.png',0,'Summon a dark familiar that can devour fish. (Movable)',[1000,500]))
+        self.all_sigils.append(sigil.Sigil('Hell Fire','Assets/sigils/hellfireSigil.png',0,'Hellfire sweeps the ocean floor burning fish in its path',[util.window_size[0]/3,util.window_size[1]/4.5]))
         self.all_sigils.append(sigil.Sigil('Ascension','Assets/sigils/ascensionSigil.png',0,'Once you have collected enough blood, you may ascend to a higher plane',[util.window_size[0]/2,util.window_size[1]/2]))
 
     def render(self):

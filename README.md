@@ -6,7 +6,6 @@ TODO:
 add sigils:
 	- Ascension
 		- Animation
-	- Demonic Familiar
 	- 
 
 add fish:

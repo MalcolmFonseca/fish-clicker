@@ -110,13 +110,16 @@ def render():
     screen.blit(util.player_ob.score_text,util.player_ob.score_text_rect)
     screen.blit(util.player_ob.sps_text,util.player_ob.sps_text_rect)
 
-    #render bloodlightning
+    #render sigil powers
     if any(sigil.name == "Blood Lightning" and sigil.bought for sigil in util.sigil_menu.all_sigils):
         util.blood_lightning.render()
 
     if any(sigil.name == "Dark Familiar" and sigil.bought for sigil in util.sigil_menu.all_sigils):
         util.dark_familiar.render()
-    
+
+    if any(sigil.name == "Hell Fire" and sigil.bought for sigil in util.sigil_menu.all_sigils):
+        util.hell_fire.render()
+        
     if util.settings['Shop In Front']:
         render_shop()
 
