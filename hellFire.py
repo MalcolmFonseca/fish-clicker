@@ -31,10 +31,16 @@ class Flame(pygame.sprite.Sprite):
 
         if self.timer <= 0:
             self.kill()
+        elif self.timer <= 10:
+            self.rect.bottom = util.window_size[1] + 25
         elif self.timer <= 20:
             self.rect.bottom = util.window_size[1] + 20
+        elif self.timer <= 30:
+            self.rect.bottom = util.window_size[1] + 15
         elif self.timer <= 40:
             self.rect.bottom = util.window_size[1] + 10
+        elif self.timer <= 50:
+            self.rect.bottom = util.window_size[1] + 5
         else:
             self.rect.bottom = util.window_size[1]
 
