@@ -5,7 +5,7 @@ class MenuSystem():
         self.enabled = False
         self.current_menu = menu.MainMenu()
         #create button for menu
-        self.menu_button = pygame.image.load('Assets/menu.png').convert()
+        self.menu_button = pygame.image.load('Assets/menuButton.png').convert()
         self.menu_button_rect = self.menu_button.get_rect()
         self.menu_button_rect.top = util.window_size[1]/128
         self.menu_button_rect.left = util.window_size[1]/128
@@ -19,8 +19,7 @@ class MenuSystem():
 
     def render(self):
         #draw menu box
-        pygame.draw.rect(util.screen,self.current_menu.menu_rect.border_color,self.current_menu.menu_rect.border_rect)
-        pygame.draw.rect(util.screen,self.current_menu.menu_rect.inner_color,self.current_menu.menu_rect.inner_rect)
+        util.screen.blit(self.current_menu.image,self.current_menu.rect)
 
         #render rects
         for rect in self.current_menu.rects:
@@ -28,10 +27,8 @@ class MenuSystem():
 
         #render buttons
         for button in self.current_menu.buttons:
-            pygame.draw.rect(util.screen,'#FFE5AD',button.rect)
-            util.screen.blit(button.text,button.text_rect)
+            button.render()
 
         #render check boxes
         for box in self.current_menu.check_boxes:
-            util.screen.blit(box.get_image(),box.get_rect())
-            util.screen.blit(box.text,box.text_rect)
+            box.render()

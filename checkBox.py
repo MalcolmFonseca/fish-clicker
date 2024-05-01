@@ -16,6 +16,12 @@ class CheckBox():
         except:
             self.on = False
 
+        self.image = pygame.image.load('Assets/shopbutton.png').convert()
+        #making a rect to use in transform for sizing
+        self.rect = pygame.Rect(0,0,self.text_rect.width + self.on_rect.width + 100,self.text_rect.height + 20)
+        self.image = pygame.transform.scale(self.image,[self.rect.width*util.scale[0],self.rect.height*util.scale[1]])
+        self.rect = self.image.get_rect()
+
     def get_image(self):
         if self.on:
             return self.on_image
@@ -27,3 +33,8 @@ class CheckBox():
             return self.on_rect
         else:
             return self.off_rect 
+        
+    def render(self):
+        util.screen.blit(self.image,self.rect)
+        util.screen.blit(self.get_image(),self.get_rect())
+        util.screen.blit(self.text,self.text_rect)

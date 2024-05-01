@@ -189,34 +189,31 @@ while util.running:
                 util.dark_familiar.dragging = False
             if util.menu_system.menu_button_rect.collidepoint(event.pos):
                 util.menu_system.toggle()
-                break
             elif util.knife_ob.rect.collidepoint(event.pos):
                 util.knife_ob.enabled = not util.knife_ob.enabled
             elif util.bomb_sigil.rect.collidepoint(event.pos):
                 util.bomb_sigil.press()
             elif util.scene_button.rect.collidepoint(event.pos):
                 util.scene_button.press()
-            elif util.menu_system.enabled:
+            elif util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+                util.main_shop.move_shop("UP")
+            elif util.main_shop.bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+                util.main_shop.move_shop("DOWN")
+            elif close_shop_button_rect.collidepoint(event.pos):
+                toggle_shop()
+            for button in util.main_shop.current_buttons:
+                if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
+                    if util.player_ob.score > button.cost: #comment out for free shop creatures
+                        buy(button)
+                        break
+            #keep this block separate for other checks, as it will block out other actions obviously as it checks state rather than collision
+            if util.menu_system.enabled:
                 for button in util.menu_system.current_menu.buttons:
                     if button.rect.collidepoint(event.pos):
                         util.menu_system.current_menu.press(button)
                 for box in util.menu_system.current_menu.check_boxes:
                     if box.get_rect().collidepoint(event.pos):
                         util.menu_system.current_menu.check(box)
-            elif util.main_shop.top_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                util.main_shop.move_shop("UP")
-                break
-            elif util.main_shop.bottom_arrow_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                util.main_shop.move_shop("DOWN")
-                break
-            elif close_shop_button_rect.collidepoint(event.pos):
-                toggle_shop()
-                break
-            for button in util.main_shop.current_buttons:
-                if button.button_rect.collidepoint(event.pos) and util.main_shop.minimize == False:
-                    if util.player_ob.score > button.cost: #comment out for free shop creatures
-                        buy(button)
-                        break
     render()
     util.clock_time = util.clock.tick(60)
 pygame.quit()
