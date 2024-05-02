@@ -3,14 +3,14 @@ import pygame,util
 class HellFire():
     def __init__(self):
         self.position = [0,util.window_size[1]]
-        self.time = 10
+        self.time = .20
         self.flame_group = pygame.sprite.Group()
         self.direction = 1
 
     def render(self):
-        self.time -= 1
+        self.time -= util.clock_time/1000
         if self.time <= 0:
-            self.time = 10
+            self.time = .20
             if self.position[0] >= util.window_size[0] or self.position[0] < 0:
                 self.direction *= -1
             self.position[0] += 60*self.direction

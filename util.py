@@ -3,7 +3,7 @@ import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sig
 def init(current_screen):
     #event object for score update
     global UPDATE_SCORE
-    UPDATE_SCORE = pygame.USEREVENT +1
+    UPDATE_SCORE = pygame.USEREVENT + 1
     #settings user can change
     global settings
     player_data = save.load_data()

@@ -215,5 +215,5 @@ while util.running:
                     if box.get_rect().collidepoint(event.pos):
                         util.menu_system.current_menu.check(box)
     render()
-    util.clock_time = util.clock.tick(60)
+    util.clock.tick(60)
 pygame.quit()
