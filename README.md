@@ -20,3 +20,7 @@ add fish:
 	- shark
 
 fix hitbox on whale
+
+rename util to something more fitting (maybe separate game objects from screen and time? game.py + objects.py)
+
+even better: remove most if not all global variables that couple components and instead make them cohesive

@@ -28,5 +28,3 @@ class BombSigil():
             for creature in util.player_ob.bought:
                 if creature.dead == False:
                     creature.die()
-        else:
-            pass
