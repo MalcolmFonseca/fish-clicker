@@ -1,11 +1,10 @@
-import pygame,shopButton,util,save,background
+import pygame,shopButton,util,save
 pygame.init()
 
 #set fullscreen
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 util.init(screen)
-background.init()
 
 #create dictionary storing pricing tiers for easier changes down the line
 #format is cost:sps
@@ -86,7 +85,7 @@ def toggle_shop():
 #render method
 def render():
     #render backdrop
-    screen.blit(background.image,background.rect)
+    util.background_ob.render()
 
     #position sps text
     util.player_ob.sps_text_rect.centerx = util.player_ob.score_text_rect.centerx
@@ -168,7 +167,7 @@ pygame.time.set_timer(util.UPDATE_SCORE,1000)
 save.load(save.load_data())
 render()
 util.update_score()
-background.update()
+util.background_ob.render()
 #gameloop
 while util.running:
     #event loop

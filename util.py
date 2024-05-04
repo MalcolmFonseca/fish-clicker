@@ -1,4 +1,4 @@
-import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning,cursor,darkFamiliar,sigilInfoBox,hellFire,popup
+import shop,gore,player,pygame,menuSystem,save,knife,sceneButton,bloodtemple,sigilMenu,bombSigil,bloodLightning,cursor,darkFamiliar,sigilInfoBox,hellFire,popup,background
 
 def init(current_screen):
     #event object for score update
@@ -50,6 +50,10 @@ def init(current_screen):
     #player
     global player_ob
     player_ob = player.Player()
+
+    #background
+    global background_ob
+    background_ob = background.Background()
 
     #shop
     global main_shop

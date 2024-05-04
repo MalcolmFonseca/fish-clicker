@@ -1,4 +1,4 @@
-import util,pygame,background
+import util,pygame
 
 def init():
     #temple
@@ -23,7 +23,7 @@ def init():
 
 def render():
     #render backdrop
-    util.screen.blit(background.image,background.rect)
+    util.background_ob.render()
 
     #render temple
     util.screen.blit(temple_image,temple_rect)
@@ -94,7 +94,7 @@ def enter():
                     break
                 if util.scene_button.rect.collidepoint(event.pos):
                     util.scene_button.press()
-                    background.update()
+                    util.background_ob.render()
                     running = False
                 if book_rect.collidepoint(event.pos):
                     util.sigil_menu.enabled = True
