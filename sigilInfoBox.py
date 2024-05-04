@@ -2,7 +2,7 @@ import pygame,math,util
 
 class SigilInfoBox():
     def __init__(self):
-        self.image = pygame.image.load('Assets/shopbutton.png').convert()
+        self.image = pygame.image.load('Assets/board.png').convert()
         self.rect = self.image.get_rect()
 
         self.font = pygame.font.Font('Assets/Kamalla.ttf',math.trunc(util.window_size[1]/27))

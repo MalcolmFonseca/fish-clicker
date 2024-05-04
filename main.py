@@ -139,6 +139,9 @@ def render():
     #render scene button
     screen.blit(util.scene_button.image,util.scene_button.rect)
 
+    #render popups
+    util.popups.popup_group.update()
+
     #update cursor
     util.cursor_ob.update()
 

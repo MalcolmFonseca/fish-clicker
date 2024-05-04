@@ -33,9 +33,12 @@ class MainMenu(Menu):
 
     def press(self,button):
         if button.name == 'Save + Exit':
-            save.save_data()
-            bloodtemple.running = False
-            util.running = False
+            try:
+                save.save_data()
+                bloodtemple.running = False
+                util.running = False
+            except:
+                return
         elif button.name == 'Save':
             save.save_data()
         else:

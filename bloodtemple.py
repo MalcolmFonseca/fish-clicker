@@ -68,6 +68,9 @@ def render():
     #update creatures to respawn in background
     util.player_ob.bought.update()
 
+    #render popups
+    util.popups.popup_group.update()
+
     #update cursor
     util.cursor_ob.update()
 

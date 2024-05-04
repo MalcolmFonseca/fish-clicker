@@ -40,9 +40,13 @@ def save_data():
         "settings": util.settings
     }
 
-    #write to json file
-    with open("save.json","w") as f:
-        json.dump(player_data,f)
+    try:
+        #write to json file
+        with open("save.json","w") as f:
+            json.dump(player_data,f)
+        util.popups.create_popup("Game Saved")
+    except:
+        util.popups.create_popup("Error Saving Game")
 
 def load_data():
     #check if file exists

@@ -2,7 +2,7 @@ import pygame, creature, math, util
 
 class ShopButton():
     def __init__(self,name,cost,sps,creature_type,image_path,icon_image_path): #creature type is either walking, swimming or stationary
-        self.button_image = pygame.image.load('Assets/shopbutton.png').convert()
+        self.button_image = pygame.image.load('Assets/board.png').convert()
         self.button_rect = self.button_image.get_rect()
         self.button_image = pygame.transform.scale(self.button_image,[self.button_rect.width*util.scale[0],self.button_rect.height*util.scale[1]])
         self.button_rect = self.button_image.get_rect()
