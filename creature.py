@@ -24,15 +24,8 @@ class Creature(pygame.sprite.Sprite):
         else:
             self.image = self.base_image
 
-        #animation for slicing
-        if self.dead_timer <= 0:
-            self.dead = False
-        else:
-            self.dead_timer -= util.clock_time/1000
-        mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
-                if util.knife_ob.enabled and util.scene_button.state == "Ocean":
-                    self.die()
+        self.check_death()
+
         #keep creature in bounds
         if self.rect.left < 0:
             self.rect.left = 0
@@ -43,6 +36,16 @@ class Creature(pygame.sprite.Sprite):
 
         #move
         self.rect.centerx += self.speed
+
+    def check_death(self):
+        if self.dead_timer <= 0:
+            self.dead = False
+        else:
+            self.dead_timer -= util.clock_time/1000
+        mouse_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
+                if util.knife_ob.enabled and util.scene_button.state == "Ocean":
+                    self.die()
 
     def die(self):
         if self.dead == False:
@@ -64,15 +67,7 @@ class StationaryCreature(Creature):
 
     #override update method to prevent movement
     def update(self):
-        #animation for slicing
-        if self.dead_timer <= 0:
-            self.dead = False
-        else:
-            self.dead_timer -= util.clock_time/1000 
-        mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.dead == False:
-            if util.knife_ob.enabled:
-                self.die()
+        self.check_death()
 
 class SwimmingCreature(Creature):
     def __init__(self, image_path):

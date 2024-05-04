@@ -3,15 +3,9 @@ Cookie Clicker inspired game with an aquatic theme
 
 TODO:
 
-add responsive feedback to save button
-
-add more settings
-	- Fullscreen toggle
-
 add sigils:
 	- Ascension
 		- Animation
-	- 
 
 add fish:
 	- prehistoric fish
